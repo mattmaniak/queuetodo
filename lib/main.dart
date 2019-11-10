@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'widgets.dart';
+import 'queuetodo/layout.dart' as queuetodo;
 
 void main() {
   runApp(
     MaterialApp(
       title: 'QueueToDo',
-      home: QueueToDo(),
+      home: queuetodo.Layout()
     )
   );
 }
