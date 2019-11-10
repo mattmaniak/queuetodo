@@ -1,2 +1,2 @@
 # QueueToDo
-Manage your everyday tasks in the right way.
+Manage your everyday tasks the right way.
