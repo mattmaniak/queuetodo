@@ -1,7 +1,6 @@
-library todoqueue;
-
 import 'package:flutter/material.dart';
-import 'titlebar.dart' as queuetodo;
+// import 'button.dart';
+import 'titlebar.dart';
 
 class Layout extends StatelessWidget {
   @override
@@ -9,12 +8,26 @@ class Layout extends StatelessWidget {
     return Material(
       child: Column(
         children: <Widget>[
-          queuetodo.TitleBar(title: "Your Queue"),
+          TitleBar(),
           Expanded(
             child: FlutterLogo(size: 256.0)
           )
        ],
       )
     );
+
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     leading: IconButton(
+    //       icon: Icon(Icons.menu),
+    //       tooltip: 'Navigation menu',
+    //       onPressed: null,
+    //     ),
+    //     title: Text('awdawd'),
+    //   ),
+    //   body: Center(
+    //     child: Button(),
+    //   ),
+    // );
   }
 }
