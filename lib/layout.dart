@@ -6,32 +6,26 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
-  final int _tasksMin = 1;
+  final int _tasksMin = 0;
   final int _tasksMax = 8;
-  int _tasksAmount = 1;
-  List<Task> tasks;
+  int _tasksAmount = 0;
+  List<Task> _tasks = List<Task>();
 
   void _addTask() {
     setState(() {
-      _tasksAmount++;
-
-      if(_tasksAmount > _tasksMax) {
-        _tasksAmount = _tasksMax;
-      } else {
-        tasks.add(Task());
+      if(_tasks.length < _tasksMax) {
+        _tasks.add(Task(creationTime: DateTime.now()));
       }
+      _tasksAmount =_tasks.length;
     });
   }
 
   void _deleteTask() {
     setState(() {
-      _tasksAmount--;
-
-      if(_tasksAmount < _tasksMin) {
-        _tasksAmount = _tasksMin;
-      } else {
-        tasks.remove(Task());
+      if(_tasks.length > _tasksMin) {
+        _tasks.remove(_tasks.first); // TODO: REMOVES LAST ELEMENT.
       }
+      _tasksAmount =_tasks.length;
     });
   }
 
@@ -53,9 +47,9 @@ class _LayoutState extends State<Layout> {
         ],
         title: Text('Pending tasks: $_tasksAmount'),
       ),
-      body: ListView(
-        children: tasks,
-      )
+      body: Column(
+        children: _tasks, // ListView doesn't work.
+      ),
     );
   }
 }
