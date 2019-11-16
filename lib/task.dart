@@ -16,7 +16,7 @@ class _TaskState extends State<Task> {
     return Card(
       color: Colors.green,
       child: ListTile(
-        leading: Icon(Icons.map),
+        leading: Icon(Icons.all_inclusive),
         title: Text(creationTime.toString()),
       ),
     );
