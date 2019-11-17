@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Task extends StatefulWidget {
-  Task({this.creationTime});
-  final DateTime creationTime;
+  Task({this.taskIndex});
+  final int taskIndex;
 
-  _TaskState createState() => _TaskState(creationTime: this.creationTime);
+  _TaskState createState() => _TaskState(taskIndex: this.taskIndex);
 }
 
 class _TaskState extends State<Task> {
-  _TaskState({this.creationTime});
-  final DateTime creationTime;
+  _TaskState({this.taskIndex});
+  final int taskIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class _TaskState extends State<Task> {
       color: Colors.green,
       child: ListTile(
         leading: Icon(Icons.all_inclusive),
-        title: Text(creationTime.toString()),
+        title: Text(taskIndex.toString()),
       ),
     );
   }
