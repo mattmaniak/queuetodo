@@ -6,26 +6,27 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
-  final int _tasksMax = 16;
-  int _tasksAmount = 0;
+  static const int _tasksMax = 16;
   List<Task> _tasks = [];
 
   void _addTask() {
-    setState(() {
-      if(_tasks.length < _tasksMax) {
-        _tasks.add(Task(taskIndex: _tasksAmount));
-      }
-      _tasksAmount =_tasks.length;
-    });
+    if(_tasks.length < _tasksMax) {
+      setState(() {
+        _tasks.add(Task(taskIndex: _tasks.length + 1));
+      });
+    }
   }
 
   void _deleteTask() {
-    setState(() {
-      if(_tasks.isNotEmpty) {
-        _tasks.removeAt(0);
+    if(_tasks.isNotEmpty) {
+      try {
+        setState(() {
+          _tasks.removeAt(0);
+        });
+      } on UnsupportedError {
+        // Fixed size list.
       }
-      _tasksAmount =_tasks.length;
-    });
+    }
   }
 
   @override
@@ -44,7 +45,7 @@ class _LayoutState extends State<Layout> {
             onPressed: _deleteTask,
           ),
         ],
-        title: Text('Pending tasks: $_tasksAmount'),
+        title: Text('Pending tasks: ${_tasks.length}'),
       ),
       body: ListView(
         scrollDirection: Axis.vertical,
