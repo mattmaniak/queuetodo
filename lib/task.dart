@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Task extends StatefulWidget {
-  Task({this.taskIndex});
   final int taskIndex;
 
+  Task({this.taskIndex});
   _TaskState createState() => _TaskState(taskIndex: this.taskIndex);
 }
 

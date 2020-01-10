@@ -8,7 +8,7 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   final int _tasksMax = 16;
   int _tasksAmount = 0;
-  List<Widget> _tasks = [];
+  List<Task> _tasks = [];
 
   void _addTask() {
     setState(() {
