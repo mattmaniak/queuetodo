@@ -13,39 +13,28 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: Container(
-          color: Colors.deepPurple[100],
-          child: ListView(
-            children: [
-              DrawerHeader(
-                child: Text('Drawer'),
-              ),
-              ListTile(
-                title: Text('Option'),
-              )
-            ],
-          ),
-        ),
-      ),
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple[300],
         actions: <Widget>[
           IconButton(
+            color: Colors.black,
             icon: Icon(Icons.add),
-            tooltip: 'Add task',
+            tooltip: 'Create task',
             onPressed: _addTask,
           ),
           IconButton(
-            icon: Icon(Icons.delete),
-            tooltip: 'Delete task',
-            onPressed: _deleteTask,
+            color: Colors.black,
+            icon: Icon(Icons.remove),
+            tooltip: 'Remove task',
+            onPressed: _removeTask,
           ),
         ],
-        title: Text('Pending tasks: ${_tasks.length}'),
+        title: Text(
+          'Pending tasks: ${_tasks.length}',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Container(
-        color: Colors.deepPurple[100],
+        // color: Colors.yellow[200],
         child: ListView(
           children: _tasks.toList(),
         ),
@@ -62,10 +51,16 @@ class _AppState extends State<App> {
       } on UnsupportedError {
         // Fixed size list.
       }
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => EditTask(),
+      //   ),
+      // );
     }
   }
 
-  void _deleteTask() {
+  void _removeTask() {
     if (_tasks.isNotEmpty) {
       try {
         setState(() {

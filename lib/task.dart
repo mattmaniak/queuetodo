@@ -8,14 +8,30 @@ class Task extends StatefulWidget {
 }
 
 class _TaskState extends State<Task> {
+  String _title = 'Task title';
+  Icon _trailingArrow = Icon(Icons.expand_more);
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.deepPurple[200],
-      child: ListTile(
-        leading: Icon(Icons.all_inclusive),
-        title: Text(widget.id.toString()),
-      ),
+    return ExpansionTile(
+      leading: Icon(Icons.work),
+      title: Text(_title),
+      subtitle: Text(widget.id.toString()),
+      trailing: _trailingArrow,
+      onExpansionChanged:  (expanded) {
+        if (expanded) {
+          setState(() {
+            _trailingArrow = Icon(Icons.expand_less);
+          });
+        } else {
+          setState(() {
+            _trailingArrow = Icon(Icons.expand_more);
+          });
+        }
+      },
+      children: [
+        Text('Expanded'),
+      ],
     );
   }
 }
