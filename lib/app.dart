@@ -14,15 +14,13 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
+        actions: [
           IconButton(
-            color: Colors.black,
             icon: Icon(Icons.add),
             tooltip: 'Create task',
-            onPressed: _addTask,
+            onPressed: _createTask,
           ),
           IconButton(
-            color: Colors.black,
             icon: Icon(Icons.remove),
             tooltip: 'Remove task',
             onPressed: _removeTask,
@@ -30,11 +28,9 @@ class _AppState extends State<App> {
         ],
         title: Text(
           'Pending tasks: ${_tasks.length}',
-          style: TextStyle(color: Colors.black),
         ),
       ),
       body: Container(
-        // color: Colors.yellow[200],
         child: ListView(
           children: _tasks.toList(),
         ),
@@ -42,21 +38,15 @@ class _AppState extends State<App> {
     );
   }
 
-  void _addTask() {
+  void _createTask() {
     if (_tasks.length < _tasksMax) {
       try {
         setState(() {
-          _tasks.add(Task(id: DateTime.now()));
+          _tasks.add(Task(creationId: DateTime.now()));
         });
       } on UnsupportedError {
         // Fixed size list.
       }
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => EditTask(),
-      //   ),
-      // );
     }
   }
 
