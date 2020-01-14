@@ -14,25 +14,40 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            tooltip: 'Create task',
-            onPressed: _createTask,
-          ),
-          IconButton(
-            icon: Icon(Icons.remove),
-            tooltip: 'Remove task',
-            onPressed: _removeTask,
-          ),
-        ],
-        title: Text(
-          'Pending tasks: ${_tasks.length}',
-        ),
+        centerTitle: true,
+        title: Text('${_tasks.length} pending'),
       ),
       body: Container(
         child: ListView(
           children: _tasks.toList(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: Icon(Icons.add_to_queue),
+        label: Text('Create task'),
+        onPressed: _createTask,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomAppBar(
+        child: BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColorDark,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.queue, color: Theme.of(context).iconTheme.color),
+              title: Text(
+                'Queue',
+                style: TextStyle(color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.score),
+              title: Text('Statistics'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info),
+              title: Text('About'),
+            ),
+          ],
         ),
       ),
     );

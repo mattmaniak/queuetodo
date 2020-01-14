@@ -8,17 +8,19 @@ class Task extends StatefulWidget {
 }
 
 class _TaskState extends State<Task> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  Icon _trailingArrow = Icon(Icons.expand_more);
-  String _title = 'Task title';
-  String _description = 'Description';
+  final _descriptionController = TextEditingController();
+  final _titleController = TextEditingController();
+  String _description = '';
+  String _title = '';
+  Icon _trailingArrow = Icon(Icons.expand_less);
+  DateTime _deadline;
   DateTime _lastModified;
 
   @override
   void initState() {
     super.initState();
     _lastModified = widget.creationId;
+    _deadline = widget.creationId;
 
     _titleController.addListener(() {
       setState(() {
@@ -26,14 +28,12 @@ class _TaskState extends State<Task> {
         _lastModified = DateTime.now();
       });
     });
-
     _descriptionController.addListener(() {
       setState(() {
         _description = _descriptionController.text;
         _lastModified = DateTime.now();
       });
     });
-
   }
 
   @override
@@ -45,70 +45,86 @@ class _TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      leading: Icon(Icons.work),
       title: Text(_title),
-      subtitle: Text(widget.creationId.toString()),
+      subtitle: Text('Deadline ${_convertToIsoDate(_deadline)}'),
       trailing: _trailingArrow,
+      initiallyExpanded: true,
       onExpansionChanged: (expanded) {
-        if (expanded) {
-          setState(() {
+        setState(() {
+          if (expanded) {
+            _descriptionController.text = _description;
+            _titleController.text = _title;
             _trailingArrow = Icon(Icons.expand_less);
-          });
-        } else {
-          setState(() {
+          } else {
             _trailingArrow = Icon(Icons.expand_more);
-          });
-        }
+          }
+        });
       },
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 16.0,
-          ),
-          child: Text(_description),
-        ),
-        Form(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Title'
-                  ),
-                  // initialValue: _title,
-                  autocorrect: false,
-                  maxLength: 32,
-                  controller: _titleController,
-                ),
+        Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.0,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Description'
-                  ),
-                  // initialValue: _title,
-                  keyboardType: TextInputType.text,
-                  maxLines: null,
-                  autocorrect: false,
-                  maxLength: 256,
-                  controller: _descriptionController,
-                ),
+              child: TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                autocorrect: false,
+                maxLength: 32,
+                controller: _titleController,
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: 16.0,
-                ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.0,
               ),
-            ],
-          ),
+              child: TextField(
+                decoration: InputDecoration(labelText: 'Description'),
+                maxLines: null,
+                maxLength: 256,
+                autocorrect: false,
+                keyboardType: TextInputType.text,
+                controller: _descriptionController,
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 32.0,
+              child: FlatButton(
+                color: Theme.of(context).buttonColor,
+                child: Text('Change deadline ${_convertToIsoDate(_deadline)}'),
+                onPressed: () {
+                  showDatePicker(
+                          context: context,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2038),
+                          initialDate: DateTime.now())
+                      .then((date) {
+                    setState(() {
+                      if (date != null) {
+                        _deadline = date;
+                      } else {
+                        _deadline = widget.creationId;
+                      }
+                    });
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: 20.0,
+              ),
+            ),
+          ],
         ),
       ],
     );
+  }
+
+  String _convertToIsoDate(DateTime date) {
+    if (date != null) {
+      return '${date.year}-${date.month}-${date.day}';
+    }
+    return '1970-01-01';
   }
 }
