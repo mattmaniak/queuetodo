@@ -93,6 +93,8 @@ class _TaskState extends State<Task> {
                     labelText: 'Description'
                   ),
                   // initialValue: _title,
+                  keyboardType: TextInputType.text,
+                  maxLines: null,
                   autocorrect: false,
                   maxLength: 256,
                   controller: _descriptionController,
