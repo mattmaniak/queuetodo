@@ -12,42 +12,46 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('${_tasks.length} pending'),
-      ),
-      body: Container(
-        child: ListView(
-          children: _tasks.toList(),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   title: Text('${_tasks.length} pending'),
+        // ),
+        body: Container(
+          child: ListView(
+            children: _tasks.toList(),
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.add_to_queue),
-        label: Text('Create task'),
-        onPressed: _createTask,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      bottomNavigationBar: BottomAppBar(
-        child: BottomNavigationBar(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.queue, color: Theme.of(context).iconTheme.color),
-              title: Text(
-                'Queue',
-                style: TextStyle(color: Theme.of(context).iconTheme.color),
+        floatingActionButton: FloatingActionButton.extended(
+          icon: Icon(Icons.add_to_queue),
+          label: Text('Create task'),
+          onPressed: _createTask,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        bottomNavigationBar: BottomAppBar(
+          child: BottomNavigationBar(
+            currentIndex: 1,
+            backgroundColor: Theme.of(context).primaryColor,
+            selectedItemColor: Theme.of(context).accentColor,
+            unselectedItemColor: Theme.of(context).iconTheme.color,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.queue,
+                ),
+                title: Text('Queue'),
               ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.score),
-              title: Text('Statistics'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.info),
-              title: Text('About'),
-            ),
-          ],
+              BottomNavigationBarItem(
+                icon: Icon(Icons.score),
+                title: Text('Stats'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.info),
+                title: Text('About'),
+              ),
+            ],
+          ),
         ),
       ),
     );

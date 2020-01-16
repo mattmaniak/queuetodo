@@ -68,7 +68,9 @@ class _TaskState extends State<Task> {
                 horizontal: 16.0,
               ),
               child: TextField(
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                ),
                 autocorrect: false,
                 maxLength: 32,
                 controller: _titleController,
@@ -79,7 +81,9 @@ class _TaskState extends State<Task> {
                 horizontal: 16.0,
               ),
               child: TextField(
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                ),
                 maxLines: null,
                 maxLength: 256,
                 autocorrect: false,
@@ -91,7 +95,11 @@ class _TaskState extends State<Task> {
               width: MediaQuery.of(context).size.width - 32.0,
               child: FlatButton(
                 color: Theme.of(context).buttonColor,
-                child: Text('Change deadline ${_convertToIsoDate(_deadline)}'),
+                child: Text(
+                  'Change deadline',
+                  style: TextStyle(
+                    color: Theme.of(context).iconTheme.color),
+                  ),
                 onPressed: () {
                   showDatePicker(
                           context: context,
