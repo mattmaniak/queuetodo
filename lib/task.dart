@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class Task extends StatefulWidget {
   final DateTime creationId;
+  final Function removeTask;
 
-  Task({this.creationId});
+  Task({@required this.creationId, @required this.removeTask});
   _TaskState createState() => _TaskState();
 }
 
@@ -91,33 +92,30 @@ class _TaskState extends State<Task> {
                 controller: _descriptionController,
               ),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 32.0,
-              child: FlatButton(
-                color: Theme.of(context).buttonColor,
-                child: Text(
-                  'Change deadline',
-                  style: TextStyle(
-                    color: Theme.of(context).iconTheme.color,
+            ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: [
+                FlatButton(
+                  color: Theme.of(context).buttonColor,
+                  child: Text(
+                    'Change deadline',
+                    style: TextStyle(
+                      color: Theme.of(context).iconTheme.color,
+                    ),
                   ),
+                  onPressed: _setDeadline,
                 ),
-                onPressed: () {
-                  showDatePicker(
-                          context: context,
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime(2038),
-                          initialDate: DateTime.now())
-                      .then((date) {
-                    setState(() {
-                      if (date != null) {
-                        _deadline = date;
-                      } else {
-                        _deadline = widget.creationId;
-                      }
-                    });
-                  });
-                },
-              ),
+                FlatButton(
+                  color: Theme.of(context).buttonColor,
+                  child: Text(
+                    'Remove',
+                    style: TextStyle(
+                      color: Theme.of(context).iconTheme.color,
+                    ),
+                  ),
+                  onPressed: widget.removeTask,
+                ),
+              ],
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -128,6 +126,23 @@ class _TaskState extends State<Task> {
         ),
       ],
     );
+  }
+
+  void _setDeadline() {
+    showDatePicker(
+            context: context,
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2038),
+            initialDate: DateTime.now())
+        .then((date) {
+      setState(() {
+        if (date != null) {
+          _deadline = date;
+        } else {
+          _deadline = widget.creationId;
+        }
+      });
+    });
   }
 
   String _convertToIsoDate(DateTime date) {
