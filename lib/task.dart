@@ -98,8 +98,9 @@ class _TaskState extends State<Task> {
                 child: Text(
                   'Change deadline',
                   style: TextStyle(
-                    color: Theme.of(context).iconTheme.color),
+                    color: Theme.of(context).iconTheme.color,
                   ),
+                ),
                 onPressed: () {
                   showDatePicker(
                           context: context,
