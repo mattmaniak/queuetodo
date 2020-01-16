@@ -50,17 +50,7 @@ class _TaskState extends State<Task> {
       subtitle: Text('Deadline ${_convertToIsoDate(_deadline)}'),
       trailing: _trailingArrow,
       initiallyExpanded: true,
-      onExpansionChanged: (expanded) {
-        setState(() {
-          if (expanded) {
-            _descriptionController.text = _description;
-            _titleController.text = _title;
-            _trailingArrow = Icon(Icons.expand_less);
-          } else {
-            _trailingArrow = Icon(Icons.expand_more);
-          }
-        });
-      },
+      onExpansionChanged: _changeTileExpansion,
       children: [
         Column(
           children: [
@@ -126,6 +116,18 @@ class _TaskState extends State<Task> {
         ),
       ],
     );
+  }
+
+  void _changeTileExpansion(bool isExpanded) {
+    setState(() {
+      if (isExpanded) {
+        _descriptionController.text = _description;
+        _titleController.text = _title;
+        _trailingArrow = Icon(Icons.expand_less);
+      } else {
+        _trailingArrow = Icon(Icons.expand_more);
+      }
+    });
   }
 
   void _setDeadline() {
