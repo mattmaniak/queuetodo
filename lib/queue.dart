@@ -12,10 +12,8 @@ class Queue extends StatefulWidget {
 class _QueueState extends State<Queue> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
-        children: widget.tasks.toList(),
-      ),
+    return ListView(
+      children: widget.tasks.toList(),
     );
   }
 }

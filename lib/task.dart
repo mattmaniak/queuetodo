@@ -46,8 +46,8 @@ class _TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: Text(_title),
-      subtitle: Text('Deadline ${_convertToIsoDate(_deadline)}'),
+      title: Text('Title: $_title'),
+      subtitle: Text('Deadline: ${_convertToIsoDate(_deadline)}'),
       trailing: _trailingArrow,
       initiallyExpanded: true,
       onExpansionChanged: _changeTileExpansion,
@@ -62,8 +62,9 @@ class _TaskState extends State<Task> {
                 decoration: InputDecoration(
                   labelText: 'Title',
                 ),
-                autocorrect: false,
                 maxLength: 32,
+                autocorrect: false,
+                enableSuggestions: false,
                 controller: _titleController,
               ),
             ),
@@ -79,33 +80,39 @@ class _TaskState extends State<Task> {
                 maxLength: 256,
                 autocorrect: false,
                 keyboardType: TextInputType.text,
+                enableSuggestions: false,
                 controller: _descriptionController,
               ),
             ),
-            ButtonBar(
-              alignment: MainAxisAlignment.center,
-              children: [
-                FlatButton(
-                  color: Theme.of(context).buttonColor,
-                  child: Text(
-                    'Change deadline',
-                    style: TextStyle(
-                      color: Theme.of(context).iconTheme.color,
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8.0,
+              ),
+              child: ButtonBar(
+                alignment: MainAxisAlignment.start,
+                children: [
+                  FlatButton(
+                    // color: Theme.of(context).buttonColor,
+                    child: Text(
+                      'Change deadline',
+                      style: TextStyle(
+                        // color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
+                    onPressed: _setDeadline,
                   ),
-                  onPressed: _setDeadline,
-                ),
-                FlatButton(
-                  color: Theme.of(context).buttonColor,
-                  child: Text(
-                    'Remove',
-                    style: TextStyle(
-                      color: Theme.of(context).iconTheme.color,
+                  FlatButton(
+                    // color: Theme.of(context).buttonColor,
+                    child: Text(
+                      'Remove',
+                      style: TextStyle(
+                        // color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
+                    onPressed: widget.removeTask,
                   ),
-                  onPressed: widget.removeTask,
-                ),
-              ],
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -118,9 +125,9 @@ class _TaskState extends State<Task> {
     );
   }
 
-  void _changeTileExpansion(bool isExpanded) {
+  void _changeTileExpansion(bool expanded) {
     setState(() {
-      if (isExpanded) {
+      if (expanded) {
         _descriptionController.text = _description;
         _titleController.text = _title;
         _trailingArrow = Icon(Icons.expand_less);

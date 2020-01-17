@@ -23,12 +23,12 @@ class _AppState extends State<App> {
       child: Scaffold(
         body: _tabs[_tabIndex],
         floatingActionButton: _floatingButton,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         bottomNavigationBar: BottomAppBar(
           child: BottomNavigationBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            selectedItemColor: Theme.of(context).accentColor,
-            unselectedItemColor: Theme.of(context).iconTheme.color,
+            // backgroundColor: Theme.of(context).primaryColor,
+            // selectedItemColor: Theme.of(context).accentColor,
+            // unselectedItemColor: Theme.of(context).iconTheme.color,
             currentIndex: _tabIndex,
             items: [
               BottomNavigationBarItem(
@@ -44,12 +44,7 @@ class _AppState extends State<App> {
                 title: Text('About'),
               ),
             ],
-            onTap: (index) {
-              setState(() {
-                _tabIndex = index;
-                debugPrint(index.toString());
-              });
-            },
+            onTap: _switchTab,
           ),
         ),
       ),
@@ -58,9 +53,9 @@ class _AppState extends State<App> {
 
   Widget get _floatingButton {
     if (_tabIndex == 0) {
-      return FloatingActionButton.extended(
-        icon: Icon(Icons.add_to_queue),
-        label: Text('Create task'),
+      return FloatingActionButton(
+        child: Icon(Icons.add_to_queue),
+        tooltip: 'Create task',
         onPressed: _createTask,
       );
     }
@@ -94,5 +89,11 @@ class _AppState extends State<App> {
         // Fixed size list.
       }
     }
+  }
+
+  void _switchTab(int index) {
+    setState(() {
+      _tabIndex = index;
+    });
   }
 }
