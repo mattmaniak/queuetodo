@@ -5,7 +5,11 @@ class Task extends StatefulWidget {
   final Function removeTask;
   int index;
 
-  Task({@required this.creationId, @required this.index, @required this.removeTask});
+  Task(
+      {@required this.creationId,
+      @required this.index,
+      @required this.removeTask});
+
   _TaskState createState() => _TaskState();
 }
 
@@ -46,67 +50,78 @@ class _TaskState extends State<Task> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Text('Title: $_title'),
-      subtitle: Text(_deadline.toString() + ' ' + widget.index.toString()),
-      // subtitle: Text('Deadline: ${_convertToIsoDate(_deadline)}'),
-      trailing: _trailingArrow,
-      initiallyExpanded: true,
-      onExpansionChanged: _changeTileExpansion,
-      children: [
-        Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.0,
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                  isDense: true,
-                ),
-                maxLength: 40,
-                autocorrect: false,
-                enableSuggestions: false,
-                controller: _titleController,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.0,
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                  isDense: true,
-                ),
-                maxLines: null,
-                maxLength: 400,
-                autocorrect: false,
-                keyboardType: TextInputType.text,
-                enableSuggestions: false,
-                controller: _descriptionController,
-              ),
-            ),
-            ButtonBar(
-              alignment: MainAxisAlignment.start,
-              children: [
-                FlatButton(
-                  // color: Theme.of(context).buttonColor,
+    return Card(
+      child: ExpansionTile(
+        title: Text('Title: $_title'),
+        subtitle: Text(_deadline.toString() + ' ' + widget.index.toString()),
+        // subtitle: Text('Deadline: ${_convertToIsoDate(_deadline)}'),
+        trailing: _trailingArrow,
+        initiallyExpanded: true,
+        onExpansionChanged: _changeTileExpansion,
+        children: [
+          Column(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 32.0,
+                child: Container(
                   child: Text(
-                    'Change deadline',
-                    style: TextStyle(
-                      // color: Theme.of(context).iconTheme.color,
-                    ),
+                    'Last modified: ${_convertToIsoDate(_lastModified)}',
+                    textAlign: TextAlign.left,
                   ),
-                  onPressed: _setDeadline,
                 ),
-                _renderRemoveButton(),
-              ],
-            ),
-          ],
-        ),
-      ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Title',
+                    isDense: true,
+                  ),
+                  maxLength: 40,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  controller: _titleController,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                    isDense: true,
+                  ),
+                  maxLines: null,
+                  maxLength: 400,
+                  autocorrect: false,
+                  keyboardType: TextInputType.text,
+                  enableSuggestions: false,
+                  controller: _descriptionController,
+                ),
+              ),
+              ButtonBar(
+                alignment: MainAxisAlignment.start,
+                children: [
+                  FlatButton(
+                    // color: Theme.of(context).buttonColor,
+                    child: Text(
+                      'Change deadline',
+                      style: TextStyle(
+                          // color: Theme.of(context).iconTheme.color,
+                          ),
+                    ),
+                    onPressed: _setDeadline,
+                  ),
+                  _renderRemoveButton(),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
