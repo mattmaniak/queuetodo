@@ -22,7 +22,7 @@ class _AppState extends State<App> {
     return SafeArea(
       child: Scaffold(
         body: _tabs[_tabIndex],
-        floatingActionButton: _floatingButton,
+        floatingActionButton: _renderFloatingButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         bottomNavigationBar: BottomAppBar(
           child: BottomNavigationBar(
@@ -51,7 +51,7 @@ class _AppState extends State<App> {
     );
   }
 
-  Widget get _floatingButton {
+  Widget get _renderFloatingButton {
     if (_tabIndex == 0) {
       return FloatingActionButton(
         child: Icon(Icons.add_to_queue),
@@ -77,6 +77,7 @@ class _AppState extends State<App> {
           );
         } on UnsupportedError {
           // Fixed size list.
+          debugPrint('Creation error');
         }
       });
     }
@@ -86,10 +87,14 @@ class _AppState extends State<App> {
     if (_tasks.isNotEmpty) {
       setState(() {
         try {
-          debugPrint(index.toString());
+          _tasks.forEach((task) {
+            debugPrint(task.index.toString());
+          });
+          debugPrint('delete ' + index.toString());
           _tasks.removeAt(index);
         } on UnsupportedError {
           // Fixed size list.
+          debugPrint('Removal error');
         }
         for (int i = index; i < _tasks.length; i++) {
           _tasks.elementAt(i).index = i;

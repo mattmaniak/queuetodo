@@ -65,7 +65,7 @@ class _TaskState extends State<Task> {
                   labelText: 'Title',
                   isDense: true,
                 ),
-                maxLength: 32,
+                maxLength: 40,
                 autocorrect: false,
                 enableSuggestions: false,
                 controller: _titleController,
@@ -81,49 +81,29 @@ class _TaskState extends State<Task> {
                   isDense: true,
                 ),
                 maxLines: null,
-                maxLength: 256,
+                maxLength: 400,
                 autocorrect: false,
                 keyboardType: TextInputType.text,
                 enableSuggestions: false,
                 controller: _descriptionController,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8.0,
-              ),
-              child: ButtonBar(
-                alignment: MainAxisAlignment.start,
-                children: [
-                  FlatButton(
-                    // color: Theme.of(context).buttonColor,
-                    child: Text(
-                      'Change deadline',
-                      style: TextStyle(
-                        // color: Theme.of(context).iconTheme.color,
-                      ),
+            ButtonBar(
+              alignment: MainAxisAlignment.start,
+              children: [
+                FlatButton(
+                  // color: Theme.of(context).buttonColor,
+                  child: Text(
+                    'Change deadline',
+                    style: TextStyle(
+                      // color: Theme.of(context).iconTheme.color,
                     ),
-                    onPressed: _setDeadline,
                   ),
-                  _renderRemoveButton(),
-                  // FlatButton(
-                  //   // color: Theme.of(context).buttonColor,
-                  //   child: Text(
-                  //     'Remove',
-                  //     style: TextStyle(
-                  //       // color: Theme.of(context).iconTheme.color,
-                  //     ),
-                  //   ),
-                  //   onPressed: widget.removeTask,
-                  // ),
-                ],
-              ),
+                  onPressed: _setDeadline,
+                ),
+                _renderRemoveButton(),
+              ],
             ),
-            // Padding(
-            //   padding: EdgeInsets.only(
-            //     bottom: 20.0,
-            //   ),
-            // ),
           ],
         ),
       ],
