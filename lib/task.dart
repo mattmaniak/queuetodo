@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class Task extends StatefulWidget {
   final DateTime creationId;
   final Function removeTask;
+  int index;
 
-  Task({@required this.creationId, @required this.removeTask});
+  Task({@required this.creationId, @required this.index, @required this.removeTask});
   _TaskState createState() => _TaskState();
 }
 
@@ -47,7 +48,8 @@ class _TaskState extends State<Task> {
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Text('Title: $_title'),
-      subtitle: Text('Deadline: ${_convertToIsoDate(_deadline)}'),
+      subtitle: Text(_deadline.toString() + ' ' + widget.index.toString()),
+      // subtitle: Text('Deadline: ${_convertToIsoDate(_deadline)}'),
       trailing: _trailingArrow,
       initiallyExpanded: true,
       onExpansionChanged: _changeTileExpansion,
@@ -61,6 +63,7 @@ class _TaskState extends State<Task> {
               child: TextField(
                 decoration: InputDecoration(
                   labelText: 'Title',
+                  isDense: true,
                 ),
                 maxLength: 32,
                 autocorrect: false,
@@ -75,6 +78,7 @@ class _TaskState extends State<Task> {
               child: TextField(
                 decoration: InputDecoration(
                   labelText: 'Description',
+                  isDense: true,
                 ),
                 maxLines: null,
                 maxLength: 256,
@@ -101,24 +105,25 @@ class _TaskState extends State<Task> {
                     ),
                     onPressed: _setDeadline,
                   ),
-                  FlatButton(
-                    // color: Theme.of(context).buttonColor,
-                    child: Text(
-                      'Remove',
-                      style: TextStyle(
-                        // color: Theme.of(context).iconTheme.color,
-                      ),
-                    ),
-                    onPressed: widget.removeTask,
-                  ),
+                  _renderRemoveButton(),
+                  // FlatButton(
+                  //   // color: Theme.of(context).buttonColor,
+                  //   child: Text(
+                  //     'Remove',
+                  //     style: TextStyle(
+                  //       // color: Theme.of(context).iconTheme.color,
+                  //     ),
+                  //   ),
+                  //   onPressed: widget.removeTask,
+                  // ),
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 20.0,
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(
+            //     bottom: 20.0,
+            //   ),
+            // ),
           ],
         ),
       ],
@@ -152,6 +157,27 @@ class _TaskState extends State<Task> {
         }
       });
     });
+  }
+
+  Widget _renderRemoveButton() {
+    Color textColor;
+
+    if (widget.index == 0) {
+      textColor = Colors.green;
+    } else {
+      textColor = Colors.red;
+    }
+    return FlatButton(
+      // color: Theme.of(context).buttonColor,
+      child: Text(
+        'Remove',
+        style: TextStyle(
+          color: textColor,
+          // color: Theme.of(context).iconTheme.color,
+        ),
+      ),
+      onPressed: () => widget.removeTask(widget.index),
+    );
   }
 
   String _convertToIsoDate(DateTime date) {

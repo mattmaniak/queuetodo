@@ -63,31 +63,38 @@ class _AppState extends State<App> {
   }
 
   void _createTask() {
+    final int index = _tasks.length;
+
     if (_tasks.length < _tasksMax) {
-      try {
-        setState(() {
+      setState(() {
+        try {
           _tasks.add(
             Task(
               creationId: DateTime.now(),
+              index: index,
               removeTask: _removeTask,
             ),
           );
-        });
-      } on UnsupportedError {
-        // Fixed size list.
-      }
+        } on UnsupportedError {
+          // Fixed size list.
+        }
+      });
     }
   }
 
-  void _removeTask() {
+  void _removeTask(int index) {
     if (_tasks.isNotEmpty) {
-      try {
-        setState(() {
-          _tasks.remove(_tasks.first);
-        });
-      } on UnsupportedError {
-        // Fixed size list.
-      }
+      setState(() {
+        try {
+          debugPrint(index.toString());
+          _tasks.removeAt(index);
+        } on UnsupportedError {
+          // Fixed size list.
+        }
+        for (int i = index; i < _tasks.length; i++) {
+          _tasks.elementAt(i).index = i;
+        }
+      });
     }
   }
 
