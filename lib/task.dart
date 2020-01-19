@@ -155,19 +155,19 @@ class _TaskState extends State<Task> {
   }
 
   Widget _renderRemoveButton() {
-    Color textColor;
+    // Color textColor;
 
-    if (widget.index == 0) {
-      textColor = Colors.green;
-    } else {
-      textColor = Colors.red;
-    }
+    // if (widget.index == 0) {
+    //   textColor = Colors.green;
+    // } else {
+    //   textColor = Colors.red;
+    // }
     return FlatButton(
       // color: Theme.of(context).buttonColor,
       child: Text(
         'Remove',
         style: TextStyle(
-          color: textColor,
+          // color: textColor,
           // color: Theme.of(context).iconTheme.color,
         ),
       ),

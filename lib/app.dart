@@ -11,7 +11,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   static const int _tasksMax = 16;
-  static List<Task> _tasks = [];
+  List<Task> _tasks = [];
   List<Widget> _tabs;
   int _tabIndex = 0;
 
@@ -87,17 +87,14 @@ class _AppState extends State<App> {
     if (_tasks.isNotEmpty) {
       setState(() {
         try {
-          _tasks.forEach((task) {
-            debugPrint(task.index.toString());
-          });
           debugPrint('delete ' + index.toString());
           _tasks.removeAt(index);
+          for (int i = index; i < _tasks.length; i++) {
+            _tasks[i].index = i;
+          }
         } on UnsupportedError {
           // Fixed size list.
           debugPrint('Removal error');
-        }
-        for (int i = index; i < _tasks.length; i++) {
-          _tasks.elementAt(i).index = i;
         }
       });
     }
