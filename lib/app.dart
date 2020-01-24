@@ -23,14 +23,6 @@ class _AppState extends State<App> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: _removeTask,
-            ),
-          ],
-        ),
         body: _tabs[_tabIndex],
         floatingActionButton: _renderFloatingButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -75,7 +67,7 @@ class _AppState extends State<App> {
   void _createTask() {
     if (_tasks.length < _tasksMax) {
       setState(() {
-        _tasks.add(
+        _tasks.addLast(
           Task(
             creationId: DateTime.now(),
             removeTask: _removeTask,
@@ -88,7 +80,7 @@ class _AppState extends State<App> {
   void _removeTask() {
     if (_tasks.isNotEmpty) {
       setState(() {
-        _tasks.removeLast();
+        _tasks.removeFirst();
       });
     }
   }

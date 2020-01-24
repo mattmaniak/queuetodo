@@ -50,13 +50,20 @@ class _TaskState extends State<Task> {
     return Card(
       child: ExpansionTile(
         title: _renderTitle,
-        subtitle: Text('Last modified $_lastModified'),
+        subtitle: Text('Created ${widget.creationId}'),
         trailing: _trailingArrow,
         initiallyExpanded: true,
         onExpansionChanged: _changeTileExpansion,
         children: [
           Column(
             children: [
+              Container(
+                width: MediaQuery.of(context).size.width - 40.0,
+                child: Text(
+                  'Last modified $_lastModified',
+                  textAlign: TextAlign.left,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -69,18 +76,11 @@ class _TaskState extends State<Task> {
                   ),
                   maxLines: null,
                   maxLength: _maxDescriptionLength,
-                  autocorrect: false,
                   keyboardType: TextInputType.text,
-                  enableSuggestions: false,
                   controller: _descriptionController,
                 ),
               ),
-              ButtonBar(
-                alignment: MainAxisAlignment.start,
-                children: [
-                  _renderRemoveButton(),
-                ],
-              ),
+              _renderRemoveButton,
             ],
           ),
         ],
@@ -114,8 +114,6 @@ class _TaskState extends State<Task> {
             counterText: '',
           ),
           maxLength: _maxTitleLength,
-          autocorrect: false,
-          enableSuggestions: false,
           controller: _titleController,
         ),
       );
@@ -124,9 +122,9 @@ class _TaskState extends State<Task> {
     }
   }
 
-  Widget _renderRemoveButton() {
+  Widget get _renderRemoveButton {
     return FlatButton(
-      child: Text('Remove'),
+      child: Text('Finish task'),
       onPressed: widget.removeTask,
     );
   }
