@@ -24,7 +24,6 @@ class _TaskState extends State<Task> {
   void initState() {
     super.initState();
     _lastModified = widget.creationId;
-    // _deadline = widget.creationId;
 
     _titleController.addListener(() {
       setState(() {
@@ -121,7 +120,7 @@ class _TaskState extends State<Task> {
         ),
       );
     } else {
-      return Text('Title: $_title');
+      return Text(_title);
     }
   }
 
