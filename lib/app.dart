@@ -1,9 +1,11 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 import 'about.dart';
 import 'stats.dart';
 import 'task.dart';
-import 'queue.dart';
+import 'tasks_queue.dart';
 
 class App extends StatefulWidget {
   _AppState createState() => _AppState();
@@ -11,16 +13,24 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   static const int _tasksMax = 16;
-  List<Task> _tasks = [];
+  Queue<Task> _tasks = Queue();
   List<Widget> _tabs;
   int _tabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    _tabs = [Queue(tasks: _tasks), Stats(), About()];
+    _tabs = [TasksQueue(tasks: _tasks), Stats(), About()];
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: _removeTask,
+            ),
+          ],
+        ),
         body: _tabs[_tabIndex],
         floatingActionButton: _renderFloatingButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -63,39 +73,22 @@ class _AppState extends State<App> {
   }
 
   void _createTask() {
-    final int index = _tasks.length;
-
     if (_tasks.length < _tasksMax) {
       setState(() {
-        try {
-          _tasks.add(
-            Task(
-              creationId: DateTime.now(),
-              index: index,
-              removeTask: _removeTask,
-            ),
-          );
-        } on UnsupportedError {
-          // Fixed size list.
-          debugPrint('Creation error');
-        }
+        _tasks.add(
+          Task(
+            creationId: DateTime.now(),
+            removeTask: _removeTask,
+          ),
+        );
       });
     }
   }
 
-  void _removeTask(int index) {
+  void _removeTask() {
     if (_tasks.isNotEmpty) {
       setState(() {
-        try {
-          debugPrint('delete ' + index.toString());
-          _tasks.removeAt(index);
-          for (int i = index; i < _tasks.length; i++) {
-            _tasks[i].index = i;
-          }
-        } on UnsupportedError {
-          // Fixed size list.
-          debugPrint('Removal error');
-        }
+        _tasks.removeLast();
       });
     }
   }

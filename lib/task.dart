@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 class Task extends StatefulWidget {
   final DateTime creationId;
   final Function removeTask;
-  int index;
 
-  Task(
-      {@required this.creationId,
-      @required this.index,
-      @required this.removeTask});
+  Task({@required this.creationId, @required this.removeTask});
 
   _TaskState createState() => _TaskState();
 }
@@ -22,14 +18,13 @@ class _TaskState extends State<Task> {
   String _title = '';
   bool _expanded = true;
   Icon _trailingArrow = Icon(Icons.expand_less);
-  DateTime _deadline;
   DateTime _lastModified;
 
   @override
   void initState() {
     super.initState();
     _lastModified = widget.creationId;
-    _deadline = widget.creationId;
+    // _deadline = widget.creationId;
 
     _titleController.addListener(() {
       setState(() {
@@ -56,27 +51,13 @@ class _TaskState extends State<Task> {
     return Card(
       child: ExpansionTile(
         title: _renderTitle,
-        subtitle: Text('Deadline: ${_convertToIsoDate(_deadline)} ${widget.index}'),
+        subtitle: Text('Last modified $_lastModified'),
         trailing: _trailingArrow,
         initiallyExpanded: true,
         onExpansionChanged: _changeTileExpansion,
         children: [
           Column(
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 4.0,
-                ),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width - 40.0,
-                  child: Container(
-                    child: Text(
-                      'Last modified: ${_convertToIsoDate(_lastModified)}',
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -98,16 +79,6 @@ class _TaskState extends State<Task> {
               ButtonBar(
                 alignment: MainAxisAlignment.start,
                 children: [
-                  FlatButton(
-                    // color: Theme.of(context).buttonColor,
-                    child: Text(
-                      'Change deadline',
-                      style: TextStyle(
-                          // color: Theme.of(context).iconTheme.color,
-                          ),
-                    ),
-                    onPressed: _setDeadline,
-                  ),
                   _renderRemoveButton(),
                 ],
               ),
@@ -119,7 +90,7 @@ class _TaskState extends State<Task> {
   }
 
   void _changeTileExpansion(bool expanded) {
-   setState(() {
+    setState(() {
       if (expanded) {
         _descriptionController.text = _description;
         _titleController.text = _title;
@@ -154,39 +125,10 @@ class _TaskState extends State<Task> {
     }
   }
 
-  void _setDeadline() {
-    showDatePicker(
-            context: context,
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2038),
-            initialDate: DateTime.now())
-        .then((date) {
-      setState(() {
-        if (date != null) {
-          _deadline = date;
-        } else {
-          _deadline = widget.creationId;
-        }
-      });
-    });
-  }
-
   Widget _renderRemoveButton() {
-    Color textColor;
-
-    if (widget.index == 0) {
-      textColor = Colors.green;
-    } else {
-      textColor = Colors.red;
-    }
     return FlatButton(
-      child: Text(
-        'Remove',
-        style: TextStyle(
-          color: textColor,
-        ),
-      ),
-      onPressed: () => widget.removeTask(widget.index),
+      child: Text('Remove'),
+      onPressed: widget.removeTask,
     );
   }
 
