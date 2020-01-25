@@ -3,24 +3,41 @@ import 'package:flutter/material.dart';
 class Task extends StatefulWidget {
   final int maxDescriptionLength = 300;
   final int maxTitleLength = 30;
-  final DateTime idWhenCreated;
+  final DateTime creationTimeStamp;
   final Function removeTask;
   DateTime lastModified;
   bool isFirstInQueue;
+  _TaskState state;
 
   Task(
-      {@required this.idWhenCreated,
+      {@required this.creationTimeStamp,
       @required this.isFirstInQueue,
       @required this.removeTask});
 
-  _TaskState createState() => _TaskState();
+  _TaskState createState() {
+    state = _TaskState();
+    return state;
+  }
+
+  Map<String, dynamic> toJson(Task task) {
+    if (state != null) {
+      return <String, dynamic> {
+        'creationTimeStamp': task.creationTimeStamp,
+        'removeTask': task.removeTask,
+        'lastModified': task.lastModified,
+        'isFirtstInQueue': task.isFirstInQueue,
+        'title': task.state.description,
+        'description': task.state.description,
+      };
+    }
+  }
 }
 
 class _TaskState extends State<Task> {
   final _descriptionController = TextEditingController();
   final _titleController = TextEditingController();
-  String _description = '';
-  String _title = '';
+  String description = '';
+  String title = '';
   bool _expanded = true;
   Icon _trailingArrow = Icon(Icons.expand_less);
   DateTime _lastModified;
@@ -28,17 +45,17 @@ class _TaskState extends State<Task> {
   @override
   void initState() {
     super.initState();
-    widget.lastModified = widget.idWhenCreated;
+    widget.lastModified = widget.creationTimeStamp;
 
     _titleController.addListener(() {
       setState(() {
-        _title = _titleController.text;
+        title = _titleController.text;
         widget.lastModified = DateTime.now();
       });
     });
     _descriptionController.addListener(() {
       setState(() {
-        _description = _descriptionController.text;
+        description = _descriptionController.text;
         widget.lastModified = DateTime.now();
       });
     });
@@ -56,7 +73,7 @@ class _TaskState extends State<Task> {
     return Card(
       child: ExpansionTile(
         title: _renderTitle,
-        subtitle: Text('Created ${_shortenDateTime(widget.idWhenCreated)}'),
+        subtitle: Text('Created ${_shortenDateTime(widget.creationTimeStamp)}'),
         trailing: _trailingArrow,
         initiallyExpanded: true,
         onExpansionChanged: _changeTileExpansion,
@@ -97,8 +114,8 @@ class _TaskState extends State<Task> {
   void _changeTileExpansion(bool expanded) {
     setState(() {
       if (expanded) {
-        _descriptionController.text = _description;
-        _titleController.text = _title;
+        _descriptionController.text = description;
+        _titleController.text = title;
         _trailingArrow = Icon(Icons.expand_less);
       } else {
         _trailingArrow = Icon(Icons.expand_more);
@@ -124,7 +141,7 @@ class _TaskState extends State<Task> {
         ),
       );
     } else {
-      return Text(_title);
+      return Text(title);
     }
   }
 

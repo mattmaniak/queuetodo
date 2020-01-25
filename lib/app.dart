@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'about.dart';
 import 'how_to.dart';
 import 'task.dart';
+import 'task_data.dart';
 import 'tasks_queue.dart';
 
 class App extends StatefulWidget {
@@ -13,9 +14,16 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   static const int _tasksMax = 16;
+  final _taskData = TaskData();
   Queue<Task> _tasks = Queue();
   List<Widget> _tabs;
   int _tabIndex = 0;
+
+  _AppState() {
+    _taskData.read.then((tasks) {
+      _tasks = tasks;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +64,7 @@ class _AppState extends State<App> {
   Widget get _renderFloatingButton {
     if (_tabIndex == 0) {
       return FloatingActionButton(
-        child: Icon(Icons.add_to_queue),
+        child: Icon(Icons.add_box),
         tooltip: 'Create task',
         onPressed: _createTask,
       );
@@ -74,7 +82,7 @@ class _AppState extends State<App> {
       setState(() {
         _tasks.add(
           Task(
-            idWhenCreated: DateTime.now(),
+            creationTimeStamp: DateTime.now(),
             isFirstInQueue: isFirst,
             removeTask: _removeTask,
           ),
@@ -83,6 +91,7 @@ class _AppState extends State<App> {
       for (int i = 1; i < _tasks.length; i++) {
         _tasks.elementAt(i).isFirstInQueue = false;
       }
+      _taskData.save(_tasks);
     }
   }
 
@@ -93,6 +102,7 @@ class _AppState extends State<App> {
       });
       _tasks.first.isFirstInQueue = true;
     }
+    _taskData.save(_tasks);
   }
 
   void _switchTab(int index) {
