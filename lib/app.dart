@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import 'about.dart';
-import 'stats.dart';
+import 'how_to.dart';
 import 'task.dart';
 import 'tasks_queue.dart';
 
@@ -19,7 +19,7 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    _tabs = [TasksQueue(tasks: _tasks), Stats(), About()];
+    _tabs = [TasksQueue(tasks: _tasks), HowTo(), About()];
 
     return SafeArea(
       child: Scaffold(
@@ -38,11 +38,11 @@ class _AppState extends State<App> {
                 title: Text('Queue'),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.score),
-                title: Text('Stats'),
+                icon: Icon(Icons.check_box),
+                title: Text('How To'),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.info),
+                icon: Icon(Icons.description),
                 title: Text('About'),
               ),
             ],
@@ -65,15 +65,24 @@ class _AppState extends State<App> {
   }
 
   void _createTask() {
+    bool isFirst = true;
+
+    if (_tasks.length > 0) {
+      isFirst = false;
+    }
     if (_tasks.length < _tasksMax) {
       setState(() {
-        _tasks.addLast(
+        _tasks.add(
           Task(
-            creationId: DateTime.now(),
+            idWhenCreated: DateTime.now(),
+            isFirstInQueue: isFirst,
             removeTask: _removeTask,
           ),
         );
       });
+      for (int i = 1; i < _tasks.length; i++) {
+        _tasks.elementAt(i).isFirstInQueue = false;
+      }
     }
   }
 
@@ -82,6 +91,7 @@ class _AppState extends State<App> {
       setState(() {
         _tasks.removeFirst();
       });
+      _tasks.first.isFirstInQueue = true;
     }
   }
 

@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 
 class Task extends StatefulWidget {
-  final DateTime creationId;
+  final int maxDescriptionLength = 300;
+  final int maxTitleLength = 30;
+  final DateTime idWhenCreated;
   final Function removeTask;
+  DateTime lastModified;
+  bool isFirstInQueue;
 
-  Task({@required this.creationId, @required this.removeTask});
+  Task(
+      {@required this.idWhenCreated,
+      @required this.isFirstInQueue,
+      @required this.removeTask});
 
   _TaskState createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  static const int _maxDescriptionLength = 300;
-  static const int _maxTitleLength = 30;
   final _descriptionController = TextEditingController();
   final _titleController = TextEditingController();
   String _description = '';
@@ -23,24 +28,25 @@ class _TaskState extends State<Task> {
   @override
   void initState() {
     super.initState();
-    _lastModified = widget.creationId;
+    widget.lastModified = widget.idWhenCreated;
 
     _titleController.addListener(() {
       setState(() {
         _title = _titleController.text;
-        _lastModified = DateTime.now();
+        widget.lastModified = DateTime.now();
       });
     });
     _descriptionController.addListener(() {
       setState(() {
         _description = _descriptionController.text;
-        _lastModified = DateTime.now();
+        widget.lastModified = DateTime.now();
       });
     });
   }
 
   @override
   void dispose() {
+    _descriptionController.dispose();
     _titleController.dispose();
     super.dispose();
   }
@@ -50,7 +56,7 @@ class _TaskState extends State<Task> {
     return Card(
       child: ExpansionTile(
         title: _renderTitle,
-        subtitle: Text('Created ${widget.creationId}'),
+        subtitle: Text('Created ${_shortenDateTime(widget.idWhenCreated)}'),
         trailing: _trailingArrow,
         initiallyExpanded: true,
         onExpansionChanged: _changeTileExpansion,
@@ -60,7 +66,7 @@ class _TaskState extends State<Task> {
               Container(
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: Text(
-                  'Last modified $_lastModified',
+                  'Last modified ${widget.lastModified}',
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -75,7 +81,7 @@ class _TaskState extends State<Task> {
                     counterText: '',
                   ),
                   maxLines: null,
-                  maxLength: _maxDescriptionLength,
+                  maxLength: widget.maxDescriptionLength,
                   keyboardType: TextInputType.text,
                   controller: _descriptionController,
                 ),
@@ -113,7 +119,7 @@ class _TaskState extends State<Task> {
             hintText: 'Title',
             counterText: '',
           ),
-          maxLength: _maxTitleLength,
+          maxLength: widget.maxTitleLength,
           controller: _titleController,
         ),
       );
@@ -123,16 +129,29 @@ class _TaskState extends State<Task> {
   }
 
   Widget get _renderRemoveButton {
-    return FlatButton(
-      child: Text('Finish task'),
-      onPressed: widget.removeTask,
+    if (widget.isFirstInQueue) {
+      return FlatButton(
+        child: Text('Finish task'),
+        onPressed: widget.removeTask,
+      );
+    }
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: 16.0,
+      ),
+      child: Container(
+        width: 0.0,
+        height: 0.0,
+      ),
     );
   }
 
-  String _convertToIsoDate(DateTime date) {
+  String _shortenDateTime(DateTime date) {
     if (date != null) {
-      return '${date.year}-${date.month}-${date.day}';
+      // Seconds and miliseconds are removed.
+      return '${date.year}-${date.month}-${date.day} '
+          '${date.hour + 1}:${date.minute}';
     }
-    return '1970-01-01';
+    return '1970-01-01 00:00';
   }
 }
