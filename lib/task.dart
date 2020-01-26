@@ -5,42 +5,32 @@ class Task extends StatefulWidget {
   final int maxTitleLength = 30;
   final DateTime creationTimeStamp;
   final Function removeTask;
+  final Function saveConfig;
   DateTime lastModified;
+  String description;
+  String title;
   bool isFirstInQueue;
   _TaskState state;
 
   Task(
       {@required this.creationTimeStamp,
-      @required this.isFirstInQueue,
-      @required this.removeTask});
+      @required this.lastModified,
+      @required this.removeTask,
+      @required this.saveConfig,
+      this.description: '',
+      this.title: '',
+      this.isFirstInQueue: false});
 
   _TaskState createState() {
     state = _TaskState();
     return state;
-  }
-
-  Map<String, dynamic> toJson(Task task) {
-    if (state != null) {
-      return <String, dynamic> {
-        'creationTimeStamp': task.creationTimeStamp,
-        'removeTask': task.removeTask,
-        'lastModified': task.lastModified,
-        'isFirtstInQueue': task.isFirstInQueue,
-        'title': task.state.description,
-        'description': task.state.description,
-      };
-    }
   }
 }
 
 class _TaskState extends State<Task> {
   final _descriptionController = TextEditingController();
   final _titleController = TextEditingController();
-  String description = '';
-  String title = '';
   bool _expanded = true;
-  Icon _trailingArrow = Icon(Icons.expand_less);
-  DateTime _lastModified;
 
   @override
   void initState() {
@@ -48,16 +38,22 @@ class _TaskState extends State<Task> {
     widget.lastModified = widget.creationTimeStamp;
 
     _titleController.addListener(() {
-      setState(() {
-        title = _titleController.text;
-        widget.lastModified = DateTime.now();
-      });
+      if (mounted) {
+        setState(() {
+          widget.title = _titleController.text;
+          widget.lastModified = DateTime.now();
+          widget.saveConfig();
+        });
+      }
     });
     _descriptionController.addListener(() {
-      setState(() {
-        description = _descriptionController.text;
-        widget.lastModified = DateTime.now();
-      });
+      if (mounted) {
+        setState(() {
+          widget.description = _descriptionController.text;
+          widget.lastModified = DateTime.now();
+          widget.saveConfig();
+        });
+      }
     });
   }
 
@@ -74,8 +70,8 @@ class _TaskState extends State<Task> {
       child: ExpansionTile(
         title: _renderTitle,
         subtitle: Text('Created ${_shortenDateTime(widget.creationTimeStamp)}'),
-        trailing: _trailingArrow,
-        initiallyExpanded: true,
+        trailing: _renderTrailingArrow,
+        initiallyExpanded: _expanded,
         onExpansionChanged: _changeTileExpansion,
         children: [
           Column(
@@ -83,7 +79,7 @@ class _TaskState extends State<Task> {
               Container(
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: Text(
-                  'Last modified ${widget.lastModified}',
+                  'Last modified ${_shortenDateTime(widget.lastModified)}',
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -111,17 +107,28 @@ class _TaskState extends State<Task> {
     );
   }
 
-  void _changeTileExpansion(bool expanded) {
+  void collapse() {
     setState(() {
-      if (expanded) {
-        _descriptionController.text = description;
-        _titleController.text = title;
-        _trailingArrow = Icon(Icons.expand_less);
-      } else {
-        _trailingArrow = Icon(Icons.expand_more);
-      }
+      _expanded = false;
     });
+  }
+
+  Widget get _renderTrailingArrow {
+    if (_expanded) {
+      return Icon(Icons.expand_less);
+    } else {
+      return Icon(Icons.expand_more);
+    }
+  }
+
+  void _changeTileExpansion(bool expanded) {
     _expanded = expanded;
+    if (mounted && _expanded) {
+      setState(() {
+        _descriptionController.text = widget.description;
+        _titleController.text = widget.title;
+      });
+    }
   }
 
   Widget get _renderTitle {
@@ -141,7 +148,7 @@ class _TaskState extends State<Task> {
         ),
       );
     } else {
-      return Text(title);
+      return Text(widget.title);
     }
   }
 
@@ -167,7 +174,7 @@ class _TaskState extends State<Task> {
     if (date != null) {
       // Seconds and miliseconds are removed.
       return '${date.year}-${date.month}-${date.day} '
-          '${date.hour + 1}:${date.minute}';
+          '${date.hour}:${date.minute}';
     }
     return '1970-01-01 00:00';
   }

@@ -13,15 +13,17 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  static const int _tasksMax = 16;
+  static const int _tasksMax = 8;
   final _taskData = TaskData();
   Queue<Task> _tasks = Queue();
   List<Widget> _tabs;
   int _tabIndex = 0;
 
   _AppState() {
-    _taskData.read.then((tasks) {
-      _tasks = tasks;
+    _taskData.read(_removeTask, _taskData.save).then((tasks) {
+      setState(() {
+        _tasks = tasks;
+      });
     });
   }
 
@@ -73,24 +75,21 @@ class _AppState extends State<App> {
   }
 
   void _createTask() {
-    bool isFirst = true;
-
-    if (_tasks.length > 0) {
-      isFirst = false;
-    }
     if (_tasks.length < _tasksMax) {
       setState(() {
         _tasks.add(
           Task(
             creationTimeStamp: DateTime.now(),
-            isFirstInQueue: isFirst,
+            lastModified: DateTime.now(),
             removeTask: _removeTask,
+            saveConfig: _taskData.save,
           ),
         );
       });
-      for (int i = 1; i < _tasks.length; i++) {
-        _tasks.elementAt(i).isFirstInQueue = false;
-      }
+      // for (int i = 1; i < _tasks.length; i++) {
+      //   _tasks.elementAt(i).isFirstInQueue = false;
+      //   _tasks.elementAt(i).state.collapse();
+      // }
       _taskData.save(_tasks);
     }
   }
