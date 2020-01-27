@@ -7,7 +7,7 @@ import 'task.dart';
 class TasksQueue extends StatelessWidget {
   final Queue<Task> tasks;
 
-  TasksQueue({@required this.tasks});
+  const TasksQueue({@required this.tasks});
 
   @override
   Widget build(BuildContext context) {

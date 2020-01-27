@@ -21,6 +21,7 @@ class Task extends StatefulWidget {
       this.title: '',
       this.isFirstInQueue: false});
 
+  @override
   _TaskState createState() {
     state = _TaskState();
     return state;

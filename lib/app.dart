@@ -3,24 +3,24 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import 'about.dart';
+import 'config.dart';
 import 'how_to.dart';
 import 'task.dart';
-import 'task_data.dart';
 import 'tasks_queue.dart';
 
 class App extends StatefulWidget {
+  @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
   static const int _tasksMax = 8;
-  final _taskData = TaskData();
   Queue<Task> _tasks = Queue();
   List<Widget> _tabs;
   int _tabIndex = 0;
 
   _AppState() {
-    _taskData.read(_removeTask, _taskData.save).then((tasks) {
+    configRead(_removeFirstTask, configSave).then((tasks) {
       setState(() {
         _tasks = tasks;
       });
@@ -29,10 +29,28 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    _tabs = [TasksQueue(tasks: _tasks), HowTo(), About()];
+    _tabs = [
+      TasksQueue(
+        tasks: _tasks,
+      ),
+      HowTo(),
+      About()
+    ];
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.add_box),
+              onPressed: _createTask,
+            ),
+            IconButton(
+              icon: Icon(Icons.done),
+              onPressed: _removeFirstTask,
+            ),
+          ],
+        ),
         body: _tabs[_tabIndex],
         floatingActionButton: _renderFloatingButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -65,10 +83,11 @@ class _AppState extends State<App> {
 
   Widget get _renderFloatingButton {
     if (_tabIndex == 0) {
-      return FloatingActionButton(
-        child: Icon(Icons.add_box),
-        tooltip: 'Create task',
-        onPressed: _createTask,
+      return FloatingActionButton.extended(
+        icon: Icon(Icons.save),
+        label: Text('Save'),
+        tooltip: 'Save current tasks',
+        onPressed: () => configSave(_tasks),
       );
     }
     return null;
@@ -81,8 +100,8 @@ class _AppState extends State<App> {
           Task(
             creationTimeStamp: DateTime.now(),
             lastModified: DateTime.now(),
-            removeTask: _removeTask,
-            saveConfig: _taskData.save,
+            removeTask: _removeFirstTask,
+            saveConfig: configSave,
           ),
         );
       });
@@ -90,18 +109,16 @@ class _AppState extends State<App> {
       //   _tasks.elementAt(i).isFirstInQueue = false;
       //   _tasks.elementAt(i).state.collapse();
       // }
-      _taskData.save(_tasks);
     }
   }
 
-  void _removeTask() {
+  void _removeFirstTask() {
     if (_tasks.isNotEmpty) {
       setState(() {
         _tasks.removeFirst();
       });
       _tasks.first.isFirstInQueue = true;
     }
-    _taskData.save(_tasks);
   }
 
   void _switchTab(int index) {
