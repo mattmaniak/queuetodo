@@ -20,7 +20,7 @@ class _AppState extends State<App> {
   int _tabIndex = 0;
 
   _AppState() {
-    configRead(_removeFirstTask, configSave).then((tasks) {
+    configRead(_removeFirstTask, _saveTasks).then((tasks) {
       setState(() {
         _tasks = tasks;
       });
@@ -36,21 +36,8 @@ class _AppState extends State<App> {
       HowTo(),
       About()
     ];
-
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              icon: Icon(Icons.add_box),
-              onPressed: _createTask,
-            ),
-            IconButton(
-              icon: Icon(Icons.done),
-              onPressed: _removeFirstTask,
-            ),
-          ],
-        ),
         body: _tabs[_tabIndex],
         floatingActionButton: _renderFloatingButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -84,10 +71,10 @@ class _AppState extends State<App> {
   Widget get _renderFloatingButton {
     if (_tabIndex == 0) {
       return FloatingActionButton.extended(
-        icon: Icon(Icons.save),
-        label: Text('Save'),
-        tooltip: 'Save current tasks',
-        onPressed: () => configSave(_tasks),
+        icon: Icon(Icons.add_box),
+        label: Text('Add'),
+        tooltip: 'Create a new task',
+        onPressed: _createTask,
       );
     }
     return null;
@@ -101,7 +88,7 @@ class _AppState extends State<App> {
             creationTimeStamp: DateTime.now(),
             lastModified: DateTime.now(),
             removeTask: _removeFirstTask,
-            saveConfig: configSave,
+            saveConfig: _saveTasks,
           ),
         );
       });
@@ -111,6 +98,8 @@ class _AppState extends State<App> {
       // }
     }
   }
+
+  void _saveTasks() => configSave(_tasks);
 
   void _removeFirstTask() {
     if (_tasks.isNotEmpty) {

@@ -8,7 +8,7 @@ import 'task.dart';
 
 void configSave(Queue<Task> tasks) async {
   final preferences = await SharedPreferences.getInstance();
-  List<String> encodedTasks = List(tasks.length);
+  final List<String> encodedTasks = List(tasks.length);
 
   for (int i = 0; i < tasks.length; i++) {
     try {
@@ -27,9 +27,10 @@ void configSave(Queue<Task> tasks) async {
 
 Future<Queue<Task>> configRead(Function removeTask, Function saveConfig) async {
   final preferences = await SharedPreferences.getInstance();
-  List<String> encodedTasks = preferences.getStringList('_encodedTasks') ?? [];
-  Queue<Task> tasks = Queue();
+  final List<String> encodedTasks =
+      preferences.getStringList('_encodedTasks') ?? [];
   Map<String, dynamic> decodedTask = {};
+  Queue<Task> tasks = Queue();
 
   encodedTasks.forEach((encodedTask) {
     try {

@@ -43,7 +43,6 @@ class _TaskState extends State<Task> {
         setState(() {
           widget.title = _titleController.text;
           widget.lastModified = DateTime.now();
-          widget.saveConfig();
         });
       }
     });
@@ -52,7 +51,6 @@ class _TaskState extends State<Task> {
         setState(() {
           widget.description = _descriptionController.text;
           widget.lastModified = DateTime.now();
-          widget.saveConfig();
         });
       }
     });
@@ -67,6 +65,8 @@ class _TaskState extends State<Task> {
 
   @override
   Widget build(BuildContext context) {
+    widget.saveConfig();
+
     return Card(
       child: ExpansionTile(
         title: _renderTitle,
