@@ -25,7 +25,8 @@ void configSave(Queue<Task> tasks) async {
   preferences.setStringList('_encodedTasks', encodedTasks);
 }
 
-Future<Queue<Task>> configRead(Function removeTask, Function saveConfig) async {
+Future<Queue<Task>> configRead(
+    int tasksMax, Function removeTask, Function saveConfig) async {
   final preferences = await SharedPreferences.getInstance();
   final List<String> encodedTasks =
       preferences.getStringList('_encodedTasks') ?? [];
@@ -33,21 +34,26 @@ Future<Queue<Task>> configRead(Function removeTask, Function saveConfig) async {
   Queue<Task> tasks = Queue();
 
   encodedTasks.forEach((encodedTask) {
-    try {
-      decodedTask = json.decode(encodedTask);
-    } on FormatException {
-      debugPrint('format');
+    final now = DateTime.now();
+
+    if (tasks.length < tasksMax) {
+      try {
+        decodedTask = json.decode(encodedTask);
+      } on FormatException {
+        debugPrint('format');
+      }
+      tasks.add(
+        Task(
+          creationTimeStamp:
+              DateTime.tryParse(decodedTask['creationTimeStamp']) ?? now,
+          lastModified: DateTime.tryParse(decodedTask['lastModified']) ?? now,
+          removeTask: removeTask,
+          saveConfig: saveConfig,
+          title: decodedTask['title'] ?? '',
+          description: decodedTask['description'] ?? '',
+        ),
+      );
     }
-    tasks.add(
-      Task(
-        creationTimeStamp: DateTime.tryParse(decodedTask['creationTimeStamp']),
-        lastModified: DateTime.tryParse(decodedTask['lastModified']),
-        removeTask: removeTask,
-        saveConfig: saveConfig,
-        title: decodedTask['title'],
-        description: decodedTask['description'],
-      ),
-    );
   });
   if (tasks.isNotEmpty) {
     tasks.first.isFirstInQueue = true;

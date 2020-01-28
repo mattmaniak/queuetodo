@@ -6,7 +6,7 @@ import 'theme.dart';
 void main() {
   runApp(
     MaterialApp(
-      // theme: theme,
+      theme: theme,
       title: 'QueueToDo',
       home: App(),
     ),

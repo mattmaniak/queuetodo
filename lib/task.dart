@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:intl/intl.dart';
+
 class Task extends StatefulWidget {
   final int maxDescriptionLength = 300;
   final int maxTitleLength = 30;
@@ -31,7 +33,7 @@ class Task extends StatefulWidget {
 class _TaskState extends State<Task> {
   final _descriptionController = TextEditingController();
   final _titleController = TextEditingController();
-  bool _expanded = true;
+  bool _expanded = false;
 
   @override
   void initState() {
@@ -54,6 +56,7 @@ class _TaskState extends State<Task> {
         });
       }
     });
+    _changeTileExpansion(false); // Insert data from the config into TextForms.
   }
 
   @override
@@ -69,8 +72,22 @@ class _TaskState extends State<Task> {
 
     return Card(
       child: ExpansionTile(
-        title: _renderTitle,
-        subtitle: Text('Created ${_shortenDateTime(widget.creationTimeStamp)}'),
+        title: Padding(
+          padding: EdgeInsets.only(
+            bottom: 8.0,
+          ),
+          child: TextField(
+            decoration: InputDecoration(
+              isDense: true,
+              hintText: 'Title',
+              counterText: '',
+            ),
+            maxLength: widget.maxTitleLength,
+            controller: _titleController,
+          ),
+        ),
+        subtitle: Text('Created ' +
+            DateFormat('yyyy-MM-dd HH:mm:ss').format(widget.creationTimeStamp)),
         trailing: _renderTrailingArrow,
         initiallyExpanded: _expanded,
         onExpansionChanged: _changeTileExpansion,
@@ -80,7 +97,9 @@ class _TaskState extends State<Task> {
               Container(
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: Text(
-                  'Last modified ${_shortenDateTime(widget.lastModified)}',
+                  'Last modified ' +
+                      DateFormat('yyyy-MM-dd HH:mm:ss')
+                          .format(widget.lastModified),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -117,9 +136,8 @@ class _TaskState extends State<Task> {
   Widget get _renderTrailingArrow {
     if (_expanded) {
       return Icon(Icons.expand_less);
-    } else {
-      return Icon(Icons.expand_more);
     }
+    return Icon(Icons.expand_more);
   }
 
   void _changeTileExpansion(bool expanded) {
@@ -129,27 +147,6 @@ class _TaskState extends State<Task> {
         _descriptionController.text = widget.description;
         _titleController.text = widget.title;
       });
-    }
-  }
-
-  Widget get _renderTitle {
-    if (_expanded) {
-      return Padding(
-        padding: EdgeInsets.only(
-          bottom: 8.0,
-        ),
-        child: TextField(
-          decoration: InputDecoration(
-            isDense: true,
-            hintText: 'Title',
-            counterText: '',
-          ),
-          maxLength: widget.maxTitleLength,
-          controller: _titleController,
-        ),
-      );
-    } else {
-      return Text(widget.title);
     }
   }
 
@@ -169,14 +166,5 @@ class _TaskState extends State<Task> {
         height: 0.0,
       ),
     );
-  }
-
-  String _shortenDateTime(DateTime date) {
-    if (date != null) {
-      // Seconds and miliseconds are removed.
-      return '${date.year}-${date.month}-${date.day} '
-          '${date.hour}:${date.minute}';
-    }
-    return '1970-01-01 00:00';
   }
 }

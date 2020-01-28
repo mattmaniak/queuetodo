@@ -14,13 +14,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  static const int _tasksMax = 8;
+  static const int _tasksMax = 4;
   Queue<Task> _tasks = Queue();
   List<Widget> _tabs;
   int _tabIndex = 0;
 
   _AppState() {
-    configRead(_removeFirstTask, _saveTasks).then((tasks) {
+    configRead(_tasksMax, _removeFirstTask, _saveTasks).then((tasks) {
       setState(() {
         _tasks = tasks;
       });
