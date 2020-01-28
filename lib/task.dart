@@ -6,19 +6,19 @@ class Task extends StatefulWidget {
   final DateTime creationTimeStamp;
   final Function removeTask;
   final Function saveConfig;
-  DateTime lastModified;
-  String description;
-  String title;
-  bool isFirstInQueue;
   _TaskState state;
+  DateTime lastModified;
+  String description = '';
+  String title = '';
+  bool isFirstInQueue = false;
 
   Task(
       {@required this.creationTimeStamp,
       @required this.lastModified,
       @required this.removeTask,
       @required this.saveConfig,
-      this.description: '',
-      this.title: '',
+      this.description,
+      this.title,
       this.isFirstInQueue: false});
 
   @override

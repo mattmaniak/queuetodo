@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'about.dart';
 import 'config.dart';
-import 'how_to.dart';
+import 'usage.dart';
 import 'task.dart';
 import 'tasks_queue.dart';
 
@@ -33,7 +33,7 @@ class _AppState extends State<App> {
       TasksQueue(
         tasks: _tasks,
       ),
-      HowTo(),
+      Usage(),
       About()
     ];
     return SafeArea(
@@ -54,7 +54,7 @@ class _AppState extends State<App> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.check_box),
-                title: Text('How To'),
+                title: Text('Usage'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.description),
