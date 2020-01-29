@@ -83,7 +83,7 @@ class _AppState extends State<App> {
   void _createTask() {
     if (_tasks.length < _tasksMax) {
       setState(() {
-        _tasks.add(
+        _tasks.addLast(
           Task(
             creationTimeStamp: DateTime.now(),
             lastModified: DateTime.now(),
@@ -92,10 +92,11 @@ class _AppState extends State<App> {
           ),
         );
       });
-      // for (int i = 1; i < _tasks.length; i++) {
-      //   _tasks.elementAt(i).isFirstInQueue = false;
-      //   _tasks.elementAt(i).state.collapse();
-      // }
+      for (int i = 0; i < _tasks.length; i++) {
+        // _tasks.elementAt(i).isFirstInQueue = false;
+        _tasks.elementAt(i).collapse();
+        debugPrint(i.toString());
+      }
     }
   }
 

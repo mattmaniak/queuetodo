@@ -28,6 +28,12 @@ class Task extends StatefulWidget {
     state = _TaskState();
     return state;
   }
+
+  void collapse() {
+    if (state != null) {
+      state.collapse();
+    }
+  }
 }
 
 class _TaskState extends State<Task> {
