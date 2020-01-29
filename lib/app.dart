@@ -94,7 +94,7 @@ class _AppState extends State<App> {
       });
       for (int i = 0; i < _tasks.length; i++) {
         // _tasks.elementAt(i).isFirstInQueue = false;
-        _tasks.elementAt(i).collapse();
+        _tasks.elementAt(i).update();
         debugPrint(i.toString());
       }
     }
@@ -106,9 +106,18 @@ class _AppState extends State<App> {
     if (_tasks.isNotEmpty) {
       setState(() {
         _tasks.removeFirst();
-        _tasks.first.isFirstInQueue = true;
       });
     }
+    if (_tasks.isNotEmpty) {
+      _tasks.first.isFirstInQueue = true;
+    }
+    // setState(() {
+    for (int i = 0; i < _tasks.length; i++) {
+      // _tasks.elementAt(i).isFirstInQueue = false;
+      _tasks.elementAt(i).update();
+      debugPrint(i.toString());
+    }
+    // });
   }
 
   void _switchTab(int index) {

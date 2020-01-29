@@ -5,6 +5,9 @@ import 'package:intl/intl.dart';
 class Task extends StatefulWidget {
   final int maxDescriptionLength = 300;
   final int maxTitleLength = 30;
+  final descriptionController = TextEditingController();
+  final titleController = TextEditingController();
+
   final DateTime creationTimeStamp;
   final Function removeTask;
   final Function saveConfig;
@@ -29,55 +32,57 @@ class Task extends StatefulWidget {
     return state;
   }
 
-  void collapse() {
+  void update() {
     if (state != null) {
-      state.collapse();
+      state.update();
     }
   }
 }
 
 class _TaskState extends State<Task> {
-  final _descriptionController = TextEditingController();
-  final _titleController = TextEditingController();
   bool _expanded = false;
 
   @override
   void initState() {
     super.initState();
-    widget.lastModified = widget.creationTimeStamp;
-
-    _changeTileExpansion(false); // Insert data from the config into TextForms.
-    _titleController.addListener(() {
-      if (mounted) {
-        setState(() {
-          widget
-            ..title = _titleController.text
-            ..lastModified = DateTime.now();
-        });
-      }
-    });
-    _descriptionController.addListener(() {
-      if (mounted) {
-        setState(() {
-          widget
-            ..description = _descriptionController.text
-            ..lastModified = DateTime.now();
-        });
-      }
-    });
+    _changeTileExpansion(_expanded); // Insert data from config into TextForms.
+    widget
+      ..lastModified = widget.creationTimeStamp
+      ..titleController.addListener(() {
+        if (mounted) {
+          setState(() {
+            widget
+              ..title = widget.titleController.text
+              ..lastModified = DateTime.now();
+          });
+        }
+      })
+      ..descriptionController.addListener(() {
+        if (mounted) {
+          setState(() {
+            widget
+              ..description = widget.descriptionController.text
+              ..lastModified = DateTime.now();
+          });
+        }
+      });
   }
 
   @override
   void dispose() {
-    _descriptionController.dispose();
-    _titleController.dispose();
+    if (mounted) {
+      // widget
+      //   ..descriptionController.dispose()
+      //   ..titleController.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    widget.saveConfig();
-
+    if (mounted) {
+      widget.saveConfig();
+    }
     return Card(
       child: ExpansionTile(
         title: Padding(
@@ -91,7 +96,7 @@ class _TaskState extends State<Task> {
               counterText: '',
             ),
             maxLength: widget.maxTitleLength,
-            controller: _titleController,
+            controller: widget.titleController,
           ),
         ),
         subtitle: Text('Created ' +
@@ -124,7 +129,7 @@ class _TaskState extends State<Task> {
                   maxLines: null,
                   maxLength: widget.maxDescriptionLength,
                   keyboardType: TextInputType.text,
-                  controller: _descriptionController,
+                  controller: widget.descriptionController,
                 ),
               ),
               _renderRemoveButton,
@@ -141,6 +146,16 @@ class _TaskState extends State<Task> {
     });
   }
 
+  void update() {
+    if (mounted) {
+      setState(() {
+        widget
+          ..descriptionController.text = widget.description
+          ..titleController.text = widget.title;
+      });
+    }
+  }
+
   Widget get _renderTrailingArrow {
     if (_expanded) {
       return Icon(Icons.expand_less);
@@ -152,8 +167,9 @@ class _TaskState extends State<Task> {
     _expanded = expanded;
     if (mounted && _expanded) {
       setState(() {
-        _descriptionController.text = widget.description;
-        _titleController.text = widget.title;
+        widget
+          ..descriptionController.text = widget.description
+          ..titleController.text = widget.title;
       });
     }
   }
