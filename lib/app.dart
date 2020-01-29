@@ -30,8 +30,8 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     _tabs = [
-      TasksQueue(
-        tasks: _tasks,
+      ListView(
+        children: _tasks.toList(),
       ),
       Usage(),
       About()
@@ -105,8 +105,8 @@ class _AppState extends State<App> {
     if (_tasks.isNotEmpty) {
       setState(() {
         _tasks.removeFirst();
+        _tasks.first.isFirstInQueue = true;
       });
-      _tasks.first.isFirstInQueue = true;
     }
   }
 

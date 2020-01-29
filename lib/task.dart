@@ -40,23 +40,25 @@ class _TaskState extends State<Task> {
     super.initState();
     widget.lastModified = widget.creationTimeStamp;
 
+    _changeTileExpansion(false); // Insert data from the config into TextForms.
     _titleController.addListener(() {
       if (mounted) {
         setState(() {
-          widget.title = _titleController.text;
-          widget.lastModified = DateTime.now();
+          widget
+            ..title = _titleController.text
+            ..lastModified = DateTime.now();
         });
       }
     });
     _descriptionController.addListener(() {
       if (mounted) {
         setState(() {
-          widget.description = _descriptionController.text;
-          widget.lastModified = DateTime.now();
+          widget
+            ..description = _descriptionController.text
+            ..lastModified = DateTime.now();
         });
       }
     });
-    _changeTileExpansion(false); // Insert data from the config into TextForms.
   }
 
   @override
