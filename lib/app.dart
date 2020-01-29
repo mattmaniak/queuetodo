@@ -6,7 +6,6 @@ import 'about.dart';
 import 'config.dart';
 import 'usage.dart';
 import 'task.dart';
-import 'tasks_queue.dart';
 
 class App extends StatefulWidget {
   @override
