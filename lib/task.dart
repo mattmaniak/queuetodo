@@ -31,12 +31,6 @@ class Task extends StatefulWidget {
     state = _TaskState();
     return state;
   }
-
-  void update() {
-    if (state != null) {
-      state.update();
-    }
-  }
 }
 
 class _TaskState extends State<Task> {
