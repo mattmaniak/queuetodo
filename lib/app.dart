@@ -85,7 +85,6 @@ class _AppState extends State<App> {
         _tasks.addLast(
           Task(
             creationTimeStamp: DateTime.now(),
-            lastModified: DateTime.now(),
             removeTask: _removeFirstTask,
             saveConfig: _saveTasks,
           ),

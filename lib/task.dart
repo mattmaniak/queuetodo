@@ -19,11 +19,11 @@ class Task extends StatefulWidget {
 
   Task(
       {@required this.creationTimeStamp,
-      @required this.lastModified,
       @required this.removeTask,
       @required this.saveConfig,
       this.description,
       this.title,
+      this.lastModified,
       this.isFirstInQueue: false});
 
   @override
@@ -39,7 +39,6 @@ class _TaskState extends State<Task> {
   @override
   void initState() {
     super.initState();
-    _changeTileExpansion(_expanded); // Insert data from config into TextForms.
     widget
       ..lastModified = widget.creationTimeStamp
       ..titleController.addListener(() {
@@ -60,6 +59,9 @@ class _TaskState extends State<Task> {
           });
         }
       });
+      // ..descriptionController.text = widget.description
+      // ..titleController.text = widget.title;
+    _changeTileExpansion(_expanded); // Insert data from config into TextForms.
   }
 
   @override
@@ -132,22 +134,6 @@ class _TaskState extends State<Task> {
         ],
       ),
     );
-  }
-
-  void collapse() {
-    setState(() {
-      _expanded = false;
-    });
-  }
-
-  void update() {
-    if (mounted) {
-      setState(() {
-        widget
-          ..descriptionController.text = widget.description
-          ..titleController.text = widget.title;
-      });
-    }
   }
 
   Widget get _renderTrailingArrow {
