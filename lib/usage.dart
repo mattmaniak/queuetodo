@@ -22,7 +22,7 @@ class Usage extends StatelessWidget {
                 ),
               ),
               Text(
-                'Ancient proverb',
+                'Probably ancient proverb',
                 style: TextStyle(
                   fontSize: 10.0,
                 ),

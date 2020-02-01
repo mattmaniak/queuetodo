@@ -94,6 +94,11 @@ class _TaskState extends State<Task> {
               isDense: true,
               hintText: 'Title',
               counterText: '',
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
             ),
             maxLength: widget?.maxTitleLength ?? TextField.noMaxLength,
             controller: widget?.titleController,
@@ -131,6 +136,11 @@ class _TaskState extends State<Task> {
                     hintText: 'Description',
                     isDense: true,
                     counterText: '',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
                   ),
                   maxLines: null,
                   maxLength:
@@ -149,9 +159,15 @@ class _TaskState extends State<Task> {
 
   Widget get _renderTrailingArrow {
     if (_expanded) {
-      return Icon(Icons.expand_less);
+      return Icon(
+        Icons.expand_less,
+        color: Theme.of(context).accentColor,
+      );
     }
-    return Icon(Icons.expand_more);
+    return Icon(
+      Icons.expand_more,
+      color: Theme.of(context).accentColor,
+    );
   }
 
   void _changeTileExpansion(bool expanded) {
