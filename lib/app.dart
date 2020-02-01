@@ -13,7 +13,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  static const int _tasksMax = 4;
+  static const int _tasksMax = 8;
   Queue<Task> _tasks = Queue();
   List<Widget> _tabs;
   int _tabIndex = 0;
@@ -37,14 +37,15 @@ class _AppState extends State<App> {
     ];
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColorLight,
         body: _tabs[_tabIndex],
         floatingActionButton: _renderFloatingButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         bottomNavigationBar: BottomAppBar(
           child: BottomNavigationBar(
-            // backgroundColor: Theme.of(context).primaryColor,
-            // selectedItemColor: Theme.of(context).accentColor,
-            // unselectedItemColor: Theme.of(context).iconTheme.color,
+            backgroundColor: Theme.of(context).primaryColor,
+            selectedItemColor: Theme.of(context).accentColor,
+            unselectedItemColor: Theme.of(context).iconTheme.color,
             currentIndex: _tabIndex,
             items: [
               BottomNavigationBarItem(

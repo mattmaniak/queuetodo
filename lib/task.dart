@@ -40,7 +40,7 @@ class _TaskState extends State<Task> {
   void initState() {
     super.initState();
     widget
-      ..lastModified = widget.creationTimeStamp
+      ..lastModified = widget?.creationTimeStamp ?? DateTime.now()
       ..titleController.addListener(() {
         if (mounted) {
           setState(() {
@@ -58,10 +58,9 @@ class _TaskState extends State<Task> {
               ..lastModified = DateTime.now();
           });
         }
-      });
-      // ..descriptionController.text = widget.description
-      // ..titleController.text = widget.title;
-    _changeTileExpansion(_expanded); // Insert data from config into TextForms.
+      })
+      ..descriptionController.text = widget?.description ?? ''
+      ..titleController.text = widget?.title ?? '';
   }
 
   @override
@@ -76,10 +75,15 @@ class _TaskState extends State<Task> {
 
   @override
   Widget build(BuildContext context) {
-    if (mounted) {
-      widget.saveConfig();
-    }
+    widget?.saveConfig();
+
     return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+        Radius.circular(
+          16.0,
+        ),
+      )),
       child: ExpansionTile(
         title: Padding(
           padding: EdgeInsets.only(
@@ -91,12 +95,18 @@ class _TaskState extends State<Task> {
               hintText: 'Title',
               counterText: '',
             ),
-            maxLength: widget.maxTitleLength,
-            controller: widget.titleController,
+            maxLength: widget?.maxTitleLength ?? TextField.noMaxLength,
+            controller: widget?.titleController,
           ),
         ),
-        subtitle: Text('Created ' +
-            DateFormat('yyyy-MM-dd HH:mm:ss').format(widget.creationTimeStamp)),
+        subtitle: Text(
+          'Created ' +
+              DateFormat('yyyy-MM-dd HH:mm:ss')
+                  .format(widget?.creationTimeStamp),
+          style: TextStyle(
+            color: Theme.of(context).textTheme.subtitle.color,
+          ),
+        ),
         trailing: _renderTrailingArrow,
         initiallyExpanded: _expanded,
         onExpansionChanged: _changeTileExpansion,
@@ -108,7 +118,7 @@ class _TaskState extends State<Task> {
                 child: Text(
                   'Last modified ' +
                       DateFormat('yyyy-MM-dd HH:mm:ss')
-                          .format(widget.lastModified),
+                          .format(widget?.lastModified),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -123,7 +133,8 @@ class _TaskState extends State<Task> {
                     counterText: '',
                   ),
                   maxLines: null,
-                  maxLength: widget.maxDescriptionLength,
+                  maxLength:
+                      widget?.maxDescriptionLength ?? TextField.noMaxLength,
                   keyboardType: TextInputType.text,
                   controller: widget.descriptionController,
                 ),
@@ -148,17 +159,18 @@ class _TaskState extends State<Task> {
     if (mounted && _expanded) {
       setState(() {
         widget
-          ..descriptionController.text = widget.description
-          ..titleController.text = widget.title;
+          ..descriptionController.text = widget?.description ?? ''
+          ..titleController.text = widget?.title ?? '';
       });
     }
   }
 
   Widget get _renderRemoveButton {
-    if (widget.isFirstInQueue) {
+    if (widget?.isFirstInQueue ?? false) {
       return FlatButton(
+        color: Theme.of(context).buttonColor,
         child: Text('Finish task'),
-        onPressed: widget.removeTask,
+        onPressed: widget?.removeTask ?? () {},
       );
     }
     return Padding(

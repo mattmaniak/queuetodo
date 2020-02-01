@@ -9,11 +9,12 @@ ThemeData get theme {
     accentColor: Color(0xff448aff),
     accentColorBrightness: Brightness.light,
     buttonColor: Color(0xff448aff),
-    dividerColor: Color(0xffbdbdbd),
+    dividerColor: Color(0x00000000),
     errorColor: Color(0xffD32f2f),
-    iconTheme: IconThemeData(
-      color: Color(0xff212121),
-    ),
+    // iconTheme: IconThemeData(
+    //   color: Color(0xff212121),
+    // ),
+    cardColor: Color(0xffffeb3b),
     // textTheme: TextTheme()
   );
 }
