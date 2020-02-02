@@ -10,5 +10,8 @@ Just press the 'Add' button to create one. Set a short title and a little longer
 description. Push even more tasks to the Queue and always start your work with
 the first one.
 
+## Terms of Use
+Described in the license.
+
 ## Pricacy Policy
 No data is collected.

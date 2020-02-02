@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
+import 'error.dart';
+
 class Task extends StatefulWidget {
   final int maxDescriptionLength = 500;
   final int maxTitleLength = 50;
@@ -48,6 +50,10 @@ class _TaskState extends State<Task> {
               ..title = widget.titleController.text
               ..lastModified = DateTime.now();
           });
+          if (widget.title.length == widget?.maxTitleLength) {
+            showErrorSnackBar(
+                context, 'Title length limit is ${widget?.maxTitleLength}.');
+          }
         }
       })
       ..descriptionController.addListener(() {
@@ -57,6 +63,10 @@ class _TaskState extends State<Task> {
               ..description = widget.descriptionController.text
               ..lastModified = DateTime.now();
           });
+          if (widget.description.length == widget?.maxDescriptionLength) {
+            showErrorSnackBar(context,
+                'Description length limit is ${widget?.maxDescriptionLength}.');
+          }
         }
       })
       ..descriptionController.text = widget?.description ?? ''

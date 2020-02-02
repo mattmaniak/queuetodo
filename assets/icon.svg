@@ -27,9 +27,9 @@
      inkscape:window-height="962"
      id="namedview12"
      showgrid="false"
-     inkscape:zoom="0.84096521"
-     inkscape:cx="-265.3959"
-     inkscape:cy="391.66548"
+     inkscape:zoom="0.5946522"
+     inkscape:cx="-165.84855"
+     inkscape:cy="493.76384"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -63,7 +63,7 @@
   </g>
   <g
      id="layer2"
-     style="fill:#42a5f5;fill-opacity:1"
+     style="fill:#2196f3;fill-opacity:1"
      inkscape:export-xdpi="96"
      inkscape:export-ydpi="96">
     <rect
@@ -72,27 +72,27 @@
        height="67.73333"
        width="16.933332"
        id="rect837"
-       style="fill:#42a5f5;fill-opacity:1;stroke-width:0.19580252" />
+       style="fill:#2196f3;fill-opacity:1;stroke-width:0.19580252" />
     <rect
        y="184.02292"
        x="62.441666"
        height="67.73333"
        width="16.933332"
        id="rect837-5"
-       style="fill:#42a5f5;fill-opacity:1;stroke-width:0.19580252" />
+       style="fill:#2196f3;fill-opacity:1;stroke-width:0.19580252" />
     <rect
        y="172.64584"
        x="91.01667"
        height="67.73333"
        width="16.933332"
        id="rect837-5-3"
-       style="fill:#42a5f5;fill-opacity:1;stroke-width:0.19580252" />
+       style="fill:#2196f3;fill-opacity:1;stroke-width:0.19580252" />
     <rect
        y="161.53334"
        x="118.53333"
        height="67.73333"
        width="16.933332"
        id="rect837-5-5"
-       style="fill:#42a5f5;fill-opacity:1;stroke-width:0.19580252" />
+       style="fill:#2196f3;fill-opacity:1;stroke-width:0.19580252" />
   </g>
 </svg>

@@ -8,7 +8,9 @@ void main() {
     MaterialApp(
       theme: theme,
       title: 'QueueToDo',
-      home: App(),
+      home: SafeArea(
+        child: App(),
+      ),
     ),
   );
 }
