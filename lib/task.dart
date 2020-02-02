@@ -158,14 +158,8 @@ class _TaskState extends State<Task> {
   }
 
   Widget get _renderTrailingArrow {
-    if (_expanded) {
-      return Icon(
-        Icons.expand_less,
-        color: Theme.of(context).accentColor,
-      );
-    }
     return Icon(
-      Icons.expand_more,
+      _expanded ? Icons.expand_less : Icons.expand_more,
       color: Theme.of(context).accentColor,
     );
   }

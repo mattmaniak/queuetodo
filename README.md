@@ -1,5 +1,5 @@
 # QueueToDo
-First is first. Last is last. Manage your everyday tasks the right way.
+Manage your everyday tasks the right way.
 
 ## Description
 Increase your productivity by organizing your tasks in the most natural way -
