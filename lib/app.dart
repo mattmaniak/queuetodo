@@ -15,7 +15,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   static const int _tasksMax = 8;
   Queue<Task> _tasks = Queue();
-  List<Widget> _tabs;
+  List<List<Widget>> _tabs;
   int _tabIndex = 0;
 
   _AppState() {
@@ -29,16 +29,16 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     _tabs = [
-      ListView(
-        children: _tasks.toList(),
-      ),
-      Usage(),
-      About()
+      _tasks.toList(),
+      [Usage()],
+      [About()],
     ];
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).primaryColorLight,
-        body: _tabs[_tabIndex],
+        body: ListView(
+          children: _tabs[_tabIndex],
+        ),
         floatingActionButton: _renderFloatingButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         bottomNavigationBar: BottomAppBar(

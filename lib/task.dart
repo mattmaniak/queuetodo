@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Task extends StatefulWidget {
-  final int maxDescriptionLength = 300;
-  final int maxTitleLength = 30;
+  final int maxDescriptionLength = 500;
+  final int maxTitleLength = 50;
   final descriptionController = TextEditingController();
   final titleController = TextEditingController();
 
@@ -79,30 +79,19 @@ class _TaskState extends State<Task> {
 
     return Card(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-        Radius.circular(
-          16.0,
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            16.0,
+          ),
         ),
-      )),
+      ),
       child: ExpansionTile(
         title: Padding(
           padding: EdgeInsets.only(
             bottom: 8.0,
           ),
-          child: TextField(
-            decoration: InputDecoration(
-              isDense: true,
-              hintText: 'Title',
-              counterText: '',
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).accentColor,
-                ),
-              ),
-            ),
-            maxLength: widget?.maxTitleLength ?? TextField.noMaxLength,
-            controller: widget?.titleController,
-          ),
+          child: _renderTextField(
+              'Title', widget?.maxTitleLength, widget?.titleController),
         ),
         subtitle: Text(
           'Created ' +
@@ -131,23 +120,10 @@ class _TaskState extends State<Task> {
                 padding: EdgeInsets.symmetric(
                   horizontal: 16.0,
                 ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Description',
-                    isDense: true,
-                    counterText: '',
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ),
-                  maxLines: null,
-                  maxLength:
-                      widget?.maxDescriptionLength ?? TextField.noMaxLength,
-                  keyboardType: TextInputType.text,
-                  controller: widget.descriptionController,
-                ),
+                child: _renderTextField(
+                    'Description',
+                    widget?.maxDescriptionLength,
+                    widget?.descriptionController),
               ),
               _renderRemoveButton,
             ],
@@ -161,6 +137,26 @@ class _TaskState extends State<Task> {
     return Icon(
       _expanded ? Icons.expand_less : Icons.expand_more,
       color: Theme.of(context).accentColor,
+    );
+  }
+
+  Widget _renderTextField(
+      String hintText, int maxLength, TextEditingController controller) {
+    return TextField(
+      decoration: InputDecoration(
+        hintText: hintText,
+        isDense: true,
+        counterText: '',
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).accentColor,
+          ),
+        ),
+      ),
+      maxLines: null,
+      maxLength: maxLength ?? TextField.noMaxLength,
+      keyboardType: TextInputType.text,
+      controller: controller,
     );
   }
 
