@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 import 'error.dart';
 
 class Task extends StatefulWidget {
-  final int maxDescriptionLength = 500;
-  final int maxTitleLength = 50;
+  final int maxDescriptionLength = 1000;
+  final int maxTitleLength = 100;
   final descriptionController = TextEditingController();
   final titleController = TextEditingController();
 
@@ -26,7 +26,7 @@ class Task extends StatefulWidget {
       this.description,
       this.title,
       this.lastModified,
-      this.isFirstInQueue: false});
+      this.isFirstInQueue});
 
   @override
   _TaskState createState() {
@@ -36,8 +36,6 @@ class Task extends StatefulWidget {
 }
 
 class _TaskState extends State<Task> {
-  bool _expanded = false;
-
   @override
   void initState() {
     super.initState();
@@ -104,25 +102,19 @@ class _TaskState extends State<Task> {
               'Title', widget?.maxTitleLength, widget?.titleController),
         ),
         subtitle: Text(
-          'Created ' +
-              DateFormat('yyyy-MM-dd HH:mm:ss')
-                  .format(widget?.creationTimeStamp),
+          'Created ' + _formatDate(widget?.creationTimeStamp),
           style: TextStyle(
             color: Theme.of(context).textTheme.subtitle.color,
           ),
         ),
-        trailing: _renderTrailingArrow,
-        initiallyExpanded: _expanded,
-        onExpansionChanged: _changeTileExpansion,
+        initiallyExpanded: false,
         children: [
           Column(
             children: [
               Container(
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: Text(
-                  'Last modified ' +
-                      DateFormat('yyyy-MM-dd HH:mm:ss')
-                          .format(widget?.lastModified),
+                  'Last modified ' + _formatDate(widget?.lastModified),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -140,13 +132,6 @@ class _TaskState extends State<Task> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget get _renderTrailingArrow {
-    return Icon(
-      _expanded ? Icons.expand_less : Icons.expand_more,
-      color: Theme.of(context).accentColor,
     );
   }
 
@@ -170,24 +155,15 @@ class _TaskState extends State<Task> {
     );
   }
 
-  void _changeTileExpansion(bool expanded) {
-    _expanded = expanded;
-    if (mounted && _expanded) {
-      setState(() {
-        widget
-          ..descriptionController.text = widget?.description ?? ''
-          ..titleController.text = widget?.title ?? '';
-      });
-    }
-  }
-
   Widget get _renderRemoveButton {
-    if (widget?.isFirstInQueue ?? false) {
-      return FlatButton(
-        color: Theme.of(context).buttonColor,
-        child: Text('Finish task'),
-        onPressed: widget?.removeTask ?? () {},
-      );
+    if (mounted) {
+      if (widget.isFirstInQueue) {
+        return FlatButton(
+          color: Theme.of(context).buttonColor,
+          child: Text('Finish task'),
+          onPressed: widget.removeTask,
+        );
+      }
     }
     return Padding(
       padding: EdgeInsets.only(
@@ -198,5 +174,10 @@ class _TaskState extends State<Task> {
         height: 0.0,
       ),
     );
+  }
+
+  String _formatDate(DateTime date) {
+    date = date ?? DateTime.fromMillisecondsSinceEpoch(0); // 1970-01-01...
+    return DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
   }
 }

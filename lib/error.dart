@@ -11,7 +11,7 @@ void showErrorSnackBar(BuildContext context, String message) {
           color: Theme.of(context).errorColor,
         ),
       ),
-      duration: Duration(seconds: 5),
+      duration: Duration(seconds: 3),
     ),
   );
 }

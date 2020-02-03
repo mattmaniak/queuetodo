@@ -14,7 +14,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  static const int _tasksMax = 50;
+  static const int _tasksMax = 100;
   Queue<Task> _tasks = Queue();
   List<List<Widget>> _tabs;
   int _tabIndex = 0;
@@ -113,11 +113,11 @@ class _AppState extends State<App> {
         _tasks.removeFirst();
       });
     }
-    setState(() {
-      if (_tasks.isNotEmpty) {
+    if (_tasks.isNotEmpty) {
+      setState(() {
         _tasks.first.isFirstInQueue = true;
-      }
-    });
+      });
+    }
   }
 
   void _switchTab(int index) {
