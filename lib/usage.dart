@@ -44,7 +44,6 @@ class Usage extends StatelessWidget {
               'most natural way - by queueing them. Stop procrastinating '
               'and let the app to engage you to do tasks without the '
               'possibility to change their order.\n\n'
-
               'Just press the \'Add\' button in the bottom right corner to '
               'create a task. Set a short title and a little longer '
               'description. Push even more tasks to the Queue and always start '

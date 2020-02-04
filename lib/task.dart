@@ -87,11 +87,7 @@ class _TaskState extends State<Task> {
 
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(
-            16.0,
-          ),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),
       child: ExpansionTile(
         title: Padding(
@@ -156,14 +152,12 @@ class _TaskState extends State<Task> {
   }
 
   Widget get _renderRemoveButton {
-    if (mounted) {
-      if (widget.isFirstInQueue) {
-        return FlatButton(
-          color: Theme.of(context).buttonColor,
-          child: Text('Finish task'),
-          onPressed: widget.removeTask,
-        );
-      }
+    if (widget?.isFirstInQueue ?? false) {
+      return FlatButton(
+        color: Theme.of(context).buttonColor,
+        child: Text('Finish task'),
+        onPressed: widget?.removeTask ?? () {},
+      );
     }
     return Padding(
       padding: EdgeInsets.only(
