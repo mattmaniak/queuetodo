@@ -17,7 +17,6 @@ class Task extends StatefulWidget {
   DateTime lastModified;
   String description = '';
   String title = '';
-  bool isFirstInQueue = false;
 
   Task(
       {@required this.creationTimeStamp,
@@ -25,8 +24,7 @@ class Task extends StatefulWidget {
       @required this.saveConfig,
       this.description,
       this.title,
-      this.lastModified,
-      this.isFirstInQueue});
+      this.lastModified});
 
   @override
   _TaskState createState() {
@@ -42,43 +40,29 @@ class _TaskState extends State<Task> {
     widget
       ..lastModified = widget?.creationTimeStamp ?? DateTime.now()
       ..titleController.addListener(() {
-        if (mounted) {
-          setState(() {
-            widget
-              ..title = widget.titleController.text
-              ..lastModified = DateTime.now();
-          });
-          if (widget.title.length == widget?.maxTitleLength) {
-            showErrorSnackBar(
-                context, 'Title length limit is ${widget?.maxTitleLength}.');
-          }
+        setState(() {
+          widget
+            ..title = widget?.titleController?.text ?? ''
+            ..lastModified = DateTime.now();
+        });
+        if (widget?.title?.length == widget?.maxTitleLength) {
+          showErrorSnackBar(
+              context, 'Title length limit is ${widget?.maxTitleLength}.');
         }
       })
       ..descriptionController.addListener(() {
-        if (mounted) {
-          setState(() {
-            widget
-              ..description = widget.descriptionController.text
-              ..lastModified = DateTime.now();
-          });
-          if (widget.description.length == widget?.maxDescriptionLength) {
-            showErrorSnackBar(context,
-                'Description length limit is ${widget?.maxDescriptionLength}.');
-          }
+        setState(() {
+          widget
+            ..description = widget?.descriptionController?.text ?? ''
+            ..lastModified = DateTime.now();
+        });
+        if (widget?.description?.length == widget?.maxDescriptionLength) {
+          showErrorSnackBar(context,
+              'Description length limit is ${widget?.maxDescriptionLength}.');
         }
       })
       ..descriptionController.text = widget?.description ?? ''
       ..titleController.text = widget?.title ?? '';
-  }
-
-  @override
-  void dispose() {
-    if (mounted) {
-      // widget
-      //   ..descriptionController.dispose()
-      //   ..titleController.dispose();
-    }
-    super.dispose();
   }
 
   @override
@@ -115,15 +99,16 @@ class _TaskState extends State<Task> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.0,
+                padding: EdgeInsets.only(
+                  left: 16.0,
+                  right: 16.0,
+                  bottom: 8.0,
                 ),
                 child: _renderTextField(
                     'Description',
                     widget?.maxDescriptionLength,
                     widget?.descriptionController),
               ),
-              _renderRemoveButton,
             ],
           ),
         ],
@@ -148,25 +133,6 @@ class _TaskState extends State<Task> {
       maxLength: maxLength ?? TextField.noMaxLength,
       keyboardType: TextInputType.text,
       controller: controller,
-    );
-  }
-
-  Widget get _renderRemoveButton {
-    if (widget?.isFirstInQueue ?? false) {
-      return FlatButton(
-        color: Theme.of(context).buttonColor,
-        child: Text('Finish task'),
-        onPressed: widget?.removeTask ?? () {},
-      );
-    }
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: 16.0,
-      ),
-      child: Container(
-        width: 0.0,
-        height: 0.0,
-      ),
     );
   }
 

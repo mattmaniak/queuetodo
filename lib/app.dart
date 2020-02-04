@@ -31,7 +31,13 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     _tabs = [
-      _tasks.toList(),
+      [
+        _displayQueuePopperButton,
+        Column(
+          children: _tasks.toList(),
+        ),
+        _displayQueuePusherButton,
+      ],
       [Usage()],
       [About()],
     ];
@@ -45,24 +51,26 @@ class _AppState extends State<App> {
           );
         },
       ),
-      floatingActionButton: _renderFloatingButton,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BottomAppBar(
         child: BottomNavigationBar(
-          backgroundColor: Theme.of(context).primaryColorDark,
           selectedItemColor: Theme.of(context).accentColor,
           unselectedItemColor: Theme.of(context).iconTheme.color,
+          showUnselectedLabels: true,
           currentIndex: _tabIndex,
+          type: BottomNavigationBarType.shifting,
           items: [
             BottomNavigationBarItem(
+              backgroundColor: Theme.of(context).primaryColorDark,
               icon: Icon(Icons.queue),
               title: Text('Queue'),
             ),
             BottomNavigationBarItem(
+              backgroundColor: Theme.of(context).primaryColorDark,
               icon: Icon(Icons.check_box),
               title: Text('Usage'),
             ),
             BottomNavigationBarItem(
+              backgroundColor: Theme.of(context).primaryColorDark,
               icon: Icon(Icons.description),
               title: Text('About'),
             ),
@@ -73,13 +81,37 @@ class _AppState extends State<App> {
     );
   }
 
-  Widget get _renderFloatingButton {
+  Widget get _displayQueuePopperButton {
     if (_tabIndex == 0) {
-      return FloatingActionButton.extended(
-        icon: Icon(Icons.add_box),
-        label: Text('Add'),
-        tooltip: 'Create a new task',
-        onPressed: _createTask,
+      return Padding(
+        padding: EdgeInsets.all(4.0),
+        child: FloatingActionButton.extended(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          ),
+          icon: Icon(Icons.delete_forever),
+          tooltip: 'Pop a task from the Queue.',
+          label: Text('Remove a task'),
+          onPressed: _removeFirstTask,
+        ),
+      );
+    }
+    return null;
+  }
+
+  Widget get _displayQueuePusherButton {
+    if (_tabIndex == 0) {
+      return Padding(
+        padding: EdgeInsets.all(4.0),
+        child: FloatingActionButton.extended(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          ),
+          icon: Icon(Icons.add_box),
+          tooltip: 'Push a task to the Queue.',
+          label: Text('Create a task'),
+          onPressed: _createTask,
+        ),
       );
     }
     return null;
@@ -96,9 +128,6 @@ class _AppState extends State<App> {
           ),
         );
       });
-      if (_tasks.length == 1) {
-        _tasks.first.isFirstInQueue = true;
-      }
     } else {
       showErrorSnackBar(
           _scaffoldContext, 'Maximum number of tasks is $_tasksMax.');
@@ -111,11 +140,6 @@ class _AppState extends State<App> {
     if (_tasks.isNotEmpty) {
       setState(() {
         _tasks.removeFirst();
-      });
-    }
-    if (_tasks.isNotEmpty) {
-      setState(() {
-        _tasks.first.isFirstInQueue = true;
       });
     }
   }

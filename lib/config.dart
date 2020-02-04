@@ -19,7 +19,7 @@ void configSave(Queue<Task> tasks) async {
         'description': tasks.elementAt(i).description
       });
     } on JsonUnsupportedObjectError {
-      debugPrint('json');
+      // ...
     }
   }
   preferences.setStringList('_encodedTasks', encodedTasks);
@@ -32,6 +32,10 @@ Future<Queue<Task>> configRead(
       preferences.getStringList('_encodedTasks') ?? [];
   Map<String, dynamic> decodedTask = {};
   Queue<Task> tasks = Queue();
+
+  // for (String encodedTask in encodedTasks) {
+
+  // }
 
   encodedTasks.forEach((encodedTask) {
     final now = DateTime.now();
@@ -55,8 +59,5 @@ Future<Queue<Task>> configRead(
       );
     }
   });
-  if (tasks.isNotEmpty) {
-    tasks.first.isFirstInQueue = true;
-  }
   return tasks;
 }
