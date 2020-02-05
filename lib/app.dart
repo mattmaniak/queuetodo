@@ -8,6 +8,8 @@ import 'error.dart';
 import 'usage.dart';
 import 'task.dart';
 
+enum _AppTabs { usage, queue, about }
+
 class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
@@ -16,12 +18,11 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   static const int _tasksMax = 100;
   Queue<Task> _tasks = Queue();
-  List<List<Widget>> _tabs;
-  int _tabIndex = 0;
+  int _tabIndex = 1;
   BuildContext _scaffoldContext;
 
   _AppState() {
-    configRead(_tasksMax, _removeFirstTask, _saveTasks).then((tasks) {
+    configRead(_tasksMax, _popTask, _saveTasks).then((tasks) {
       setState(() {
         _tasks = tasks;
       });
@@ -30,7 +31,8 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    _tabs = [
+    List<List<Widget>> tabs = [
+      [Usage()],
       [
         _displayQueuePopperButton,
         Column(
@@ -38,7 +40,6 @@ class _AppState extends State<App> {
         ),
         _displayQueuePusherButton,
       ],
-      [Usage()],
       [About()],
     ];
     return Scaffold(
@@ -47,7 +48,7 @@ class _AppState extends State<App> {
         builder: (BuildContext context) {
           _scaffoldContext = context;
           return ListView(
-            children: _tabs[_tabIndex],
+            children: tabs[_tabIndex],
           );
         },
       ),
@@ -61,13 +62,13 @@ class _AppState extends State<App> {
           items: [
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).primaryColorDark,
-              icon: Icon(Icons.queue),
-              title: Text('Queue'),
+              icon: Icon(Icons.check_box),
+              title: Text('Usage'),
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).primaryColorDark,
-              icon: Icon(Icons.check_box),
-              title: Text('Usage'),
+              icon: Icon(Icons.queue),
+              title: Text('Queue'),
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -82,7 +83,7 @@ class _AppState extends State<App> {
   }
 
   Widget get _displayQueuePopperButton {
-    if (_tabIndex == 0) {
+    if ((_tabIndex == _AppTabs.queue.index) && _tasks.isNotEmpty) {
       return Padding(
         padding: EdgeInsets.all(4.0),
         child: FloatingActionButton.extended(
@@ -90,17 +91,17 @@ class _AppState extends State<App> {
             borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
           icon: Icon(Icons.delete_forever),
-          tooltip: 'Pop a task from the Queue.',
-          label: Text('Remove a task'),
-          onPressed: _removeFirstTask,
+          tooltip: 'Remove the first task from the queue.',
+          label: Text('Pop the first task'),
+          onPressed: _popTask,
         ),
       );
     }
-    return null;
+    return Container();
   }
 
   Widget get _displayQueuePusherButton {
-    if (_tabIndex == 0) {
+    if (_tabIndex == _AppTabs.queue.index) {
       return Padding(
         padding: EdgeInsets.all(4.0),
         child: FloatingActionButton.extended(
@@ -108,22 +109,22 @@ class _AppState extends State<App> {
             borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
           icon: Icon(Icons.add_box),
-          tooltip: 'Push a task to the Queue.',
-          label: Text('Create a task'),
-          onPressed: _createTask,
+          tooltip: 'Add a task to the end of the queue.',
+          label: Text('Push a task'),
+          onPressed: _pushTask,
         ),
       );
     }
-    return null;
+    return Container();
   }
 
-  void _createTask() {
+  void _pushTask() {
     if (_tasks.length < _tasksMax) {
       setState(() {
         _tasks.addLast(
           Task(
-            creationTimeStamp: DateTime.now(),
-            removeTask: _removeFirstTask,
+            creationTimestamp: DateTime.now(),
+            removeTask: _popTask,
             saveConfig: _saveTasks,
           ),
         );
@@ -136,11 +137,12 @@ class _AppState extends State<App> {
 
   void _saveTasks() => configSave(_tasks);
 
-  void _removeFirstTask() {
+  void _popTask() {
     if (_tasks.isNotEmpty) {
       setState(() {
         _tasks.removeFirst();
       });
+      _saveTasks();
     }
   }
 

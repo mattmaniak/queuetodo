@@ -10,7 +10,7 @@ class Task extends StatefulWidget {
   final descriptionController = TextEditingController();
   final titleController = TextEditingController();
 
-  final DateTime creationTimeStamp;
+  final DateTime creationTimestamp;
   final Function removeTask;
   final Function saveConfig;
   _TaskState state;
@@ -19,7 +19,7 @@ class Task extends StatefulWidget {
   String title = '';
 
   Task(
-      {@required this.creationTimeStamp,
+      {@required this.creationTimestamp,
       @required this.removeTask,
       @required this.saveConfig,
       this.description,
@@ -38,7 +38,7 @@ class _TaskState extends State<Task> {
   void initState() {
     super.initState();
     widget
-      ..lastModified = widget?.creationTimeStamp ?? DateTime.now()
+      ..lastModified = widget?.creationTimestamp ?? DateTime.now()
       ..titleController.addListener(() {
         setState(() {
           widget
@@ -82,7 +82,7 @@ class _TaskState extends State<Task> {
               'Title', widget?.maxTitleLength, widget?.titleController),
         ),
         subtitle: Text(
-          'Created ' + _formatDate(widget?.creationTimeStamp),
+          'Created ' + _formatDate(widget?.creationTimestamp),
           style: TextStyle(
             color: Theme.of(context).textTheme.subtitle.color,
           ),

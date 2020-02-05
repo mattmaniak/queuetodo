@@ -13,7 +13,7 @@ void configSave(Queue<Task> tasks) async {
   for (int i = 0; i < tasks.length; i++) {
     try {
       encodedTasks[i] = json.encode({
-        'creationTimeStamp': tasks.elementAt(i).creationTimeStamp.toString(),
+        'creationTimestamp': tasks.elementAt(i).creationTimestamp.toString(),
         'lastModified': tasks.elementAt(i).lastModified.toString(),
         'title': tasks.elementAt(i).title,
         'description': tasks.elementAt(i).description
@@ -30,34 +30,30 @@ Future<Queue<Task>> configRead(
   final preferences = await SharedPreferences.getInstance();
   final List<String> encodedTasks =
       preferences.getStringList('_encodedTasks') ?? [];
-  Map<String, dynamic> decodedTask = {};
+  Map<String, dynamic> decoded = {};
   Queue<Task> tasks = Queue();
 
-  // for (String encodedTask in encodedTasks) {
-
-  // }
-
-  encodedTasks.forEach((encodedTask) {
+  for (String encoded in encodedTasks) {
     final now = DateTime.now();
 
     if (tasks.length < tasksMax) {
       try {
-        decodedTask = json.decode(encodedTask);
+        decoded = json.decode(encoded);
       } on FormatException {
         debugPrint('format');
       }
       tasks.add(
         Task(
-          creationTimeStamp:
-              DateTime.tryParse(decodedTask['creationTimeStamp']) ?? now,
-          lastModified: DateTime.tryParse(decodedTask['lastModified']) ?? now,
+          creationTimestamp:
+              DateTime.tryParse(decoded['creationTimestamp']) ?? now,
+          lastModified: DateTime.tryParse(decoded['lastModified']) ?? now,
           removeTask: removeTask,
           saveConfig: saveConfig,
-          title: decodedTask['title'] ?? '',
-          description: decodedTask['description'] ?? '',
+          title: decoded['title'] ?? '',
+          description: decoded['description'] ?? '',
         ),
       );
     }
-  });
+  }
   return tasks;
 }

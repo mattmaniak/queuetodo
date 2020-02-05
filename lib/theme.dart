@@ -17,6 +17,6 @@ ThemeData get theme {
     buttonColor: blue_500,
     cardColor: yellow_500,
     errorColor: red_300,
-    dividerColor: Colors.transparent,
+    dividerColor: Colors.transparent, // ExpandedTile borders when expanded.
   );
 }

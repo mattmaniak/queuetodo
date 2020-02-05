@@ -5,40 +5,43 @@ import 'package:url_launcher/url_launcher.dart';
 import 'error.dart';
 
 class About extends StatelessWidget {
+  static const String _semanticVersion = '0.0.0';
   static const String _authorUrl = 'https://gitlab.com/mattmaniak';
   static const String _repoUrl = '$_authorUrl/queuetodo';
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          _AboutCard(
-            title: 'Created by mattmaniak',
-            url: _authorUrl,
-          ),
-          _AboutCard(
-            title: 'Source code',
-            url: _repoUrl,
-          ),
-          _AboutCard(
-            title: 'Changelog',
-            url: '$_repoUrl/blob/master/CHANGELOG.md',
-          ),
-          _AboutCard(
-            title: 'MIT License',
-            url: '$_repoUrl/blob/master/LICENSE',
-          ),
-          _AboutCard(
-            title: 'Terms of Use',
-            subtitle: Text('Described in the license.'),
-          ),
-          _AboutCard(
-            title: 'Privacy Policy',
-            subtitle: Text('No data is collected.'),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        _AboutCard(
+          title: 'QueueToDo $_semanticVersion',
+          subtitle: Text('Manage your everyday tasks the right way.'),
+        ),
+        _AboutCard(
+          title: 'Created by mattmaniak',
+          url: _authorUrl,
+        ),
+        _AboutCard(
+          title: 'Source code',
+          url: _repoUrl,
+        ),
+        _AboutCard(
+          title: 'Changelog',
+          url: '$_repoUrl/blob/master/CHANGELOG.md',
+        ),
+        _AboutCard(
+          title: 'MIT License',
+          url: '$_repoUrl/blob/master/LICENSE',
+        ),
+        _AboutCard(
+          title: 'Terms of Use',
+          subtitle: Text('Described in the license.'),
+        ),
+        _AboutCard(
+          title: 'Privacy Policy',
+          subtitle: Text('No data is collected.'),
+        ),
+      ],
     );
   }
 }

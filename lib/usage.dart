@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+const String _usageInfo = '''
+Just press the wide blue button and 'Push a task' which basically creates an
+empty task and adds it to the queue. Fill a title and expand it to provide more
+data in a description field. Is a task already done? Just click the
+'Pop the first task' button above the queue and remove the first task.
+Forget about tapping the 'Save' button. There is nothing like that. Everything
+happens on the fly.
+''';
+
 class Usage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -40,14 +49,7 @@ class Usage extends StatelessWidget {
               bottom: 36.0,
             ),
             child: Text(
-              'Increase your productivity by organizing your tasks in the '
-              'most natural way - by queueing them. Stop procrastinating '
-              'and let the app to engage you to do tasks without the '
-              'possibility to change their order.\n\n'
-              'Just press the \'Add\' button in the bottom right corner to '
-              'create a task. Set a short title and a little longer '
-              'description. Push even more tasks to the Queue and always start '
-              'your work with the first one.',
+              _usageInfo.replaceAll('\n', ' '),
               textAlign: TextAlign.justify,
             ),
           ),
