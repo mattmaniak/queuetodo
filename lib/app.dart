@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'about.dart';
 import 'config.dart';
-import 'error.dart';
 import 'usage.dart';
 import 'task.dart';
-
-enum _AppTabs { usage, queue, about }
 
 class App extends StatefulWidget {
   @override
@@ -19,7 +16,6 @@ class _AppState extends State<App> {
   static const int _tasksMax = 100;
   Queue<Task> _tasks = Queue();
   int _tabIndex = 1;
-  BuildContext _scaffoldContext;
 
   _AppState() {
     configRead(_tasksMax, _popTask, _saveTasks).then((tasks) {
@@ -31,26 +27,40 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    List<List<Widget>> tabs = [
+    final Widget _queuePopButton = _tasks.isNotEmpty
+        ? _AppQueueButton(
+            label: 'Pop the first task',
+            tooltip: 'Remove the first task from the queue.',
+            icon: Icons.delete_forever,
+            onPressed: _popTask,
+          )
+        : Container();
+
+    final Widget _queuePushButton = _tasks.length < _tasksMax
+        ? _AppQueueButton(
+            label: 'Push a task',
+            tooltip: 'Add a task to the end of the queue.',
+            icon: Icons.add_box,
+            onPressed: _pushTask,
+          )
+        : Container();
+
+    final List<List<Widget>> tabs = [
       [Usage()],
       [
-        _displayQueuePopperButton,
+        _queuePopButton,
         Column(
           children: _tasks.toList(),
         ),
-        _displayQueuePusherButton,
+        _queuePushButton,
       ],
       [About()],
     ];
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColorLight,
-      body: Builder(
-        builder: (BuildContext context) {
-          _scaffoldContext = context;
-          return ListView(
-            children: tabs[_tabIndex],
-          );
-        },
+      body: ListView(
+        children: tabs[_tabIndex],
       ),
       bottomNavigationBar: BottomAppBar(
         child: BottomNavigationBar(
@@ -82,42 +92,6 @@ class _AppState extends State<App> {
     );
   }
 
-  Widget get _displayQueuePopperButton {
-    if ((_tabIndex == _AppTabs.queue.index) && _tasks.isNotEmpty) {
-      return Padding(
-        padding: EdgeInsets.all(4.0),
-        child: FloatingActionButton.extended(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0)),
-          ),
-          icon: Icon(Icons.delete_forever),
-          tooltip: 'Remove the first task from the queue.',
-          label: Text('Pop the first task'),
-          onPressed: _popTask,
-        ),
-      );
-    }
-    return Container();
-  }
-
-  Widget get _displayQueuePusherButton {
-    if (_tabIndex == _AppTabs.queue.index) {
-      return Padding(
-        padding: EdgeInsets.all(4.0),
-        child: FloatingActionButton.extended(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0)),
-          ),
-          icon: Icon(Icons.add_box),
-          tooltip: 'Add a task to the end of the queue.',
-          label: Text('Push a task'),
-          onPressed: _pushTask,
-        ),
-      );
-    }
-    return Container();
-  }
-
   void _pushTask() {
     if (_tasks.length < _tasksMax) {
       setState(() {
@@ -129,10 +103,7 @@ class _AppState extends State<App> {
           ),
         );
       });
-    } else {
-      showErrorSnackBar(
-          _scaffoldContext, 'Maximum number of tasks is $_tasksMax.');
-    }
+    } // Else: add button isn't rendered.
   }
 
   void _saveTasks() => configSave(_tasks);
@@ -150,5 +121,34 @@ class _AppState extends State<App> {
     setState(() {
       _tabIndex = index;
     });
+  }
+}
+
+class _AppQueueButton extends StatelessWidget {
+  final String tooltip;
+  final String label;
+  final IconData icon;
+  final Function onPressed;
+
+  const _AppQueueButton(
+      {@required this.tooltip,
+      @required this.label,
+      @required this.icon,
+      @required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(4.0),
+      child: FloatingActionButton.extended(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        ),
+        icon: Icon(this.icon),
+        tooltip: this.tooltip,
+        label: Text(this.label),
+        onPressed: this.onPressed,
+      ),
+    );
   }
 }
