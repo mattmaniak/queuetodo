@@ -5,9 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'error.dart';
 
 class About extends StatelessWidget {
-  static const String _semanticVersion = '0.0.0';
   static const String _authorUrl = 'https://gitlab.com/mattmaniak';
-  static const String _repoUrl = '$_authorUrl/queuetodo';
+  final String _repoUrl = '$_authorUrl/queuetodo';
+  final String _semanticVersion = '0.0.0';
 
   @override
   Widget build(BuildContext context) {

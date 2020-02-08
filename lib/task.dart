@@ -13,8 +13,7 @@ class Task extends StatefulWidget {
   final DateTime creationTimestamp;
   final Function removeTask;
   final Function saveConfig;
-  _TaskState state;
-  DateTime lastModified;
+  DateTime lastModified = DateTime.now();
   String description = '';
   String title = '';
 
@@ -27,10 +26,7 @@ class Task extends StatefulWidget {
       this.lastModified});
 
   @override
-  _TaskState createState() {
-    state = _TaskState();
-    return state;
-  }
+  _TaskState createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
@@ -41,9 +37,7 @@ class _TaskState extends State<Task> {
       ..lastModified = widget?.creationTimestamp ?? DateTime.now()
       ..titleController.addListener(() {
         setState(() {
-          widget
-            ..title = widget?.titleController?.text ?? ''
-            ..lastModified = DateTime.now();
+          widget?.title = widget?.titleController?.text ?? '';
         });
         if (widget?.title?.length == widget?.maxTitleLength) {
           showErrorSnackBar(
@@ -52,9 +46,7 @@ class _TaskState extends State<Task> {
       })
       ..descriptionController.addListener(() {
         setState(() {
-          widget
-            ..description = widget?.descriptionController?.text ?? ''
-            ..lastModified = DateTime.now();
+          widget?.description = widget?.descriptionController?.text ?? '';
         });
         if (widget?.description?.length == widget?.maxDescriptionLength) {
           showErrorSnackBar(context,
@@ -70,15 +62,12 @@ class _TaskState extends State<Task> {
     widget?.saveConfig();
 
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16.0)),
-      ),
       child: ExpansionTile(
         title: Padding(
           padding: EdgeInsets.only(
             bottom: 8.0,
           ),
-          child: _renderTextField(
+          child: _textField(
               'Title', widget?.maxTitleLength, widget?.titleController),
         ),
         subtitle: Text(
@@ -104,9 +93,7 @@ class _TaskState extends State<Task> {
                   right: 16.0,
                   bottom: 8.0,
                 ),
-                child: _renderTextField(
-                    'Description',
-                    widget?.maxDescriptionLength,
+                child: _textField('Description', widget?.maxDescriptionLength,
                     widget?.descriptionController),
               ),
             ],
@@ -116,11 +103,10 @@ class _TaskState extends State<Task> {
     );
   }
 
-  Widget _renderTextField(
-      String hintText, int maxLength, TextEditingController controller) {
+  Widget _textField(String text, int length, TextEditingController control) {
     return TextField(
       decoration: InputDecoration(
-        hintText: hintText,
+        hintText: text,
         isDense: true,
         counterText: '',
         enabledBorder: UnderlineInputBorder(
@@ -130,9 +116,9 @@ class _TaskState extends State<Task> {
         ),
       ),
       maxLines: null,
-      maxLength: maxLength ?? TextField.noMaxLength,
+      maxLength: length ?? TextField.noMaxLength,
       keyboardType: TextInputType.text,
-      controller: controller,
+      controller: control,
     );
   }
 

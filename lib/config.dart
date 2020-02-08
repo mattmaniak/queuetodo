@@ -1,25 +1,24 @@
 import 'dart:collection';
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'task.dart';
 
 void configSave(Queue<Task> tasks) async {
   final preferences = await SharedPreferences.getInstance();
-  final List<String> encodedTasks = List(tasks.length);
+  final List<String> encodedTasks = [];
 
-  for (int i = 0; i < tasks.length; i++) {
+  for (Task taskObject in tasks) {
     try {
-      encodedTasks[i] = json.encode({
-        'creationTimestamp': tasks.elementAt(i).creationTimestamp.toString(),
-        'lastModified': tasks.elementAt(i).lastModified.toString(),
-        'title': tasks.elementAt(i).title,
-        'description': tasks.elementAt(i).description
-      });
+      encodedTasks.add(json.encode({
+        'creationTimestamp': taskObject.creationTimestamp.toString(),
+        'lastModified': taskObject.lastModified.toString(),
+        'title': taskObject.title,
+        'description': taskObject.description
+      }));
     } on JsonUnsupportedObjectError {
-      // ...
+      continue;
     }
   }
   preferences.setStringList('_encodedTasks', encodedTasks);
@@ -40,7 +39,7 @@ Future<Queue<Task>> configRead(
       try {
         decoded = json.decode(encoded);
       } on FormatException {
-        debugPrint('format');
+        continue;
       }
       tasks.add(
         Task(

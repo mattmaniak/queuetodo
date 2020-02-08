@@ -12,49 +12,36 @@ happens on the fly.
 class Usage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              top: 36.0,
-              bottom: 4.0,
-            ),
-            child: Text(
+    return Column(
+      children: [
+        Card(
+          child: ListTile(
+            title: Text(
               'First is first.\nLast is last.',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontStyle: FontStyle.italic,
                 fontSize: 36.0,
               ),
             ),
-          ),
-          Text(
-            'Probably an ancient proverb',
-            style: TextStyle(
-              fontSize: 10.0,
+            subtitle: Text(
+              'Probably an ancient proverb',
+              textAlign: TextAlign.center,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 16.0,
-            ),
-            child: Text('Manage your everyday tasks\nthe right way.',
+        ),
+        Card(
+          child: ListTile(
+            title: Text('Manage your everyday tasks\nthe right way.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.title),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 16.0,
-              right: 16.0,
-              bottom: 36.0,
-            ),
-            child: Text(
+            subtitle: Text(
               _usageInfo.replaceAll('\n', ' '),
               textAlign: TextAlign.justify,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

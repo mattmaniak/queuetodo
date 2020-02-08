@@ -27,32 +27,28 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    final Widget _queuePopButton = _tasks.isNotEmpty
-        ? _AppQueueButton(
-            label: 'Pop the first task',
-            tooltip: 'Remove the first task from the queue.',
-            icon: Icons.delete_forever,
-            onPressed: _popTask,
-          )
-        : Container();
+    final Widget _queuePopButton = _AppQueueButton(
+      label: 'Pop the first task',
+      tooltip: 'Remove the first task from the queue.',
+      icon: Icons.delete_forever,
+      onPressed: _popTask,
+    );
 
-    final Widget _queuePushButton = _tasks.length < _tasksMax
-        ? _AppQueueButton(
-            label: 'Push a task',
-            tooltip: 'Add a task to the end of the queue.',
-            icon: Icons.add_box,
-            onPressed: _pushTask,
-          )
-        : Container();
+    final Widget _queuePushButton = _AppQueueButton(
+      label: 'Push a task',
+      tooltip: 'Add a task to the end of the queue.',
+      icon: Icons.add_box,
+      onPressed: _pushTask,
+    );
 
     final List<List<Widget>> tabs = [
       [Usage()],
       [
-        _queuePopButton,
+        _tasks.isNotEmpty ? _queuePopButton : Container(),
         Column(
           children: _tasks.toList(),
         ),
-        _queuePushButton,
+        _tasks.length < _tasksMax ? _queuePushButton : Container(),
       ],
       [About()],
     ];
@@ -62,32 +58,26 @@ class _AppState extends State<App> {
       body: ListView(
         children: tabs[_tabIndex],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: BottomNavigationBar(
-          selectedItemColor: Theme.of(context).accentColor,
-          unselectedItemColor: Theme.of(context).iconTheme.color,
-          showUnselectedLabels: true,
-          currentIndex: _tabIndex,
-          type: BottomNavigationBarType.shifting,
-          items: [
-            BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).primaryColorDark,
-              icon: Icon(Icons.check_box),
-              title: Text('Usage'),
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).primaryColorDark,
-              icon: Icon(Icons.queue),
-              title: Text('Queue'),
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).primaryColorDark,
-              icon: Icon(Icons.description),
-              title: Text('About'),
-            ),
-          ],
-          onTap: _switchTab,
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColorDark,
+        selectedItemColor: Theme.of(context).accentColor,
+        unselectedItemColor: Theme.of(context).iconTheme.color,
+        currentIndex: _tabIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.check_box),
+            title: Text('Usage'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.queue),
+            title: Text('Queue'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.description),
+            title: Text('About'),
+          ),
+        ],
+        onTap: _switchTab,
       ),
     );
   }

@@ -15,8 +15,13 @@ ThemeData get theme {
     primaryColorDark: yellow_700,
     accentColor: blue_500,
     buttonColor: blue_500,
-    cardColor: yellow_500,
     errorColor: red_300,
-    dividerColor: Colors.transparent, // ExpandedTile borders when expanded.
+    dividerColor: Colors.transparent, // ExpandedTile's borders when expanded.
+    cardTheme: CardTheme(
+      color: yellow_500,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+      ),
+    ),
   );
 }
