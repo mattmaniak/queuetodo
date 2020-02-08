@@ -5,20 +5,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'task.dart';
 
-void configSave(Queue<Task> tasks) async {
+void configSave(Queue<Task> tasks, int tasksMax) async {
   final preferences = await SharedPreferences.getInstance();
   final List<String> encodedTasks = [];
 
   for (Task taskObject in tasks) {
-    try {
-      encodedTasks.add(json.encode({
-        'creationTimestamp': taskObject.creationTimestamp.toString(),
-        'lastModified': taskObject.lastModified.toString(),
-        'title': taskObject.title,
-        'description': taskObject.description
-      }));
-    } on JsonUnsupportedObjectError {
-      continue;
+    if (encodedTasks.length < tasksMax) {
+      try {
+        encodedTasks.add(json.encode({
+          'creationTimestamp': taskObject.creationTimestamp.toString(),
+          'lastModified': taskObject.lastModified.toString(),
+          'title': taskObject.title,
+          'description': taskObject.description
+        }));
+      } on JsonUnsupportedObjectError {
+        continue;
+      }
     }
   }
   preferences.setStringList('_encodedTasks', encodedTasks);

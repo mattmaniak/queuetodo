@@ -96,7 +96,7 @@ class _AppState extends State<App> {
     } // Else: add button isn't rendered.
   }
 
-  void _saveTasks() => configSave(_tasks);
+  void _saveTasks() => configSave(_tasks, _tasksMax);
 
   void _popTask() {
     if (_tasks.isNotEmpty) {
