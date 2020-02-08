@@ -6,7 +6,6 @@ import 'theme.dart';
 void main() {
   runApp(
     MaterialApp(
-      debugShowCheckedModeBanner: false,
       theme: theme,
       title: 'QueueToDo',
       home: SafeArea(

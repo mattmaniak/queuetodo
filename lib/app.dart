@@ -27,14 +27,14 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    final Widget _queuePopButton = _AppQueueButton(
+    final Widget _popButton = _queueButton(
       label: 'Pop the first task',
       tooltip: 'Remove the first task from the queue.',
       icon: Icons.delete_forever,
       onPressed: _popTask,
     );
 
-    final Widget _queuePushButton = _AppQueueButton(
+    final Widget _pushButton = _queueButton(
       label: 'Push a task',
       tooltip: 'Add a task to the end of the queue.',
       icon: Icons.add_box,
@@ -44,11 +44,11 @@ class _AppState extends State<App> {
     final List<List<Widget>> tabs = [
       [Usage()],
       [
-        _tasks.isNotEmpty ? _queuePopButton : Container(),
+        _tasks.isNotEmpty ? _popButton : Container(),
         Column(
           children: _tasks.toList(),
         ),
-        _tasks.length < _tasksMax ? _queuePushButton : Container(),
+        _tasks.length < _tasksMax ? _pushButton : Container(),
       ],
       [About()],
     ];
@@ -82,8 +82,68 @@ class _AppState extends State<App> {
     );
   }
 
+  Widget _queueButton(
+      {@required String tooltip,
+      @required String label,
+      @required IconData icon,
+      @required Function onPressed}) {
+    return Padding(
+      padding: EdgeInsets.all(4.0),
+      child: FloatingActionButton.extended(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        ),
+        icon: Icon(icon),
+        tooltip: tooltip,
+        label: Text(label),
+        onPressed: onPressed,
+      ),
+    );
+  }
+
+  void _showQueueDialog(
+      {@required String title,
+      @required String content,
+      @required Function onYes}) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          shape: Theme.of(context).cardTheme.shape,
+          backgroundColor: Theme.of(context).primaryColorDark,
+          title: Text(title),
+          content: Text(content),
+          actions: [
+            FlatButton(
+              child: Text(
+                'No',
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              onPressed: Navigator.of(context).pop,
+            ),
+            FlatButton(
+              child: Text(
+                'Yes',
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              onPressed: () {
+                onYes();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+      barrierDismissible: false,
+    );
+  }
+
   void _pushTask() {
-    if (_tasks.length < _tasksMax) {
+    void push() {
       setState(() {
         _tasks.addLast(
           Task(
@@ -93,17 +153,34 @@ class _AppState extends State<App> {
           ),
         );
       });
+      _saveTasks();
+    }
+
+    if (_tasks.length < _tasksMax) {
+      _showQueueDialog(
+        title: 'Push?',
+        content: 'Something new to do?',
+        onYes: push,
+      );
     } // Else: add button isn't rendered.
   }
 
   void _saveTasks() => configSave(_tasks, _tasksMax);
 
   void _popTask() {
-    if (_tasks.isNotEmpty) {
+    void pop() {
       setState(() {
         _tasks.removeFirst();
       });
       _saveTasks();
+    }
+
+    if (_tasks.isNotEmpty) {
+      _showQueueDialog(
+        title: 'Pop?',
+        content: 'Already finished a task?',
+        onYes: pop,
+      );
     }
   }
 
@@ -111,34 +188,5 @@ class _AppState extends State<App> {
     setState(() {
       _tabIndex = index;
     });
-  }
-}
-
-class _AppQueueButton extends StatelessWidget {
-  final String tooltip;
-  final String label;
-  final IconData icon;
-  final Function onPressed;
-
-  const _AppQueueButton(
-      {@required this.tooltip,
-      @required this.label,
-      @required this.icon,
-      @required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(4.0),
-      child: FloatingActionButton.extended(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16.0)),
-        ),
-        icon: Icon(this.icon),
-        tooltip: this.tooltip,
-        label: Text(this.label),
-        onPressed: this.onPressed,
-      ),
-    );
   }
 }

@@ -35,22 +35,26 @@ class _TaskState extends State<Task> {
     super.initState();
     widget
       ..lastModified = widget?.creationTimestamp ?? DateTime.now()
-      ..titleController.addListener(() {
-        setState(() {
-          widget?.title = widget?.titleController?.text ?? '';
-        });
-        if (widget?.title?.length == widget?.maxTitleLength) {
-          showErrorSnackBar(
-              context, 'Title length limit is ${widget?.maxTitleLength}.');
-        }
-      })
       ..descriptionController.addListener(() {
         setState(() {
-          widget?.description = widget?.descriptionController?.text ?? '';
+          widget
+            ..description = widget?.descriptionController?.text ?? ''
+            ..lastModified = DateTime.now();
         });
         if (widget?.description?.length == widget?.maxDescriptionLength) {
           showErrorSnackBar(context,
               'Description length limit is ${widget?.maxDescriptionLength}.');
+        }
+      })
+      ..titleController.addListener(() {
+        setState(() {
+          widget
+            ..title = widget?.titleController?.text ?? ''
+            ..lastModified = DateTime.now();
+        });
+        if (widget?.title?.length == widget?.maxTitleLength) {
+          showErrorSnackBar(
+              context, 'Title length limit is ${widget?.maxTitleLength}.');
         }
       })
       ..descriptionController.text = widget?.description ?? ''
@@ -68,7 +72,10 @@ class _TaskState extends State<Task> {
             bottom: 8.0,
           ),
           child: _textField(
-              'Title', widget?.maxTitleLength, widget?.titleController),
+            hintText: 'Title',
+            maxLength: widget?.maxTitleLength,
+            controller: widget?.titleController,
+          ),
         ),
         subtitle: Text(
           'Created ' + _formatDate(widget?.creationTimestamp),
@@ -93,8 +100,11 @@ class _TaskState extends State<Task> {
                   right: 16.0,
                   bottom: 8.0,
                 ),
-                child: _textField('Description', widget?.maxDescriptionLength,
-                    widget?.descriptionController),
+                child: _textField(
+                  hintText: 'Description',
+                  maxLength: widget?.maxDescriptionLength,
+                  controller: widget?.descriptionController,
+                ),
               ),
             ],
           ),
@@ -103,10 +113,13 @@ class _TaskState extends State<Task> {
     );
   }
 
-  Widget _textField(String text, int length, TextEditingController control) {
+  Widget _textField(
+      {@required String hintText,
+      @required int maxLength,
+      @required TextEditingController controller}) {
     return TextField(
       decoration: InputDecoration(
-        hintText: text,
+        hintText: hintText,
         isDense: true,
         counterText: '',
         enabledBorder: UnderlineInputBorder(
@@ -116,9 +129,9 @@ class _TaskState extends State<Task> {
         ),
       ),
       maxLines: null,
-      maxLength: length ?? TextField.noMaxLength,
+      maxLength: maxLength,
       keyboardType: TextInputType.text,
-      controller: control,
+      controller: controller,
     );
   }
 
