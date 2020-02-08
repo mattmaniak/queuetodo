@@ -7,7 +7,7 @@ import 'error.dart';
 class About extends StatelessWidget {
   static const String _authorUrl = 'https://gitlab.com/mattmaniak';
   final String _repoUrl = '$_authorUrl/queuetodo';
-  final String _semanticVersion = '0.0.0';
+  final String _semanticVersion = '1.0.0';
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,9 @@ class About extends StatelessWidget {
 }
 
 class _AboutCard extends StatelessWidget {
-  final String title;
   final Text subtitle;
   final String url;
+  final String title;
 
   const _AboutCard({@required this.title, this.subtitle, this.url});
 

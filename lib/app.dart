@@ -178,7 +178,7 @@ class _AppState extends State<App> {
     if (_tasks.isNotEmpty) {
       _showQueueDialog(
         title: 'Pop?',
-        content: 'Already finished a task?',
+        content: 'Already finished the task?',
         onYes: pop,
       );
     }
