@@ -5,10 +5,10 @@ import 'package:intl/intl.dart';
 import 'error.dart';
 
 class Task extends StatefulWidget {
-  final int maxDescriptionLength = 1000;
-  final int maxTitleLength = 100;
   final descriptionController = TextEditingController();
   final titleController = TextEditingController();
+  final int maxDescriptionLength = 1000;
+  final int maxTitleLength = 100;
 
   final DateTime creationTimestamp;
   final Function removeTask;
@@ -67,18 +67,13 @@ class _TaskState extends State<Task> {
 
     return Card(
       child: ExpansionTile(
-        title: Padding(
-          padding: EdgeInsets.only(
-            bottom: 8.0,
-          ),
-          child: _textField(
-            hintText: 'Title',
-            maxLength: widget?.maxTitleLength,
-            controller: widget?.titleController,
-          ),
+        title: _textField(
+          hintText: 'Title',
+          maxLength: widget?.maxTitleLength,
+          controller: widget?.titleController,
         ),
         subtitle: Text(
-          'Created ' + _formatDate(widget?.creationTimestamp),
+          'Created ${_formatDate(widget?.creationTimestamp)}.',
           style: TextStyle(
             color: Theme.of(context).textTheme.subtitle.color,
           ),
@@ -90,7 +85,7 @@ class _TaskState extends State<Task> {
               Container(
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: Text(
-                  'Last modified ' + _formatDate(widget?.lastModified),
+                  'Last modified ${_formatDate(widget?.lastModified)}.',
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -98,7 +93,7 @@ class _TaskState extends State<Task> {
                 padding: EdgeInsets.only(
                   left: 16.0,
                   right: 16.0,
-                  bottom: 8.0,
+                  bottom: 4.0,
                 ),
                 child: _textField(
                   hintText: 'Description',
@@ -119,24 +114,26 @@ class _TaskState extends State<Task> {
       @required TextEditingController controller}) {
     return TextField(
       decoration: InputDecoration(
-        hintText: hintText,
         isDense: true,
-        counterText: '',
+        hintText: hintText,
+        counterStyle: TextStyle(
+          height: 0.5,
+        ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).accentColor,
           ),
         ),
       ),
-      maxLines: null,
-      maxLength: maxLength,
-      keyboardType: TextInputType.text,
       controller: controller,
+      keyboardType:
+          hintText == 'Title' ? TextInputType.text : TextInputType.multiline,
+      maxLength: maxLength,
+      minLines: 1,
+      maxLines: maxLength,
     );
   }
 
-  String _formatDate(DateTime date) {
-    date = date ?? DateTime.fromMillisecondsSinceEpoch(0); // 1970-01-01...
-    return DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
-  }
+  String _formatDate(DateTime date) => DateFormat('yyyy-MM-dd HH:mm:ss')
+      .format(date ?? DateTime.fromMillisecondsSinceEpoch(0));
 }

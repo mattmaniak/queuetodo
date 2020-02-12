@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'about.dart';
 import 'config.dart';
+import 'history.dart';
 import 'usage.dart';
 import 'task.dart';
 
@@ -15,7 +16,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   static const int _tasksMax = 100;
   Queue<Task> _tasks = Queue();
-  int _tabIndex = 1;
+  int _tabIndex = 0;
 
   _AppState() {
     configRead(_tasksMax, _popTask, _saveTasks).then((tasks) {
@@ -42,7 +43,6 @@ class _AppState extends State<App> {
     );
 
     final List<List<Widget>> tabs = [
-      [Usage()],
       [
         _tasks.isNotEmpty ? _popButton : Container(),
         Column(
@@ -50,6 +50,8 @@ class _AppState extends State<App> {
         ),
         _tasks.length < _tasksMax ? _pushButton : Container(),
       ],
+      [History()],
+      [Usage()],
       [About()],
     ];
 
@@ -59,20 +61,28 @@ class _AppState extends State<App> {
         children: tabs[_tabIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColorDark,
         selectedItemColor: Theme.of(context).accentColor,
         unselectedItemColor: Theme.of(context).iconTheme.color,
+        showUnselectedLabels: true,
         currentIndex: _tabIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.check_box),
-            title: Text('Usage'),
-          ),
-          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColorDark,
             icon: Icon(Icons.queue),
             title: Text('Queue'),
           ),
           BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColorDark,
+            icon: Icon(Icons.history),
+            title: Text('History'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColorDark,
+            icon: Icon(Icons.help_outline),
+            title: Text('Usage'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColorDark,
             icon: Icon(Icons.description),
             title: Text('About'),
           ),
@@ -145,7 +155,7 @@ class _AppState extends State<App> {
   void _pushTask() {
     void push() {
       setState(() {
-        _tasks.addLast(
+        _tasks.add(
           Task(
             creationTimestamp: DateTime.now(),
             removeTask: _popTask,

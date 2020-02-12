@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 
-ThemeData get theme {
-  const Color yellow_100 = Color(0xfffff9c4);
-  const Color yellow_500 = Color(0xffffeb3b);
-  const Color yellow_700 = Color(0xfffbc02d);
-  const Color blue_500 = Color(0xff2196f3);
-  const Color red_300 = Color(0xffe57373);
-
-  return ThemeData(
-    brightness: Brightness.light,
-    accentColorBrightness: Brightness.light,
-    primaryColor: yellow_500,
-    primaryColorLight: yellow_100,
-    primaryColorDark: yellow_700,
-    accentColor: blue_500,
-    buttonColor: blue_500,
-    errorColor: red_300,
-    dividerColor: Colors.transparent, // ExpandedTile's borders when expanded.
-    cardTheme: CardTheme(
-      color: yellow_500,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+get theme => ThemeData(
+      brightness: Brightness.light,
+      accentColorBrightness: Brightness.light,
+      primaryColorBrightness: Brightness.light,
+      primaryColor: Colors.yellow,
+      primaryColorLight: Colors.yellow[100],
+      primaryColorDark: Colors.yellow[700],
+      accentColor: Colors.blue,
+      buttonColor: Colors.blue,
+      dividerColor: Colors.transparent, // ExpandedTile's borders when expanded.
+      cardTheme: CardTheme(
+        color: Colors.yellow,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        ),
       ),
-    ),
-  );
-}
+    );
