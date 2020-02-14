@@ -3,8 +3,8 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import 'about.dart';
+import 'archive.dart';
 import 'config.dart';
-import 'history.dart';
 import 'usage.dart';
 import 'task.dart';
 
@@ -16,6 +16,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   static const int _tasksMax = 100;
   Queue<Task> _tasks = Queue();
+  List<Widget> _archivedTasks = [];
   int _tabIndex = 0;
 
   _AppState() {
@@ -50,7 +51,7 @@ class _AppState extends State<App> {
         ),
         _tasks.length < _tasksMax ? _pushButton : Container(),
       ],
-      [History()],
+      [Archive(tasks: _archivedTasks)],
       [Usage()],
       [About()],
     ];
@@ -74,7 +75,7 @@ class _AppState extends State<App> {
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColorDark,
             icon: Icon(Icons.history),
-            title: Text('History'),
+            title: Text('Archive'),
           ),
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColorDark,
@@ -172,7 +173,7 @@ class _AppState extends State<App> {
         content: 'Something new to do?',
         onYes: push,
       );
-    } // Else: add button isn't rendered.
+    } // Else: 'Add' button isn't rendered.
   }
 
   void _saveTasks() => configSave(_tasks, _tasksMax);
@@ -180,8 +181,27 @@ class _AppState extends State<App> {
   void _popTask() {
     void pop() {
       setState(() {
-        _tasks.removeFirst();
+        Task removedTask = _tasks.removeFirst();
+        _archivedTasks.add(
+          Card(
+            child: ListTile(
+              title: Text(removedTask.title.isNotEmpty
+                  ? removedTask.title
+                  : 'Empty title...'),
+              subtitle: Text(removedTask.description.isNotEmpty
+                  ? removedTask.description
+                  : 'Empty description...'),
+            ),
+          ),
+        );
       });
+      // const int _maxTasks = 10;
+
+      // if (_archivedTasks.length >= 10) {
+        // while (_archivedTasks.length >= 10) {
+        //   _archivedTasks.removeAt(0);
+        // }
+      // }
       _saveTasks();
     }
 
