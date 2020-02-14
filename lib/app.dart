@@ -14,7 +14,9 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  static const int _archivedMax = 10;
   static const int _tasksMax = 100;
+
   Queue<Task> _tasks = Queue();
   List<Widget> _archivedTasks = [];
   int _tabIndex = 0;
@@ -51,7 +53,7 @@ class _AppState extends State<App> {
         ),
         _tasks.length < _tasksMax ? _pushButton : Container(),
       ],
-      [Archive(tasks: _archivedTasks)],
+      [Archive(tasksMax: _archivedMax, tasks: _archivedTasks)],
       [Usage()],
       [About()],
     ];
@@ -170,7 +172,7 @@ class _AppState extends State<App> {
     if (_tasks.length < _tasksMax) {
       _showQueueDialog(
         title: 'Push?',
-        content: 'Something new to do?',
+        content: 'Is there anything new to do?',
         onYes: push,
       );
     } // Else: 'Add' button isn't rendered.
@@ -180,28 +182,22 @@ class _AppState extends State<App> {
 
   void _popTask() {
     void pop() {
-      setState(() {
-        Task removedTask = _tasks.removeFirst();
-        _archivedTasks.add(
-          Card(
-            child: ListTile(
-              title: Text(removedTask.title.isNotEmpty
-                  ? removedTask.title
-                  : 'Empty title...'),
-              subtitle: Text(removedTask.description.isNotEmpty
-                  ? removedTask.description
-                  : 'Empty description...'),
-            ),
+      if (_archivedTasks.length >= _archivedMax) {
+        while (_archivedTasks.length >= _archivedMax) {
+          _archivedTasks.removeAt(0);
+        }
+      }
+      _archivedTasks.add(
+        Card(
+          child: ListTile(
+            title: Text(_tasks.first.title ?? 'Empty title...'),
+            subtitle: Text(_tasks.first.description ?? 'Empty description...'),
           ),
-        );
+        ),
+      );
+      setState(() {
+        _tasks.removeFirst();
       });
-      // const int _maxTasks = 10;
-
-      // if (_archivedTasks.length >= 10) {
-        // while (_archivedTasks.length >= 10) {
-        //   _archivedTasks.removeAt(0);
-        // }
-      // }
       _saveTasks();
     }
 

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
 class Archive extends StatelessWidget {
+  final int tasksMax;
   final List<Widget> tasks;
 
   @override
-  Archive({@required this.tasks});
+  Archive({@required this.tasksMax, @required this.tasks});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-          child: ListTile(
-            title: Text('Your last 10 finished tasks:'),
-          ),
+        AppBar(
+          title: Text('Your $tasksMax recently finished tasks'),
         ),
         Column(
           children: tasks ?? [],
