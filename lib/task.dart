@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 import 'error.dart';
 
 class Task extends StatefulWidget {
-  final descriptionController = TextEditingController();
-  final titleController = TextEditingController();
+  final descriptionController;
+  final titleController;
   final int maxDescriptionLength = 1000;
   final int maxTitleLength = 100;
 
@@ -14,12 +14,10 @@ class Task extends StatefulWidget {
   final DateTime lastModified;
   final Function removeTask;
   final Function saveConfig;
-  final String description;
-  final String title;
 
   Task(
-      {@required this.title,
-      @required this.description,
+      {@required this.titleController,
+      @required this.descriptionController,
       @required this.creationTimestamp,
       @required this.lastModified,
       @required this.removeTask,
@@ -37,11 +35,12 @@ class _TaskState extends State<Task> {
   @override
   void initState() {
     super.initState();
-    _lastModified = widget.lastModified;
-    _description = widget.description;
-    _title = widget.title;
 
-     widget
+    _lastModified = widget.lastModified;
+    _description = widget.descriptionController.text;
+    _title = widget.titleController.text;
+
+    widget
       ..descriptionController.addListener(() {
         setState(() {
           _description = widget.descriptionController.text;
@@ -61,10 +60,9 @@ class _TaskState extends State<Task> {
           showErrorSnackBar(
               context, 'Title length limit is ${widget.maxTitleLength}.');
         }
-      });
-      widget
-        ..descriptionController.text = _description
-        ..titleController.text = _title;
+      })
+      ..descriptionController.text = _description
+      ..titleController.text = _title;
   }
 
   @override

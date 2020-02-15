@@ -52,8 +52,12 @@ Future<Queue<Task>> configRead(
           lastModified: DateTime.tryParse(decoded['lastModified']) ?? now,
           removeTask: removeTask,
           saveConfig: saveConfig,
-          title: decoded['title'] ?? '',
-          description: decoded['description'] ?? '',
+          titleController: TextEditingController(
+            text: decoded['title'],
+          ),
+          descriptionController: TextEditingController(
+            text: decoded['description'],
+          ),
         ),
       );
     }

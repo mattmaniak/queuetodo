@@ -152,8 +152,10 @@ class _AppState extends State<App> {
       setState(() {
         _tasks.add(
           Task(
-            title: '',
-            description: '',
+            // title: '',
+            // description: '',
+            titleController: TextEditingController(),
+            descriptionController: TextEditingController(),
             creationTimestamp: now,
             lastModified: now,
             removeTask: _popTask,
