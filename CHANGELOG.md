@@ -1,6 +1,5 @@
 # Changelog
 ## 1.1.0
-- Task archive.
 - Text length counters.
 - Multiline description.
 - A new icon.

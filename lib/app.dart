@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import 'about.dart';
-import 'archive.dart';
 import 'config.dart';
 import 'usage.dart';
 import 'task.dart';
@@ -14,12 +13,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  static const int _archivedMax = 10;
   static const int _tasksMax = 100;
 
+  int _tabIndex = 1;
   Queue<Task> _tasks = Queue();
-  List<Widget> _archivedTasks = [];
-  int _tabIndex = 0;
 
   _AppState() {
     configRead(_tasksMax, _popTask, _saveTasks).then((tasks) {
@@ -46,6 +43,7 @@ class _AppState extends State<App> {
     );
 
     final List<List<Widget>> tabs = [
+      [Usage()],
       [
         _tasks.isNotEmpty ? _popButton : Container(),
         Column(
@@ -53,8 +51,6 @@ class _AppState extends State<App> {
         ),
         _tasks.length < _tasksMax ? _pushButton : Container(),
       ],
-      [Archive(tasksMax: _archivedMax, tasks: _archivedTasks)],
-      [Usage()],
       [About()],
     ];
 
@@ -66,23 +62,18 @@ class _AppState extends State<App> {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Theme.of(context).accentColor,
         unselectedItemColor: Theme.of(context).iconTheme.color,
-        showUnselectedLabels: true,
+        type: BottomNavigationBarType.shifting,
         currentIndex: _tabIndex,
         items: [
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColorDark,
-            icon: Icon(Icons.queue),
-            title: Text('Queue'),
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            icon: Icon(Icons.history),
-            title: Text('Archive'),
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColorDark,
             icon: Icon(Icons.help_outline),
             title: Text('Usage'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColorDark,
+            icon: Icon(Icons.queue),
+            title: Text('Queue'),
           ),
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColorDark,
@@ -182,19 +173,6 @@ class _AppState extends State<App> {
 
   void _popTask() {
     void pop() {
-      if (_archivedTasks.length >= _archivedMax) {
-        while (_archivedTasks.length >= _archivedMax) {
-          _archivedTasks.removeAt(0);
-        }
-      }
-      _archivedTasks.add(
-        Card(
-          child: ListTile(
-            title: Text(_tasks.first.title ?? 'Empty title...'),
-            subtitle: Text(_tasks.first.description ?? 'Empty description...'),
-          ),
-        ),
-      );
       setState(() {
         _tasks.removeFirst();
       });
