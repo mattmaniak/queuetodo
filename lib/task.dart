@@ -11,69 +11,75 @@ class Task extends StatefulWidget {
   final int maxTitleLength = 100;
 
   final DateTime creationTimestamp;
+  final DateTime lastModified;
   final Function removeTask;
   final Function saveConfig;
-  DateTime lastModified = DateTime.now();
-  String description = '';
-  String title = '';
+  final String description;
+  final String title;
 
   Task(
-      {@required this.creationTimestamp,
+      {@required this.title,
+      @required this.description,
+      @required this.creationTimestamp,
+      @required this.lastModified,
       @required this.removeTask,
-      @required this.saveConfig,
-      this.description,
-      this.title,
-      this.lastModified});
+      @required this.saveConfig});
 
   @override
   _TaskState createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
+  DateTime _lastModified;
+  String _description;
+  String _title;
+
   @override
   void initState() {
     super.initState();
-    widget
-      ..lastModified = widget?.creationTimestamp ?? DateTime.now()
+    _lastModified = widget.lastModified;
+    _description = widget.description;
+    _title = widget.title;
+
+     widget
       ..descriptionController.addListener(() {
         setState(() {
-          widget
-            ..description = widget?.descriptionController?.text ?? ''
-            ..lastModified = DateTime.now();
+          _description = widget.descriptionController.text;
+          _lastModified = DateTime.now();
         });
-        if (widget?.description?.length == widget?.maxDescriptionLength) {
+        if (_description.length == widget.maxDescriptionLength) {
           showErrorSnackBar(context,
-              'Description length limit is ${widget?.maxDescriptionLength}.');
+              'Description length limit is ${widget.maxDescriptionLength}.');
         }
       })
       ..titleController.addListener(() {
         setState(() {
-          widget
-            ..title = widget?.titleController?.text ?? ''
-            ..lastModified = DateTime.now();
+          _title = widget.titleController.text;
+          _lastModified = DateTime.now();
         });
-        if (widget?.title?.length == widget?.maxTitleLength) {
+        if (_title.length == widget.maxTitleLength) {
           showErrorSnackBar(
-              context, 'Title length limit is ${widget?.maxTitleLength}.');
+              context, 'Title length limit is ${widget.maxTitleLength}.');
         }
-      })
-      ..descriptionController.text = widget?.description ?? ''
-      ..titleController.text = widget?.title ?? '';
+      });
+      widget
+        ..descriptionController.text = _description
+        ..titleController.text = _title;
   }
 
   @override
   Widget build(BuildContext context) {
-    widget?.saveConfig();
+    widget.saveConfig();
 
     return Card(
       child: ExpansionTile(
         title: _textField(
           hintText: 'Title',
-          maxLength: widget?.maxTitleLength,
-          controller: widget?.titleController,
+          maxLength: widget.maxTitleLength,
+          controller: widget.titleController,
         ),
         subtitle: Text(
-          'Created ${_formatDate(widget?.creationTimestamp)}.',
+          'Created ${_formatDate(widget.creationTimestamp)}.',
           style: TextStyle(
             color: Theme.of(context).textTheme.subtitle.color,
           ),
@@ -85,7 +91,7 @@ class _TaskState extends State<Task> {
               Container(
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: Text(
-                  'Last modified ${_formatDate(widget?.lastModified)}.',
+                  'Last modified ${_formatDate(_lastModified)}.',
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -97,8 +103,8 @@ class _TaskState extends State<Task> {
                 ),
                 child: _textField(
                   hintText: 'Description',
-                  maxLength: widget?.maxDescriptionLength,
-                  controller: widget?.descriptionController,
+                  maxLength: widget.maxDescriptionLength,
+                  controller: widget.descriptionController,
                 ),
               ),
             ],
@@ -128,9 +134,9 @@ class _TaskState extends State<Task> {
       controller: controller,
       keyboardType:
           hintText == 'Title' ? TextInputType.text : TextInputType.multiline,
-      maxLength: maxLength,
       minLines: 1,
       maxLines: maxLength,
+      maxLength: maxLength,
     );
   }
 

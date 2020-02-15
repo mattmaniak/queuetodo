@@ -148,10 +148,14 @@ class _AppState extends State<App> {
 
   void _pushTask() {
     void push() {
+      final now = DateTime.now();
       setState(() {
         _tasks.add(
           Task(
-            creationTimestamp: DateTime.now(),
+            title: '',
+            description: '',
+            creationTimestamp: now,
+            lastModified: now,
             removeTask: _popTask,
             saveConfig: _saveTasks,
           ),
@@ -189,8 +193,13 @@ class _AppState extends State<App> {
   }
 
   void _switchTab(int index) {
-    setState(() {
-      _tabIndex = index;
-    });
+    if (_tabIndex != index) {
+      setState(() {
+        _tabIndex = index;
+        configRead(_tasksMax, _popTask, _saveTasks).then((tasks) {
+          _tasks = tasks;
+        });
+      });
+    }
   }
 }
