@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'task.dart';
+import 'package:queuetodo/task.dart';
 
 void configSave(Queue<Task> tasks, int tasksMax) async {
   final preferences = await SharedPreferences.getInstance();

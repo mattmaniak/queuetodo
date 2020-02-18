@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
-import 'error.dart';
+import 'package:queuetodo/error.dart';
 
 class Task extends StatefulWidget {
   final descriptionController;

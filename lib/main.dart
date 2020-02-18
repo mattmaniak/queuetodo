@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'app.dart';
-import 'theme.dart';
+import 'package:queuetodo/app.dart';
+import 'package:queuetodo/theme.dart';
 
 void main() {
   runApp(

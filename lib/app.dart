@@ -10,35 +10,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  // static const int _tasksMax = 100;
-
   int _tabIndex = 1;
-  // Queue<Task> _tasks = Queue();
-
-  // _AppState() {
-  //   configRead(_tasksMax, _popTask, _saveTasks).then((tasks) {
-  //     setState(() {
-  //       _tasks = tasks;
-  //     });
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
-    // final Widget _popButton = _queueButton(
-    //   label: 'Pop the first task',
-    //   tooltip: 'Remove the first task from the queue.',
-    //   icon: Icons.delete_forever,
-    //   onPressed: _popTask,
-    // );
-
-    // final Widget _pushButton = _queueButton(
-    //   label: 'Push a task',
-    //   tooltip: 'Add a task to the end of the queue.',
-    //   icon: Icons.add_box,
-    //   onPressed: _pushTask,
-    // );
-
     final List<List<Widget>> tabs = [
       [Usage()],
       [QueueDisplay()],
@@ -78,13 +53,8 @@ class _AppState extends State<App> {
   }
 
   void _switchTab(int index) {
-    if (_tabIndex != index) {
-      setState(() {
-        _tabIndex = index;
-        // configRead(_tasksMax, _popTask, _saveTasks).then((tasks) {
-        //   _tasks = tasks;
-        // });
-      });
-    }
+    setState(() {
+      _tabIndex = index;
+    });
   }
 }
