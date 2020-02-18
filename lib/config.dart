@@ -61,7 +61,6 @@ Future<Queue<Task>> configRead(
         ),
       );
     }
-    // debugPrint(tasks.first.title);
   }
   return tasks;
 }

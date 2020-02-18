@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import 'error.dart';
+import 'package:queuetodo/error.dart';
 
 class About extends StatelessWidget {
-  static const String _authorUrl = 'https://gitlab.com/mattmaniak';
+  static const String _authorUrl =
+      'https://play.google.com/store/search?q=mattmaniak';
   final String _repoUrl = '$_authorUrl/queuetodo';
   final String _semanticVersion = '1.0.0';
 
@@ -18,7 +19,7 @@ class About extends StatelessWidget {
           subtitle: Text('Manage your everyday tasks the right way.'),
         ),
         _AboutCard(
-          title: 'Created by mattmaniak',
+          title: 'Developer: mattmaniak',
           url: _authorUrl,
         ),
         _AboutCard(
