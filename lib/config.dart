@@ -12,8 +12,6 @@ void configSave(Queue<Task> tasks, int tasksMax) async {
 
   for (Task taskObject in tasks) {
     if (encodedTasks.length < tasksMax) {
-      debugPrint(tasks.first.titleController.text);
-
       try {
         encodedTasks.add(json.encode({
           'creationTimestamp': taskObject.creationTimestamp.toString(),

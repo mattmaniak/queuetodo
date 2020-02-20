@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:queuetodo/lower_bar.dart';
 
 import 'package:queuetodo/tabs/about.dart';
 import 'package:queuetodo/tabs/usage.dart';
@@ -14,39 +15,19 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    final List<List<Widget>> tabs = [
-      [Usage()],
-      [QueueDisplay()],
-      [About()],
-    ];
-
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColorLight,
       body: ListView(
-        children: tabs[_tabIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).accentColor,
-        unselectedItemColor: Theme.of(context).iconTheme.color,
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _tabIndex,
-        items: [
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            icon: Icon(Icons.help_outline),
-            title: Text('Usage'),
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            icon: Icon(Icons.queue),
-            title: Text('Queue'),
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            icon: Icon(Icons.description),
-            title: Text('About'),
-          ),
+        children: [
+          [
+            Usage(),
+            QueueDisplay(),
+            About(),
+          ].elementAt(_tabIndex)
         ],
+      ),
+      bottomNavigationBar: LowerBar(
+        index: _tabIndex,
         onTap: _switchTab,
       ),
     );
