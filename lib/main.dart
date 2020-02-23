@@ -11,6 +11,7 @@ void main() {
       home: SafeArea(
         child: App(),
       ),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }
