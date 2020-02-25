@@ -8,7 +8,7 @@ class About extends StatelessWidget {
   static const String _authorUrl =
       'https://play.google.com/store/search?q=mattmaniak';
   final String _repoUrl = '$_authorUrl/queuetodo';
-  final String _semanticVersion = '1.0.0';
+  final String _semanticVersion = '1.1.0';
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class About extends StatelessWidget {
           subtitle: Text('Manage your everyday tasks the right way.'),
         ),
         _AboutCard(
-          title: 'Developer: mattmaniak',
+          title: 'Developer\'s apps',
           url: _authorUrl,
         ),
         _AboutCard(

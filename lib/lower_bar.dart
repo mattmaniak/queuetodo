@@ -8,23 +8,21 @@ class LowerBar extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Theme.of(context).primaryColorDark,
       selectedItemColor: Theme.of(context).accentColor,
       unselectedItemColor: Theme.of(context).iconTheme.color,
-      type: BottomNavigationBarType.shifting,
+      showSelectedLabels: true,
       currentIndex: index,
       items: [
         BottomNavigationBarItem(
-          backgroundColor: Theme.of(context).primaryColorDark,
           icon: Icon(Icons.help_outline),
           title: Text('Usage'),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Theme.of(context).primaryColorDark,
           icon: Icon(Icons.queue),
           title: Text('Queue'),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Theme.of(context).primaryColorDark,
           icon: Icon(Icons.description),
           title: Text('About'),
         ),

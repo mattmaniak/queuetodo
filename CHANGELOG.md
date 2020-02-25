@@ -1,9 +1,9 @@
 # Changelog
 ## 1.1.0
 - Text length counters.
-- Multiline description.
+- Possible multiline description of a task.
 - A new icon.
-- Minor UI changes.
+- UI changes.
 
 ## 1.0.0
 - Initial stable release - basic task queue.

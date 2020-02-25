@@ -113,7 +113,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
     );
   }
 
-  void _saveTasks() => configSave(_tasks, _tasksMax);
+  void _saveTasks() => configSave(_tasks);
 
   void _popTask() {
     void pop() {

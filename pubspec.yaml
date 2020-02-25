@@ -1,7 +1,7 @@
 name: queuetodo
 description: Manage your everyday tasks the right way.
 
-version: 1.0.0+3
+version: 1.1.0+4
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -12,7 +12,6 @@ dependencies:
   intl: ^0.16.1
   shared_preferences: ^0.5.6+1
   url_launcher: ^5.4.1
-
 
 dev_dependencies:
   flutter_test:

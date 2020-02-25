@@ -7,9 +7,8 @@ void main() {
   testWidgets('App widget contents', (WidgetTester tester) async {
     try {
       await tester.pumpWidget(LowerBar(index: 1, onTap: (_) {},));
-      // await tester.pump();
-      // expect(find.text('Push a task'), findsOneWidget);
-      // expect(find.text('Queue'), findsOneWidget);
+      await tester.pump();
+      expect(find.text('Queue'), findsOneWidget);
     } on MissingPluginException {}
   });
 }
