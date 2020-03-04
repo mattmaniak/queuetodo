@@ -1,0 +1,33 @@
+{
+    "lower_bar": {
+        "usage_label": "Jak używać?",
+        "queue_label": "Kolejka zadań",
+        "about_label": "O aplikacji"
+    },
+    "usage": {
+        "quote": "Pierwszy jest pierwszy.\nOstatni to ostatni.",
+        "quote_author": "Domniemywana spartańska maksyma",
+        "description": "Zwiększ swoją produktywność kolejkując zadania. Aplikacja pozwala na tworzenie zadań i zakańczanie ich jedynie zachowując kolejność dodania - bez możliwości reorganizacji oznacza koniec prokrastynacji."
+    },
+    "queue": {
+        "add_task": "Dodaj nowe zadanie do kolejki",
+        "remove_task": "Zakończ pierwsze zadanie.",
+        "task": {
+            "title_placeholder": "Tytuł",
+            "description_placeholder": "Opis",
+            "created_label": "Utworzono",
+            "last_modified_label": "Ostatni raz modyfikowano"
+        }
+    },
+    "about": {
+        "motto": "Manage your everyday tasks the right way.",
+        "developer_apps": "Inne aplikacje twórcy",
+        "source_code": "Kod źródłowy",
+        "changelog": "Zmiany",
+        "license": "Licencja MIT",
+        "terms_of_use_title": "Warunki korzystania",
+        "terms_of_use_subtitle": "Zdefiniowane w licencji.",
+        "privacy_policy_title": "Polityka prywatności",
+        "privacy_policy_subtitle": "Aplikacja nie zbiera jakichkolwiek danych."
+    }
+}

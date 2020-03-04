@@ -1,5 +1,5 @@
 # QueueToDo
-Manage your everyday tasks the right way.
+Manage your everyday tasks in the right order.
 
 ## Description
 Increase your productivity by organizing your tasks in the most natural way -

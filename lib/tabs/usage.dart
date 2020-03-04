@@ -14,31 +14,24 @@ class Usage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-          child: ListTile(
-            title: Text(
-              'First is first.\nLast is last.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                fontSize: 36.0,
-              ),
-            ),
-            subtitle: Text(
-              'Probably an ancient proverb',
-              textAlign: TextAlign.center,
+        ListTile(
+          title: Text(
+            'First is first.\nLast is last.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontStyle: FontStyle.italic,
+              fontSize: 36.0,
             ),
           ),
+          subtitle: Text(
+            'Probably an ancient proverb',
+            textAlign: TextAlign.center,
+          ),
         ),
-        Card(
-          child: ListTile(
-            title: Text('Manage your everyday tasks\nthe right way.',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.title),
-            subtitle: Text(
-              _usageInfo.replaceAll('\n', ' '),
-              textAlign: TextAlign.justify,
-            ),
+        ListTile(
+          title: Text(
+            _usageInfo.replaceAll('\n', ' '),
+            textAlign: TextAlign.justify,
           ),
         ),
       ],

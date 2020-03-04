@@ -5,41 +5,41 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:queuetodo/error.dart';
 
 class About extends StatelessWidget {
-  static const String _authorUrl =
-      'https://play.google.com/store/search?q=mattmaniak';
-  final String _repoUrl = '$_authorUrl/queuetodo';
+  final String _authorUrl =
+      'https://play.google.com/store/apps/developer?id=mattmaniak';
+  final String _repoUrl = 'https://gitlab.com/mattmaniak/queuetodo';
   final String _semanticVersion = '1.1.0';
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _AboutCard(
-          title: 'QueueToDo $_semanticVersion',
-          subtitle: Text('Manage your everyday tasks the right way.'),
+        ListTile(
+          title: Text('QueueToDo $_semanticVersion'),
+          subtitle: Text('adwwdd')
         ),
-        _AboutCard(
+        _AboutButton(
           title: 'Developer\'s apps',
           url: _authorUrl,
         ),
-        _AboutCard(
+        _AboutButton(
           title: 'Source code',
           url: _repoUrl,
         ),
-        _AboutCard(
+        _AboutButton(
           title: 'Changelog',
           url: '$_repoUrl/blob/master/CHANGELOG.md',
         ),
-        _AboutCard(
+        _AboutButton(
           title: 'MIT License',
           url: '$_repoUrl/blob/master/LICENSE',
         ),
-        _AboutCard(
-          title: 'Terms of Use',
+        ListTile(
+          title: Text('Terms of Use'),
           subtitle: Text('Described in the license.'),
         ),
-        _AboutCard(
-          title: 'Privacy Policy',
+        ListTile(
+          title: Text('Privacy Policy'),
           subtitle: Text('No data is collected.'),
         ),
       ],
@@ -47,35 +47,24 @@ class About extends StatelessWidget {
   }
 }
 
-class _AboutCard extends StatelessWidget {
-  final Text subtitle;
+class _AboutButton extends StatelessWidget {
   final String url;
   final String title;
 
-  const _AboutCard({@required this.title, this.subtitle, this.url});
+  const _AboutButton({@required this.title, this.url});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(
-            16.0,
-          ),
-        ),
-      ),
       child: ListTile(
         title: Text(title),
-        subtitle: subtitle,
-        trailing: url != null
-            ? IconButton(
-                icon: Icon(
-                  Icons.open_in_new,
-                  color: Theme.of(context).accentColor,
-                ),
-                onPressed: () => _openUrlInBrowser(context),
-              )
-            : null,
+        trailing: IconButton(
+          icon: Icon(
+            Icons.open_in_new,
+            color: Theme.of(context).accentColor,
+          ),
+          onPressed: () => _openUrlInBrowser(context),
+        ),
       ),
     );
   }

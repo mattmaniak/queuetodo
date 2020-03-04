@@ -1,0 +1,33 @@
+{
+    "lower_bar": {
+        "usage_label": "Usage",
+        "queue_label": "Queue",
+        "about_label": "About"
+    },
+    "usage": {
+        "quote": "First is first.\nLast is last.",
+        "quote_author": "Probably an ancient proverb",
+        "description": "Increase your productivity by organizing your tasks in the most natural way - by queueing them. Stop procrastinating and let the app engage you to do tasks without the possibility to change their order."
+    },
+    "queue": {
+        "add_task": "Queue a task",
+        "remove_task": "Finish the first task",
+        "task": {
+            "title_placeholder": "Title",
+            "description_placeholder": "Description",
+            "created_label": "Created",
+            "last_modified_label": "Last modified"
+        }
+    },
+    "about": {
+        "motto": "Manage your everyday tasks the right way.",
+        "developer_apps": "Developer's apps",
+        "source_code": "Source code",
+        "changelog": "Changelog",
+        "license": "MIT License",
+        "terms_of_use_title": "Terms of Use",
+        "terms_of_use_subtitle": "Described in the license.",
+        "privacy_policy_title": "Privacy Policy",
+        "privacy_policy_subtitle": "No data is collected."
+    }
+}
