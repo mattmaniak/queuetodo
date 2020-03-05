@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:localize_and_translate/localize_and_translate.dart';
+
 class LowerBar extends StatelessWidget {
   final int index;
   final Function onTap;
@@ -16,7 +18,7 @@ class LowerBar extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.help_outline),
-          title: Text('Usage'),
+          title: Text(translator.translate('test')),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.queue),

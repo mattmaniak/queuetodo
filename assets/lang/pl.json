@@ -1,6 +1,7 @@
 {
+    "test": "Pol",
     "lower_bar": {
-        "usage_label": "Jak używać?",
+        "usage_label": "Co i jak?",
         "queue_label": "Kolejka zadań",
         "about_label": "O aplikacji"
     },

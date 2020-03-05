@@ -11,8 +11,9 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  easy_localization: ^1.4.1
+  # easy_localization: ^1.4.1
   intl: ^0.16.0
+  localize_and_translate: ^1.1.1+6
   shared_preferences: ^0.5.6+1
   url_launcher: ^5.4.1
 
@@ -24,5 +25,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/lang/en-US.json
-    - assets/lang/pl-PL.json
+    - assets/lang/en.json
+    - assets/lang/pl.json
