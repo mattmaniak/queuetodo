@@ -1,34 +1,40 @@
 {
-    "test": "Pol",
     "lower_bar": {
-        "usage_label": "Co i jak?",
-        "queue_label": "Kolejka zadań",
-        "about_label": "O aplikacji"
+        "usage": "Co i jak",
+        "queue": "Kolejka zadań",
+        "about": "O aplikacji"
     },
     "usage": {
-        "quote": "Pierwszy jest pierwszy.\nOstatni to ostatni.",
-        "quote_author": "Domniemywana spartańska maksyma",
-        "description": "Zwiększ swoją produktywność kolejkując zadania. Aplikacja pozwala na tworzenie zadań i zakańczanie ich jedynie zachowując kolejność dodania - bez możliwości reorganizacji oznacza koniec prokrastynacji."
+        "quote": "Pierwszy zawsze będzie pierwszy",
+        "quote_author": "Niepotwierdzona spartańska maksyma",
+        "description": "Zwiększ swoją produktywność kolejkując zadania. Aplikacja pozwala na tworzenie zadań i zakańczanie ich jedynie zachowując kolejność dodania. Brak możliwości reorganizacji oznacza koniec prokrastynacji."
     },
     "queue": {
-        "add_task": "Dodaj nowe zadanie do kolejki",
-        "remove_task": "Zakończ pierwsze zadanie.",
-        "task": {
-            "title_placeholder": "Tytuł",
-            "description_placeholder": "Opis",
-            "created_label": "Utworzono",
-            "last_modified_label": "Ostatni raz modyfikowano"
-        }
+        "push_task": "Zakolejkuj nowe zadanie",
+        "pop_task": "Zakończ pierwsze zadanie",
+        "push_question": "Coś nowego?",
+        "pop_question": "Robótka zrobiona?",
+        "confirmation": "Tak",
+        "cancelation": "Nie"
+    },
+    "task": {
+        "title": "Tytył",
+        "description": "Szczegóły",
+        "created": "Utworzono",
+        "last_modified": "Ostani raz zmodyfikowano",
+        "title_limit_info": "Maksymalna dopuszczalna ilość znaków w tytule to",
+        "description_limit_info": "Maksymalna dopuszczalna ilość znaków w opisie to"
     },
     "about": {
-        "motto": "Manage your everyday tasks the right way.",
+        "motto": "Zarządzaj codziennymi zadaniami we właściwej kolejności.",
         "developer_apps": "Inne aplikacje twórcy",
         "source_code": "Kod źródłowy",
-        "changelog": "Zmiany",
-        "license": "Licencja MIT",
+        "changelog": "Wersje oraz dziennik zmian",
+        "license": "Licencja",
         "terms_of_use_title": "Warunki korzystania",
         "terms_of_use_subtitle": "Zdefiniowane w licencji.",
         "privacy_policy_title": "Polityka prywatności",
-        "privacy_policy_subtitle": "Aplikacja nie zbiera jakichkolwiek danych."
+        "privacy_policy_subtitle": "Aplikacja nie zbiera jakichkolwiek danych.",
+        "browser_error": "Wystąpił błąd podczas uruchamiania przeglądarki."
     }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:queuetodo/error.dart';
+import 'package:queuetodo/localization.dart';
 
 class About extends StatelessWidget {
   final String _authorUrl =
@@ -15,32 +16,35 @@ class About extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          title: Text('QueueToDo $_semanticVersion'),
-          subtitle: Text('adwwdd')
-        ),
+            title: Text('QueueToDo $_semanticVersion'),
+            subtitle: Text(Localization.of(context).words['about']['motto'])),
         _AboutButton(
-          title: 'Developer\'s apps',
+          title: Localization.of(context).words['about']['developer_apps'],
           url: _authorUrl,
         ),
         _AboutButton(
-          title: 'Source code',
+          title: Localization.of(context).words['about']['source_code'],
           url: _repoUrl,
         ),
         _AboutButton(
-          title: 'Changelog',
+          title: Localization.of(context).words['about']['changelog'],
           url: '$_repoUrl/blob/master/CHANGELOG.md',
         ),
         _AboutButton(
-          title: 'MIT License',
+          title: Localization.of(context).words['about']['license'],
           url: '$_repoUrl/blob/master/LICENSE',
         ),
         ListTile(
-          title: Text('Terms of Use'),
-          subtitle: Text('Described in the license.'),
+          title: Text(
+              Localization.of(context).words['about']['terms_of_use_title']),
+          subtitle: Text(
+              Localization.of(context).words['about']['terms_of_use_subtitle']),
         ),
         ListTile(
-          title: Text('Privacy Policy'),
-          subtitle: Text('No data is collected.'),
+          title: Text(
+              Localization.of(context).words['about']['privacy_policy_title']),
+          subtitle: Text(Localization.of(context).words['about']
+              ['privacy_policy_subtitle']),
         ),
       ],
     );
@@ -71,7 +75,8 @@ class _AboutButton extends StatelessWidget {
 
   void _openUrlInBrowser(BuildContext context) async {
     if (!(await canLaunch(url) && await launch(url))) {
-      showErrorSnackBar(context, 'Unable to open a browser.');
+      showErrorSnackBar(
+          context, Localization.of(context).words['about']['browser_error']);
     }
   }
 }

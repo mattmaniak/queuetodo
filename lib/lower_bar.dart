@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:queuetodo/localization.dart';
 
 class LowerBar extends StatelessWidget {
   final int index;
@@ -18,15 +18,15 @@ class LowerBar extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.help_outline),
-          title: Text(translator.translate('test')),
+          title: Text(Localization.of(context).words['lower_bar']['usage']),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.queue),
-          title: Text('Queue'),
+          title: Text(Localization.of(context).words['lower_bar']['queue']),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.description),
-          title: Text('About'),
+          title: Text(Localization.of(context).words['lower_bar']['about']),
         ),
       ],
       onTap: this.onTap,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:queuetodo/error.dart';
+import 'package:queuetodo/localization.dart';
 
 class Task extends StatefulWidget {
   final descriptionController;
@@ -47,8 +48,10 @@ class _TaskState extends State<Task> {
           _lastModified = DateTime.now();
         });
         if (_description.length == widget.maxDescriptionLength) {
-          showErrorSnackBar(context,
-              'Description length limit is ${widget.maxDescriptionLength}.');
+          showErrorSnackBar(
+              context,
+              Localization.of(context).words['task']['description_limit_info'] +
+                  ' ${widget.maxDescriptionLength}.');
         }
       })
       ..titleController.addListener(() {
@@ -58,7 +61,9 @@ class _TaskState extends State<Task> {
         });
         if (_title.length == widget.maxTitleLength) {
           showErrorSnackBar(
-              context, 'Title length limit is ${widget.maxTitleLength}.');
+              context,
+              Localization.of(context).words['task']['title_limit_info'] +
+                  ' ${widget.maxTitleLength}.');
         }
       })
       ..descriptionController.text = _description
@@ -72,12 +77,14 @@ class _TaskState extends State<Task> {
     return Card(
       child: ExpansionTile(
         title: _textField(
-          hintText: 'Title',
+          hintText: Localization.of(context).words['task']['title'],
           maxLength: widget.maxTitleLength,
           controller: widget.titleController,
         ),
         subtitle: Text(
-          'Created ${_formatDate(widget.creationTimestamp)}.',
+          Localization.of(context).words['task']['created'] +
+              ' ' +
+              _formatDate(widget.creationTimestamp),
           style: TextStyle(
             color: Theme.of(context).textTheme.subtitle.color,
           ),
@@ -89,7 +96,9 @@ class _TaskState extends State<Task> {
               Container(
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: Text(
-                  'Last modified ${_formatDate(_lastModified)}.',
+                  Localization.of(context).words['task']['last_modified'] +
+                      ' ' +
+                      _formatDate(_lastModified),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -100,7 +109,8 @@ class _TaskState extends State<Task> {
                   bottom: 4.0,
                 ),
                 child: _textField(
-                  hintText: 'Description',
+                  hintText: Localization.of(context).words['task']
+                      ['description'],
                   maxLength: widget.maxDescriptionLength,
                   controller: widget.descriptionController,
                 ),
@@ -116,6 +126,7 @@ class _TaskState extends State<Task> {
       {@required String hintText,
       @required int maxLength,
       @required TextEditingController controller}) {
+    debugPrint(hintText);
     return TextField(
       decoration: InputDecoration(
         isDense: true,
@@ -130,8 +141,9 @@ class _TaskState extends State<Task> {
         ),
       ),
       controller: controller,
-      keyboardType:
-          hintText == 'Title' ? TextInputType.text : TextInputType.multiline,
+      keyboardType: hintText == Localization.of(context).words['task']['title']
+          ? TextInputType.text
+          : TextInputType.multiline,
       minLines: 1,
       maxLines: maxLength,
       maxLength: maxLength,

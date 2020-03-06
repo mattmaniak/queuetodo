@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import 'package:queuetodo/config.dart';
+import 'package:queuetodo/localization.dart';
 import 'package:queuetodo/task.dart';
 
 class QueueDisplay extends StatefulWidget {
@@ -26,15 +27,13 @@ class _QueueDisplayState extends State<QueueDisplay> {
   @override
   Widget build(BuildContext context) {
     final Widget _popButton = _queueButton(
-      label: 'Pop the first task',
-      tooltip: 'Remove the first task from the queue.',
+      label: Localization.of(context).words['queue']['pop_task'],
       icon: Icons.delete_forever,
       onPressed: _popTask,
     );
 
     final Widget _pushButton = _queueButton(
-      label: 'Push a task',
-      tooltip: 'Add a task to the end of the queue.',
+      label: Localization.of(context).words['queue']['push_task'],
       icon: Icons.add_box,
       onPressed: _pushTask,
     );
@@ -51,9 +50,8 @@ class _QueueDisplayState extends State<QueueDisplay> {
   }
 
   Widget _queueButton(
-      {@required String tooltip,
+      {@required IconData icon,
       @required String label,
-      @required IconData icon,
       @required Function onPressed}) {
     return Padding(
       padding: EdgeInsets.all(4.0),
@@ -64,7 +62,6 @@ class _QueueDisplayState extends State<QueueDisplay> {
             borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
           icon: Icon(icon),
-          tooltip: tooltip,
           label: Text(label),
           onPressed: onPressed,
         ),
@@ -73,9 +70,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
   }
 
   void _showQueueDialog(
-      {@required String title,
-      @required String content,
-      @required Function onPressed}) {
+      {@required String title, @required Function onPressed}) {
     showDialog(
       context: context,
       builder: (_) {
@@ -83,11 +78,10 @@ class _QueueDisplayState extends State<QueueDisplay> {
           shape: Theme.of(context).cardTheme.shape,
           backgroundColor: Theme.of(context).primaryColorDark,
           title: Text(title),
-          content: Text(content),
           actions: [
             FlatButton(
               child: Text(
-                'No',
+                Localization.of(context).words['queue']['cancelation'],
                 style: TextStyle(
                   color: Theme.of(context).accentColor,
                 ),
@@ -96,7 +90,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
             ),
             FlatButton(
               child: Text(
-                'Yes',
+                Localization.of(context).words['queue']['confirmation'],
                 style: TextStyle(
                   color: Theme.of(context).accentColor,
                 ),
@@ -125,8 +119,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
 
     if (_tasks.isNotEmpty) {
       _showQueueDialog(
-        title: 'Pop?',
-        content: 'Already finished the task?',
+        title: Localization.of(context).words['queue']['pop_question'],
         onPressed: pop,
       );
     }
@@ -152,8 +145,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
 
     if (_tasks.length < _tasksMax) {
       _showQueueDialog(
-        title: 'Push?',
-        content: 'Is there anything new to do?',
+        title: Localization.of(context).words['queue']['push_question'],
         onPressed: push,
       );
     } // Else: 'Add' button isn't rendered.

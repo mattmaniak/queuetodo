@@ -168,13 +168,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1+1"
-  localize_and_translate:
-    dependency: "direct main"
-    description:
-      name: localize_and_translate
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1+6"
   logging:
     dependency: transitive
     description:
