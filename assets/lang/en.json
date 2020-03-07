@@ -13,8 +13,8 @@
     "queue": {
         "push_task": "Queue a task",
         "pop_task": "Finish the first task",
-        "push_question": "Something new?",
-        "pop_question": "Already done?",
+        "push_question": "Something new to do?",
+        "pop_question": "Already done your work?",
         "confirmation": "Yes",
         "cancelation": "No"
     },

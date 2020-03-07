@@ -13,7 +13,7 @@
     "queue": {
         "push_task": "Zakolejkuj nowe zadanie",
         "pop_task": "Zakończ pierwsze zadanie",
-        "push_question": "Coś nowego?",
+        "push_question": "Coś nowego do zrobienia?",
         "pop_question": "Robótka zrobiona?",
         "confirmation": "Tak",
         "cancelation": "Nie"
