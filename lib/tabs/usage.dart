@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:queuetodo/localization.dart';
 
+/// Display a simple how-to.
 class Usage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

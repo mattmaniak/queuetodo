@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:queuetodo/localization.dart';
 
+/// App's bottom navigation to switch between screens (tabs).
 class LowerBar extends StatelessWidget {
   final int index;
   final Function onTap;

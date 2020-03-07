@@ -6,11 +6,13 @@ import 'package:queuetodo/config.dart';
 import 'package:queuetodo/localization.dart';
 import 'package:queuetodo/task.dart';
 
+/// Place for all tasks to queue.
 class QueueDisplay extends StatefulWidget {
   @override
   _QueueDisplayState createState() => _QueueDisplayState();
 }
 
+/// Task queue handler.
 class _QueueDisplayState extends State<QueueDisplay> {
   static const int _tasksMax = 100;
   Queue<Task> _tasks = Queue();
@@ -49,6 +51,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
     );
   }
 
+  /// The wide button with the same with as tasks.
   Widget _queueButton(
       {@required IconData icon,
       @required String label,
@@ -69,6 +72,9 @@ class _QueueDisplayState extends State<QueueDisplay> {
     );
   }
 
+  /// Small confirmation window.
+  ///
+  /// Display before each push/pop action.
   void _showQueueDialog(
       {@required String title, @required Function onPressed}) {
     showDialog(
@@ -109,6 +115,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
 
   void _saveTasks() => configSave(_tasks);
 
+  /// Remove the first task from the queue.
   void _popTask() {
     void pop() {
       setState(() {
@@ -125,6 +132,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
     }
   }
 
+  /// Add a task to the end of the queue.
   void _pushTask() {
     void push() {
       final now = DateTime.now();

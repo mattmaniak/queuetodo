@@ -5,18 +5,19 @@ import 'package:intl/intl.dart';
 import 'package:queuetodo/error.dart';
 import 'package:queuetodo/localization.dart';
 
+/// An expandable tile with two text inputs and date info.
 class Task extends StatefulWidget {
-  final descriptionController;
-  final titleController;
   final int maxDescriptionLength = 1000;
   final int maxTitleLength = 100;
+  final descriptionController;
+  final titleController;
 
   final DateTime creationTimestamp;
   final DateTime lastModified;
   final Function removeTask;
   final Function saveConfig;
 
-  Task(
+  const Task(
       {@required this.titleController,
       @required this.descriptionController,
       @required this.creationTimestamp,
@@ -28,6 +29,7 @@ class Task extends StatefulWidget {
   _TaskState createState() => _TaskState();
 }
 
+/// Task's current properties holder and it's renderer.
 class _TaskState extends State<Task> {
   DateTime _lastModified;
   String _description;
@@ -72,6 +74,10 @@ class _TaskState extends State<Task> {
 
   @override
   Widget build(BuildContext context) {
+    /// Render the tile and save config each time it redraws.
+    ///
+    /// Everytime the widget is redrawn, the config will be saved, e.g. when the
+    /// user writes a letter.
     widget.saveConfig();
 
     return Card(
@@ -126,7 +132,8 @@ class _TaskState extends State<Task> {
       {@required String hintText,
       @required int maxLength,
       @required TextEditingController controller}) {
-    debugPrint(hintText);
+    /// An input for [widget.title] and [widget.description].
+
     return TextField(
       decoration: InputDecoration(
         isDense: true,
@@ -150,6 +157,7 @@ class _TaskState extends State<Task> {
     );
   }
 
+  /// Return and ISO-formatted date.
   String _formatDate(DateTime date) => DateFormat('yyyy-MM-dd HH:mm:ss')
       .format(date ?? DateTime.fromMillisecondsSinceEpoch(0));
 }

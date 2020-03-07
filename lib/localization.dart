@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// Localization resources loader.
 class LocalizationDelegate extends LocalizationsDelegate<Localization> {
   const LocalizationDelegate();
 
@@ -20,20 +21,19 @@ class LocalizationDelegate extends LocalizationsDelegate<Localization> {
   bool shouldReload(LocalizationDelegate _) => false;
 }
 
+/// Localized strings provider.
 class Localization {
   final Locale locale;
   Map<String, dynamic> words = {};
 
-  Localization(this.locale) {
-    load();
+  Localization(this.locale);
+
+  static Localization of(BuildContext context) {
+    return Localizations.of<Localization>(context, Localization);
   }
 
   Future<void> load() async {
     words = json.decode(
         await rootBundle.loadString('assets/lang/${locale.languageCode}.json'));
-  }
-
-  static Localization of(BuildContext context) {
-    return Localizations.of<Localization>(context, Localization);
   }
 }

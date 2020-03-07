@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:queuetodo/task.dart';
 
+/// Encode and save all tasks to a device's sdcard.
 void configSave(Queue<Task> tasks) async {
   final preferences = await SharedPreferences.getInstance();
   final List<String> encodedTasks = [];
@@ -25,6 +26,7 @@ void configSave(Queue<Task> tasks) async {
   preferences.setStringList('_encodedTasks', encodedTasks);
 }
 
+/// Load and decode all tasks to a device's sdcard.
 Future<Queue<Task>> configRead(
     int tasksMax, Function removeTask, Function saveConfig) async {
   final preferences = await SharedPreferences.getInstance();

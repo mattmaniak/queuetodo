@@ -10,6 +10,7 @@ class App extends StatefulWidget {
   _AppState createState() => _AppState();
 }
 
+/// Layout renderer and tab switcher.
 class _AppState extends State<App> {
   int _tabIndex = 1;
 

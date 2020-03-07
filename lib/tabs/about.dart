@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:queuetodo/error.dart';
 import 'package:queuetodo/localization.dart';
 
+/// A tab with some basic information about this app.
 class About extends StatelessWidget {
   final String _authorUrl =
       'https://play.google.com/store/apps/developer?id=mattmaniak';
