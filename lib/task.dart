@@ -82,7 +82,7 @@ class _TaskState extends State<Task> {
 
     return Card(
       child: ExpansionTile(
-        title: _textField(
+        title: _TaskTextField(
           hintText: Localization.of(context).words['task']['title'],
           maxLength: widget.maxTitleLength,
           controller: widget.titleController,
@@ -114,7 +114,7 @@ class _TaskState extends State<Task> {
                   right: 16.0,
                   bottom: 4.0,
                 ),
-                child: _textField(
+                child: _TaskTextField(
                   hintText: Localization.of(context).words['task']
                       ['description'],
                   maxLength: widget.maxDescriptionLength,
@@ -128,16 +128,25 @@ class _TaskState extends State<Task> {
     );
   }
 
-  Widget _textField(
-      {@required String hintText,
-      @required int maxLength,
-      @required TextEditingController controller}) {
-    /// An input for [widget.title] and [widget.description].
+  /// Return and ISO-formatted date.
+  String _formatDate(DateTime date) => DateFormat('yyyy-MM-dd HH:mm:ss')
+      .format(date ?? DateTime.fromMillisecondsSinceEpoch(0));
+}
 
+/// An input for [widget.title] and [widget.description].
+class _TaskTextField extends StatelessWidget {
+  final int maxLength;
+  final String hintText;
+  final TextEditingController controller;
+
+  const _TaskTextField({this.maxLength, this.hintText, this.controller});
+
+  @override
+  Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
         isDense: true,
-        hintText: hintText,
+        hintText: this.hintText,
         counterStyle: TextStyle(
           height: 0.5,
         ),
@@ -147,17 +156,14 @@ class _TaskState extends State<Task> {
           ),
         ),
       ),
-      controller: controller,
-      keyboardType: hintText == Localization.of(context).words['task']['title']
-          ? TextInputType.text
-          : TextInputType.multiline,
+      controller: this.controller,
+      keyboardType:
+          this.hintText == Localization.of(context).words['task']['title']
+              ? TextInputType.text
+              : TextInputType.multiline,
       minLines: 1,
-      maxLines: maxLength,
-      maxLength: maxLength,
+      maxLines: this.maxLength,
+      maxLength: this.maxLength,
     );
   }
-
-  /// Return and ISO-formatted date.
-  String _formatDate(DateTime date) => DateFormat('yyyy-MM-dd HH:mm:ss')
-      .format(date ?? DateTime.fromMillisecondsSinceEpoch(0));
 }

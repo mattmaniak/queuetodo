@@ -5,9 +5,9 @@
         "about": "O aplikacji"
     },
     "usage": {
-        "quote": "Pierwszy zawsze będzie pierwszy",
+        "quote": "Pierwszy będzie zawsze pierwszy",
         "quote_author": "Niepotwierdzona spartańska maksyma",
-        "description": "Zwiększ swoją produktywność kolejkując zadania. Aplikacja pozwala na tworzenie zadań i zakańczanie ich jedynie zachowując kolejność dodania. Brak możliwości reorganizacji oznacza koniec prokrastynacji."
+        "description": "Zwiększ swoją produktywność kolejkując zadania. Aplikacja pozwala na tworzenie i usuwanie zadań. Kończenie zadań odbywa się w chronologicznej kolejności ich dodania. Co za tym idzie, brak możliwości reorganizacji oznacza koniec prokrastynacji."
     },
     "queue": {
         "push_task": "Zakolejkuj nowe zadanie",
@@ -18,7 +18,7 @@
         "cancelation": "Nie"
     },
     "task": {
-        "title": "Tytył",
+        "title": "Tytuł",
         "description": "Szczegóły",
         "created": "Utworzono",
         "last_modified": "Ostani raz zmodyfikowano",
@@ -27,7 +27,7 @@
     },
     "about": {
         "motto": "Zarządzaj codziennymi zadaniami we właściwej kolejności.",
-        "developer_apps": "Inne aplikacje twórcy",
+        "developer_apps": "Inne aplikacje autora",
         "source_code": "Kod źródłowy",
         "changelog": "Wersje oraz dziennik zmian",
         "license": "Licencja",
