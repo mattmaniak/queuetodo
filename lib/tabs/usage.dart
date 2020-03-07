@@ -28,6 +28,12 @@ class Usage extends StatelessWidget {
             textAlign: TextAlign.justify,
           ),
         ),
+        ListTile(
+          title: Text(
+            Localization.of(context).words['usage']['manual'],
+            textAlign: TextAlign.justify,
+          ),
+        ),
       ],
     );
   }

@@ -7,12 +7,10 @@ by queueing them. Stop procrastinating and let the app engage you to do tasks
 without the possibility to change their order.
 
 ## Usage
-Just press the wide blue button and 'Push a task' which basically creates an
-empty task and adds it to the queue. Fill a title and expand it to provide more
-data in a description field. Is a task already done? Just click the
-'Pop the first task' button above the queue and remove the first task.
-Forget about tapping the 'Save' button. There is nothing like that. Everything
-happens on the fly.
+Just press 'Push a task' button an basically create an empty task. Fill a title
+and expand it to provide more data in a description field. Already finished
+the task? Just click the 'Pop the first task' button above the queue and remove
+the first task.
 
 ## Terms of Use
 Described in the license.
