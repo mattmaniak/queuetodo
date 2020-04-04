@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:queuetodo/lower_bar.dart';
 
+import 'package:queuetodo/lower_bar.dart';
 import 'package:queuetodo/tabs/about.dart';
 import 'package:queuetodo/tabs/usage.dart';
 import 'package:queuetodo/tabs/queue_display.dart';
