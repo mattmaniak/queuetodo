@@ -2,6 +2,7 @@
 ## 1.3.0
 - Scrollable tabs.
 - More dimmed colors.
+- Minor localization fixes.
 
 ## 1.2.0
 - Polish localization.
