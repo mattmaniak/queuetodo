@@ -19,19 +19,19 @@ class About extends StatelessWidget {
         ListTile(
             title: Text('QueueToDo $_semanticVersion'),
             subtitle: Text(Localization.of(context).words['about']['motto'])),
-        _AboutButton(
+        _AboutTile(
           title: Localization.of(context).words['about']['developer_apps'],
           url: _authorUrl,
         ),
-        _AboutButton(
+        _AboutTile(
           title: Localization.of(context).words['about']['source_code'],
           url: _repoUrl,
         ),
-        _AboutButton(
+        _AboutTile(
           title: Localization.of(context).words['about']['changelog'],
           url: '$_repoUrl/blob/master/CHANGELOG.md',
         ),
-        _AboutButton(
+        _AboutTile(
           title: Localization.of(context).words['about']['license'],
           url: '$_repoUrl/blob/master/LICENSE',
         ),
@@ -52,11 +52,12 @@ class About extends StatelessWidget {
   }
 }
 
-class _AboutButton extends StatelessWidget {
+/// Specific ListTile with basic info and button that opens an URL.
+class _AboutTile extends StatelessWidget {
   final String url;
   final String title;
 
-  const _AboutButton({@required this.title, this.url});
+  const _AboutTile({@required this.title, this.url});
 
   @override
   Widget build(BuildContext context) {

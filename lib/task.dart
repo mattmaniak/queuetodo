@@ -35,6 +35,7 @@ class _TaskState extends State<Task> {
   String _description;
   String _title;
 
+  /// Set default or loaded values and initialize input controllers.
   @override
   void initState() {
     super.initState();

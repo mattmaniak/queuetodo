@@ -6,6 +6,7 @@ import 'package:queuetodo/app.dart';
 import 'package:queuetodo/localization.dart';
 import 'package:queuetodo/theme.dart';
 
+/// Run the application.
 void main() => runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,

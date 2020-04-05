@@ -32,6 +32,7 @@ class Localization {
     return Localizations.of<Localization>(context, Localization);
   }
 
+  // Load language assets from the asset bundle.
   Future<void> load() async {
     words = json.decode(
         await rootBundle.loadString('assets/lang/${locale.languageCode}.json'));

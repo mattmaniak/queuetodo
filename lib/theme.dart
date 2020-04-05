@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 final Color _primaryColor = Colors.amber[300];
 final Color _accentColor = Colors.lightBlueAccent[400];
 
+/// App's global theme.
 get theme => ThemeData(
       brightness: Brightness.light,
       accentColorBrightness: Brightness.light,
