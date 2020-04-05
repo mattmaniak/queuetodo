@@ -10,7 +10,7 @@ class About extends StatelessWidget {
   final String _authorUrl =
       'https://play.google.com/store/apps/developer?id=mattmaniak';
   final String _repoUrl = 'https://gitlab.com/mattmaniak/queuetodo';
-  final String _semanticVersion = '1.2.0';
+  final String _semanticVersion = '1.3.0';
 
   @override
   Widget build(BuildContext context) {
