@@ -6,7 +6,7 @@ import 'package:queuetodo/localization.dart';
 class Usage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         ListTile(
           title: Text(

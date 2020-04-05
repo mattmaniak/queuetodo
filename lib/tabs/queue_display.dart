@@ -40,7 +40,7 @@ class _QueueDisplayState extends State<QueueDisplay> {
       onPressed: _pushTask,
     );
 
-    return Column(
+    return ListView(
       children: [
         _tasks.isNotEmpty ? _popButton : Container(),
         Column(

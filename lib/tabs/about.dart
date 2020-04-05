@@ -14,7 +14,7 @@ class About extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         ListTile(
             title: Text('QueueToDo $_semanticVersion'),

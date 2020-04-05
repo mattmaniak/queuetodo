@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:queuetodo/lower_bar.dart';
+import 'package:queuetodo/localization.dart';
 import 'package:queuetodo/tabs/about.dart';
 import 'package:queuetodo/tabs/usage.dart';
 import 'package:queuetodo/tabs/queue_display.dart';
@@ -11,32 +11,59 @@ class App extends StatefulWidget {
 }
 
 /// Layout renderer and tab switcher.
-class _AppState extends State<App> {
-  int _tabIndex = 1;
+class _AppState extends State<App> with SingleTickerProviderStateMixin {
+  final List<Widget> _tabs = [
+    QueueDisplay(),
+    Usage(),
+    About(),
+  ];
+  TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(vsync: this, length: _tabs.length);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColorLight,
-      body: ListView(
-        children: [
-          [
-            Usage(),
-            QueueDisplay(),
-            About(),
-          ].elementAt(_tabIndex)
-        ],
-      ),
-      bottomNavigationBar: LowerBar(
-        index: _tabIndex,
-        onTap: _switchTab,
+    return DefaultTabController(
+      length: _tabs.length,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColorLight,
+        body: TabBarView(
+          controller: _controller,
+          children: _tabs,
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Theme.of(context).primaryColor,
+          child: TabBar(
+            controller: _controller,
+            labelColor: Theme.of(context).accentColor,
+            unselectedLabelColor: Theme.of(context).iconTheme.color,
+            tabs: [
+              Tab(
+                icon: Icon(Icons.queue),
+                text: Localization.of(context).words['lower_bar']['queue'],
+              ),
+              Tab(
+                icon: Icon(Icons.help_outline),
+                text: Localization.of(context).words['lower_bar']['usage'],
+              ),
+              Tab(
+                icon: Icon(Icons.description),
+                text: Localization.of(context).words['lower_bar']['about'],
+              ),
+            ],
+          ),
+        ),
       ),
     );
-  }
-
-  void _switchTab(int index) {
-    setState(() {
-      _tabIndex = index;
-    });
   }
 }
