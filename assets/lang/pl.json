@@ -8,7 +8,7 @@
         "quote": "Pierwszy będzie zawsze pierwszy",
         "quote_author": "Niepotwierdzona spartańska maksyma",
         "description": "Zwiększ swoją produktywność kolejkując zadania. Aplikacja pozwala na tworzenie i usuwanie zadań. Kończenie zadań odbywa się w chronologicznej kolejności ich dodania. Co za tym idzie, brak możliwości reorganizacji oznacza koniec prokrastynacji.",
-        "manual": "Naciśnij przycisk 'Zakolejkuj nowe zadanie' aby dodać je do kolejki. Uzupełnij tytuł, rozwiń zadanie i opisz je dokładniej. Zadanie gotowe? Przycisk 'Zakończ pierwsze zadanie' załatwi sprawę."
+        "manual": "Naciśnij przycisk \"Zakolejkuj nowe zadanie\" aby dodać je do kolejki. Uzupełnij tytuł, rozwiń zadanie i opisz je dokładniej. Zadanie gotowe? Przycisk \"Zakończ pierwsze zadanie\" załatwi sprawę."
     },
     "queue": {
         "push_task": "Zakolejkuj nowe zadanie",
