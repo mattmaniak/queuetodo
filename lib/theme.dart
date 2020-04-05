@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final Color _primaryColor = Colors.amber[300];
-final Color _accentColor = Colors.lightBlueAccent[700];
+final Color _accentColor = Colors.lightBlueAccent[400];
 
 get theme => ThemeData(
       brightness: Brightness.light,
