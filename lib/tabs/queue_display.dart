@@ -81,8 +81,8 @@ class _QueueDisplayState extends State<QueueDisplay> {
       context: context,
       builder: (_) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).primaryColor,
           shape: Theme.of(context).cardTheme.shape,
-          backgroundColor: Theme.of(context).primaryColorDark,
           title: Text(title),
           actions: [
             FlatButton(

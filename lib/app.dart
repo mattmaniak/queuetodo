@@ -36,7 +36,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     return DefaultTabController(
       length: _tabs.length,
       child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColorLight,
         body: TabBarView(
           controller: _controller,
           children: _tabs,
