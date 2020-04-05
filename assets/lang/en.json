@@ -14,7 +14,7 @@
         "push_task": "Queue a task",
         "pop_task": "Finish the first task",
         "push_question": "Something new to do?",
-        "pop_question": "Already done your work?",
+        "pop_question": "Already finished your work?",
         "confirmation": "Yes",
         "cancelation": "No"
     },
@@ -36,6 +36,6 @@
         "terms_of_use_subtitle": "Described in the license.",
         "privacy_policy_title": "Privacy Policy",
         "privacy_policy_subtitle": "No data is collected.",
-        "browser_error": "Unable to open a browser."
+        "browser_error": "Unable to open a web browser."
     }
 }
