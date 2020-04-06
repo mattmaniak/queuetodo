@@ -1,7 +1,7 @@
 # QueueToDo
 Manage your everyday tasks in the right order.
 
-![image](media/en/promo_1.png "QueueToDo tasks")
+![image](media/en/promo_1.webp "QueueToDo tasks")
 
 ## Description
 Increase your productivity by organizing your tasks in the most natural way -
