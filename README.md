@@ -1,12 +1,11 @@
 # QueueToDo
 Manage your everyday tasks in the right order.
 
-![image](media/en/promo_1.png "QueueToDo task")
+![image](fastlane/metadata/android/en-US/images/featureGraphic.png "QueueToDo task")
 
 ## Description
-Increase your productivity by organizing your tasks in the most natural way -
-by queueing them. Stop procrastinating and let the app engage you to do tasks
-without the possibility to change their order.
+Task management app. The queue instead of a task list to force  execution
+order. Lightweight and simple.
 
 ## Usage
 Just press 'Push a task' button an basically create an empty task. Fill a title

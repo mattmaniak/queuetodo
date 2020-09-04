@@ -1,0 +1,1 @@
+Prosta i lekka aplikacja do zarządzania codziennymi zadaniami za pomocą kolejki, a nie listy.

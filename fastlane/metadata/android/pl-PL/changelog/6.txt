@@ -1,0 +1,3 @@
+- Karty z możliwością scrollowania.
+- Bardziej stonowane kolory.
+- Naprawa błędów związanych z lokalizacją.
