@@ -1,4 +1,4 @@
-# QueueToDo
+# <img src='assets/web_hi_res_512.png' width='32'> QueueToDo
 Manage your everyday tasks in the right order.
 
 ![image](fastlane/metadata/android/en-US/images/featureGraphic.png "QueueToDo task")
